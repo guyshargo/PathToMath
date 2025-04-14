@@ -1,0 +1,53 @@
+[
+    {
+        "subject": "Addition",
+        "sum_levels": 50,
+        "fin_levels": 4,
+        "levels": [
+            {
+                "level": 1,
+                "detail": "finish"
+            },
+            {
+                "level": 2,
+                "detail": "finish"
+            },
+            {
+                "level": 3,
+                "detail": "finish"
+            },
+            {
+                "level": 4,
+                "detail": "finish"
+            },
+            {
+                "level": 5,
+                "detail": "working"
+            }
+        ]
+    },
+    {
+        "subject": "Subtraction",
+        "sum_levels": 10,
+        "fin_levels": 0,
+        "levels": []
+    },
+    {
+        "subject": "Multipication",
+        "sum_levels": 20,
+        "fin_levels": 0,
+        "levels": []
+    },
+    {
+        "subject": "Division",
+        "sum_levels": 40,
+        "fin_levels": 0,
+        "levels": []
+    },
+    {
+        "subject": "Percentage",
+        "sum_levels": 30,
+        "fin_levels": 0,
+        "levels": []
+    }
+]
