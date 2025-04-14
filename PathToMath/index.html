@@ -7,10 +7,11 @@
     <title>Path2Math</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/PathToMath/src/Utils/navBar.css">
+    <link rel="stylesheet" href="/PathToMath/src/Utils/Styles/mainPage.css">
   </head>
 
 
-  <body class="bg-gray-100 font-sans antialiased">
+  <body class="bg-gray-100 font-sans antialiased max-h-full max-w-full">
     <header id="header" class="">
         <div class="navBarContainer shadow-md py-5 px-0">
             <div class="container px-3 flex items-center  max-w-full">
@@ -21,9 +22,35 @@
             </div>
         </div>
         <nav id="mobile-menu" class="md:hidden">
-
         </nav>
     </header>
+    <diV id="main" class="mainPage max-w-full max-h-full">
+      <div class="mainContent flex row-end-3">
+        <div id="mathProblems" class="subjects">
+        </div>
+        <div id="videos" class="subjects">
+        </div>
+        <div id="dailyTest" class="subjects">
+        </div>
+      </div>
+      <div id="sideBar" class="hidden md:flex container sideBar max-h-full">
+        <div id="gradePicker" class="">
+          <label for="grades" class="text-white font-bold">I'm In Grade:</label>
+              <select id="grades"class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-700 block p-2.5">
+                name="grades">
+              <option value="1">grade A</option>
+              <option value="2">Grade B</option>
+              <option value="3">Grade C</option>
+              <option value="4">grade D</option>
+              <option value="5">Grade E</option>
+              <option value="6">Grade F</option>
+              </select>
+        </div>
+        <div id="Avatar" class="Avatar">
+          <img src="/PathToMath/src/Images/Avatars/1.png"/>
+        </div>
+      </div>
+    </diV>
     <script src="/PathToMath/src/Utils/navBar.js"></script>
 </body>
 </html>

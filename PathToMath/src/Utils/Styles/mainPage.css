@@ -1,0 +1,36 @@
+
+.mainPage{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: stretch;
+}
+.sideBar{
+    display: flex;
+    height: 100%;
+    background-color: #D9EBFF;
+    width: 20%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+.mainContent{
+    width: 80%;
+}
+.subjects{
+    display: flex;
+    flex-direction: row;
+    
+}
+#gradePicker{
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    background-color: #FFB35C;
+    border-radius: 10px;
+    justify-content: space-around;
+}
+#grades{
+width: 70%;
+border-color: rgb(255, 236, 149);
+}
