@@ -32,8 +32,11 @@ function resetGame() {
  */
 function generateVariable(level) {
     let mathLevel = Math.floor(level / 10) + 1;
-    return Math.floor(Math.random() * (10 * mathLevel));
+    let min = 1 + (mathLevel - 1) * 5;
+    let max = 10 * mathLevel;
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
 
 /**
  * Generates an incorrect option for the multiple-choice answers.
@@ -55,23 +58,16 @@ function generateOption(subject, level, answer) {
             maxBorder = answer + offset;
             break;
         case "Multiply":
-            minBorder = answer - 2 * offset;
-            maxBorder = answer + 2 * offset;
-            break;
         case "Division":
         case "Percentage":
-            minBorder = answer - 5 * offset;
-            maxBorder = answer + 5 * offset;
+            minBorder = answer - offset;
+            maxBorder = answer + offset;
             break;
     }
 
     let option = (Math.random() * (maxBorder - minBorder) + minBorder);
 
-    if (subject === "Division" || subject === "Percentage") {
-        return parseFloat(option.toFixed(2));
-    } else {
-        return Math.round(option);
-    }
+    return Math.round(option);
 }
 
 /**
@@ -87,33 +83,56 @@ function makeQuestion(subject, level) {
     let mathAction;
     let options = [];
 
-    if ((subject === "Division" || subject === "Percentage") && var2 === 0) {
-        var2 = 1;
-    }
-
     switch (subject) {
         case "Addition":
             mathAction = "+";
             answer = var1 + var2;
             break;
+
         case "Subtraction":
             mathAction = "-";
             answer = var1 - var2;
             break;
+
         case "Multiply":
             mathAction = "X";
             answer = var1 * var2;
             break;
+
         case "Division":
             mathAction = "/";
-            answer = var1 / var2;
-            answer = parseFloat(answer.toFixed(2));
+            var2 = generateVariable(level);
+            let quotient = generateVariable(level);
+            var1 = var2 * quotient;
+            answer = quotient;
             break;
+
         case "Percentage":
             mathAction = "%";
-            answer = (var1 / var2) * 100;
-            answer = parseFloat(answer.toFixed(2));
+            var2 = generateVariable(level); 
+            const simplePercents = [5, 10, 20];  
+            let chosenPercent = simplePercents[Math.floor(Math.random() * simplePercents.length)];
+            let attemptCount = 0;
+            
+            while (chosenPercent === 5 && var2 < 20 && attemptCount < 10) {
+                var2 = generateVariable(level);
+                attemptCount++;
+            }
+
+            if (attemptCount >= 10) {
+                var2 = Math.max(var2, 20);
+            }
+
+            var1 = Math.round((chosenPercent / 100) * var2);
+            answer = parseFloat(((var1 / var2) * 100).toFixed(2));  
+
+            if (answer === 0) {
+                var2 = generateVariable(level); 
+                var1 = Math.round((chosenPercent / 100) * var2);
+                answer = parseFloat(((var1 / var2) * 100).toFixed(2));
+            }
             break;
+
         default:
             return null;
     }
@@ -128,8 +147,17 @@ function makeQuestion(subject, level) {
     let insertIndex = Math.floor(Math.random() * options.length + 1);
     options.splice(insertIndex, 0, answer);
 
+    let questionText;
+    if (subject === "Percentage") {
+        questionText = `What percent is ${var1} of ${var2}?`;
+    } else {
+        questionText = `What's ${var1} ${mathAction} ${var2}?`;
+    }
+
     return {
-        question: `What's ${var1} ${mathAction} ${var2} ?`,
+        question: questionText,
+        var1,
+        var2,
         answer,
         options
     }
@@ -137,18 +165,41 @@ function makeQuestion(subject, level) {
 
 /**
  * Initializes the game with a set number of questions based on the subject and level.
+ * Ensures no duplicate questions are included.
  * @param {Object} data - The game configuration containing `subject` and `level` keys.
  */
 function createGame(data) {
     if (data.subject && data.level) {
         levelHeader.textContent = `${data.subject} - Level ${data.level}`;
 
-        for (let i = 0; i < numOfQuestions; i++) {
+        while (questions.length < numOfQuestions) {
             let question = makeQuestion(data.subject, data.level);
-            questions.push(question);
+            let isDuplicate = false;
+
+            for (let existing of questions) {
+                const isSameOrder = question.var1 === existing.var1 && question.var2 === existing.var2;
+                const isReversedOrder = question.var1 === existing.var2 && question.var2 === existing.var1;
+
+                if (data.subject === "Addition" || data.subject === "Multiply") {
+                    if (isSameOrder || isReversedOrder) {
+                        isDuplicate = true;
+                        break;
+                    }
+                } else {
+                    if (isSameOrder) {
+                        isDuplicate = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!isDuplicate) {
+                questions.push(question);
+            }
         }
     }
 }
+
 
 /**
  * Loads the game level configuration and starts generating the game.
@@ -282,6 +333,7 @@ function nextQuestionClicked() {
         else {
             levelHeader.textContent = `Oh no! You answered ${correctAnswers} / ${numOfQuestions} Correct Answers.`;
             endGameBtn.onclick = function () {
+                correctAnswers = 0;
                 resetGame();
                 loadGameLevel();
             };
@@ -292,7 +344,7 @@ function nextQuestionClicked() {
     }
 }
 
-function returnBtnClicked(){
+function returnBtnClicked() {
     window.location.href = "../subject_levels/subjectsLevelsPage.html";
 }
 loadGameLevel();
