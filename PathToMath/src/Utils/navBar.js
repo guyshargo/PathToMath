@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobilecontainer = document.getElementById('mobile-menu');
     const mobileBtn = document.getElementById('mobile-menu-button');
     const header = document.getElementById('header');
+    const selectedGrade = parseInt(localStorage.getItem("selectedGrade") || "1");
 
 const menuData = [
     {
@@ -14,7 +15,7 @@ const menuData = [
             { label: 'Subtraction', link: '#Minus'},
             { label: 'Multiplication', link: '#Multiply'},
             { label: 'Division', link: '#Divide'},
-            { label: 'Percentages', link: '#Precentage'}
+            { label: 'Percentage', link: '#Precentage'}
         ],
         class: "MathProblems"
     },
@@ -22,9 +23,9 @@ const menuData = [
         label: 'Tutorial Videos',
         link: '#videos',
         submenu:[
-            { label: 'Adding', link: '#AddingVideos'},
+            { label: 'Addition', link: '#AddingVideos'},
             { label: 'Substraction', link: '#SubstractionVideos'},
-            { label: 'Multipication', link: '#MultipicationVideos'},
+            { label: 'Multiplication', link: '#MultipicationVideos'},
             { label: 'Division', link: '#DivisionVideos'},
             { label: 'Percentage', link: '#PercentageVideos'}
         ],
@@ -50,6 +51,13 @@ const menuData = [
         class: "Logout"
     }
 ];
+const topicGrade = {
+    "Addition": 1,
+    "Substraction": 1,    
+    "Multiplication": 3,      
+    "Division": 4,
+    "Percentage": 5         
+  };
 
 function createMenuItem(item) {
 
@@ -79,7 +87,9 @@ function createMenuItem(item) {
         const submenuUl = document.createElement('ul');            
         submenuUl.classList.add('dynamic-submenu','hidden', 'absolute', 'top-full', 'bg-white', 'shadow-md', 'rounded-md', 'z-10');
         item.submenu.forEach(subItem => {
+            if(shouldDisplayItem(subItem,topicGrade,selectedGrade)){
             submenuUl.appendChild(createMenuItem(subItem));
+            }
         });
         listItem.appendChild(submenuUl);
     }
@@ -93,7 +103,7 @@ function renderMenu(data, container) {
     const menuUl = document.createElement('ul');
     menuUl.classList.add('md:flex', 'space-x-4'); 
     data.forEach(item => {
-        if(item.label!="Login"&&item.label!="Logout"||item.label == "Login"&&item.loginStatus==false||item.label=="Logout"&&item.loginStatus==true){
+        if(shouldDisplayItem(item,topicGrade,selectedGrade)){
             menuUl.appendChild(createMenuItem(item));
 
         }
@@ -104,7 +114,7 @@ function renderMenu(data, container) {
 function renderMobileMenu(data, container) {
     const menuUl = document.createElement('ul');
     data.forEach(item => {
-        if(item.label!="Login"&&item.label!="Logout"||item.label == "Login"&&item.loginStatus==false||item.label=="Logout"&&item.loginStatus==true){
+        if(shouldDisplayItem(item,topicGrade,selectedGrade)){
         const listItem = document.createElement('li');
         listItem.classList.add("mobile-item");
         const link = document.createElement('a');
@@ -122,6 +132,7 @@ function renderMobileMenu(data, container) {
             submenuUl.classList.add("mobile-menu-sub",'hidden');
             submenuUl.classList.add('ml-4');
             item.submenu.forEach(subItem => {
+                if(shouldDisplayItem(subItem,topicGrade,selectedGrade)){
                 const subListItem = document.createElement('li');
                 const subLink = document.createElement('a');
                 subLink.href = subItem.link || '#';
@@ -131,7 +142,7 @@ function renderMobileMenu(data, container) {
                     'py-2',
                     'px-8',
                     'text-indigo-200',
-                    'hover:bg-indigo-600', // ← lighter than 800
+                    'hover:bg-indigo-600', // lighter
                     'transition',
                     'duration-200',
                     'ease-in-out',
@@ -139,6 +150,7 @@ function renderMobileMenu(data, container) {
                   );
                 subListItem.appendChild(subLink);
                 submenuUl.appendChild(subListItem);
+                }
             });
             listItem.appendChild(submenuUl);
             }
@@ -148,6 +160,16 @@ function renderMobileMenu(data, container) {
     });
     container.appendChild(menuUl);
 }
+function shouldDisplayItem(item, topicGrade, selectedGrade) {
+    const showLog =
+      (item.label !== "Login" && item.label !== "Logout") ||
+      (item.label === "Login" && !item.loginStatus) ||
+      (item.label === "Logout" && item.loginStatus);
+    const showByGrade =
+      topicGrade[item.label] == null || topicGrade[item.label] <= selectedGrade;
+  
+    return showLog && showByGrade;
+  }
 
 renderMenu(menuData, dynamicMenuContainer);
 
