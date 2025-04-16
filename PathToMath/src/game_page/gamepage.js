@@ -37,7 +37,6 @@ function generateVariable(level) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-
 /**
  * Generates an incorrect option for the multiple-choice answers.
  * @param {string} subject - The math subject.
@@ -51,19 +50,8 @@ function generateOption(subject, level, answer) {
     let minBorder;
     let maxBorder;
 
-    switch (subject) {
-        case "Addition":
-        case "Subtraction":
-            minBorder = answer - offset;
-            maxBorder = answer + offset;
-            break;
-        case "Multiply":
-        case "Division":
-        case "Percentage":
-            minBorder = answer - offset;
-            maxBorder = answer + offset;
-            break;
-    }
+    minBorder = answer - offset;
+    maxBorder = answer + offset;
 
     let option = (Math.random() * (maxBorder - minBorder) + minBorder);
 
@@ -109,11 +97,11 @@ function makeQuestion(subject, level) {
 
         case "Percentage":
             mathAction = "%";
-            var2 = generateVariable(level); 
-            const simplePercents = [5, 10, 20];  
+            var2 = generateVariable(level);
+            const simplePercents = [5, 10, 20];
             let chosenPercent = simplePercents[Math.floor(Math.random() * simplePercents.length)];
             let attemptCount = 0;
-            
+
             while (chosenPercent === 5 && var2 < 20 && attemptCount < 10) {
                 var2 = generateVariable(level);
                 attemptCount++;
@@ -124,10 +112,10 @@ function makeQuestion(subject, level) {
             }
 
             var1 = Math.round((chosenPercent / 100) * var2);
-            answer = parseFloat(((var1 / var2) * 100).toFixed(2));  
+            answer = parseFloat(((var1 / var2) * 100).toFixed(2));
 
             if (answer === 0) {
-                var2 = generateVariable(level); 
+                var2 = generateVariable(level);
                 var1 = Math.round((chosenPercent / 100) * var2);
                 answer = parseFloat(((var1 / var2) * 100).toFixed(2));
             }

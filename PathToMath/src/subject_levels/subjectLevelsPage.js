@@ -3,8 +3,8 @@ const levelGrid = document.getElementById('levelGrid');
 
 let numOfLevels = 30;
 const data = {
-    subject: "Percentage",
-    finishedLevel: 29
+    subject: "Addition",
+    finishedLevel: 10
 }
 
 function makeLevel(level) {
