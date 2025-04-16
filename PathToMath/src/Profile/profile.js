@@ -32,19 +32,15 @@ function populateProfileFields(data) {
  */
 function updateProfile() {
   //putting the updated data into a json
-  const updatedData = {
-    name: document.getElementById('name').value,
-    email: document.getElementById('email').value,
-    password: document.getElementById('password').value,
-    currentGrade: document.getElementById('grades').value,
-    avatar: document.getElementById('AvatarImg').src
-  };
-  //updating local var
-  userData = updatedData;
+    userData.name =  document.getElementById('name').value,
+    userData.email =  document.getElementById('email').value,
+    userData.password =  document.getElementById('password').value,
+    userData.currentGrade =  document.getElementById('grades').value,
+    userData.avatar= document.getElementById('AvatarImg').src
   //updating the user in the local storage
   localStorage.setItem("currentUser", JSON.stringify(userData));
   //updating selected class
-  localStorage.setItem("selectedGrade", updatedData.currentGrade);
+  localStorage.setItem("selectedGrade", userData.currentGrade);
     showAlert();
 }
 /**

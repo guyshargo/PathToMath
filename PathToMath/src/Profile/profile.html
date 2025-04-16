@@ -12,7 +12,7 @@
 </head>
 
 <body class="font-sans antialiased max-h-full max-w-full">
-  <header id="header" class="">
+  <header id="header" class="Profile">
     <div class="navBarContainer shadow-md py-5 px-0">
       <div class="container px-3 flex items-center  max-w-full">
         <img id="mobile-menu-button" class="w-10 h-10 object-contain mr-5 md:hidden" src="/src/Images/mobilemenu.png" />
@@ -50,10 +50,10 @@
       </div>
       
       <!-- Profile Info Section -->
-      <div id="profileinfo" class="flex flex-col justify-center  md: w-1/3 gap-2 md: gap-6">
+      <div id="profileinfo" class="flex flex-col justify-center gap-1 h-fit w-fit md:w-1/3 md:gap-3">
         <input id="name" type="text" placeholder="Name" class="p-2 rounded shadow" />
         <input id="email" type="email" placeholder="Email" class="p-2 rounded shadow" />
-        <input id="password" type="password" placeholder="Password" class="p-2 rounded shadow" />
+        <input id="password" disabled type="password" placeholder="Password" class="p-2 rounded shadow" />
           <!-- Grade Picker -->
           <div id="gradePicker" class="gradePicker flex-row">
             <select id="grades" name="grades" class="grades w-full p-2 rounded shadow bg-white hover:cursor-pointer ">
