@@ -1,18 +1,21 @@
 //Default User
-
 const userEmail = "alice@gmail.com";
 let userData;
 document.addEventListener('DOMContentLoaded', () => {
+  //onload fill days and load fake user data
   FillDailyChallenge();
+  //if the user exists in local storage load from there
   if (localStorage.getItem("currentUser")!=undefined||localStorage.getItem("currentUser")!=null) {
     userData = JSON.parse(localStorage.getItem("currentUser"));
   } else {
     loadFakeUser(); // only fetch if no local data
   }
+  //populate the data
   const savedGrade = userData.currentGrade;
   document.getElementById("grades").value = savedGrade;
   document.getElementById("grades-mobile").value = savedGrade;
-  document.getElementById("AvatarImg").setAttribute("src", userData.avatar);    //Adding an event listener to detect grade changes and updating it in the local storage
+  document.getElementById("AvatarImg").setAttribute("src", userData.avatar);    
+  //Adding an event listener to detect grade changes and updating it in the local storage
   document.getElementById("grades").addEventListener("change", (e) => {
     setSelectedGrade(e.target.value);
   });
@@ -36,9 +39,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 //Load Fake User
 function loadFakeUser() {
+  //fetching the fake user from the Users.Json
   fetch('./src/Utils/Users.JSON')
 .then(response => response.json())
 .then(users => {
+  //fetch the specific user with this email
    userData = users[userEmail];
   if (userData) {
     // Store the full user data in localStorage
@@ -56,15 +61,23 @@ function loadFakeUser() {
 });
 }
 
-//Fill the daily challange
+/**
+ * FillDailyChallenge: add the completed and the current day challenge
+ */
 function FillDailyChallenge() {
+  //days array
   const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  //get current day 0-6
   const todayIndex = new Date().getDay();
+  //
   const todayName = dayNames[todayIndex];
-
+  //for each day div
   document.querySelectorAll('.days').forEach(dayEl => {
+    //get day's value: name of the day
     const dayVal = dayEl.getAttribute('value');
+    //the day's circle
     const dayCircle = dayEl.querySelector('.day');
+    //and today bubble
     const bubble = dayEl.querySelector('.today-marker');
 
     if (!dayVal || !dayCircle) return;
