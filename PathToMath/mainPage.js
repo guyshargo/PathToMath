@@ -81,7 +81,7 @@ function loadBadges() {
   //badge precentege 
   const badgetext = document.getElementById("badges-text");
   //amount of badges overall
-  const maxBadges =6;
+  const maxBadges =5;
   let badgeCount = 0;
 //go over each circle and check if its completed
 circles.forEach(circle => {

@@ -1,4 +1,6 @@
 
+const subjectLabels = ['Addition', 'Subtraction', 'Multiplication', 'Division', 'Percentage'];
+
 document.addEventListener('DOMContentLoaded', () => {
     //regular computer sized container
     const dynamicMenuContainer = document.getElementById('dynamic-menu-container');
@@ -18,11 +20,11 @@ const menuData = [
         link: '#home',
         //SubMenu: Math subjects
         submenu: [
-            { label: 'Addition', link: '#PlusProblems'},
-            { label: 'Subtraction', link: '#Minus'},
-            { label: 'Multiplication', link: '#Multiply'},
-            { label: 'Division', link: '#Divide'},
-            { label: 'Percentage', link: '#Precentage'}
+            { label: 'Addition', link: '/src/subject_levels/subjectsLevelsPage.html'},
+            { label: 'Subtraction', link: '/src/subject_levels/subjectsLevelsPage.html'},
+            { label: 'Multiplication', link: '/src/subject_levels/subjectsLevelsPage.html'},
+            { label: 'Division', link: '/src/subject_levels/subjectsLevelsPage.html'},
+            { label: 'Percentage', link: '/src/subject_levels/subjectsLevelsPage.html'}
         ],
         class: "MathProblems"
     },
@@ -76,10 +78,17 @@ function createMenuItem(item) {
     if(header.className==item.class){
         listItem.classList.add("active-regular-menu")
     }
+
     //add onclick to the link
-    if (item.onClick) {
-        link.addEventListener('click', item.onClick);
-    }
+
+    link.addEventListener('click', (e) => {
+        if (subjectLabels.includes(item.label)) {
+          localStorage.setItem("Subject", item.label);
+        }
+        if (item.onClick) {
+          item.onClick(e); // pass the event
+        }
+      });
     listItem.appendChild(link); // Append the link to the list item
     // Check if the item has a submenu
     // If it does, create a nested unordered list for the submenu items
@@ -141,6 +150,10 @@ function renderMobileMenu(data, container) {
         //added the label
         link.textContent = item.label;
         link.classList.add('block', 'py-3', 'px-6', 'text-white', 'hover:bg-indigo-700', 'transition', 'duration-200', 'ease-in-out');
+        //add event listener
+        if (listItem.onClick) {
+            link.addEventListener('click', item.onClick);
+        }
        //adding the link to the list item
         listItem.appendChild(link);
         //checking if the current list item in the current page and marks it
@@ -176,6 +189,15 @@ function renderMobileMenu(data, container) {
                     'text-sm'
                   );
                 //appending the subLink
+                subLink.addEventListener('click', (e) => {
+                    if (subjectLabels.includes(subItem.label)) {
+                      localStorage.setItem("Subject", subItem.label);
+                    }
+                  
+                    if (subItem.onClick) {
+                      subLink.onClick(e); // if you ever define it
+                    }
+                  });
                 subListItem.appendChild(subLink);
                 //adding to the submenu
                 submenuUl.appendChild(subListItem);
