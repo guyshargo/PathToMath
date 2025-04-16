@@ -24,18 +24,22 @@
     <nav id="mobile-menu" class="md:hidden"></nav>
   </header>
 
-  <!-- Return Button -->
-  <button onclick="history.back()" class="absolute bottom-6 left-6 bg-gray-100 text-black font-bold px-6 py-3 rounded shadow hover:bg-gray-200 transition">
-    Return
-  </button>
+
 
   <!-- Video Display -->
-  <div id="videoContainer" class="p-6 flex flex-col items-center justify-center text-center space-y-6">
+  <div id="videoContainer" class="p-6 flex flex-wrap justify-center gap-6">
     <!-- JS will insert the video here -->
   </div>
 
+<!-- Return Button BELOW the videos, aligned left -->
+<div class="w-full flex justify-start mt-8 px-6">
+  <button onclick="history.back()" class="bg-gray-100 text-black font-bold px-6 py-3 rounded shadow hover:bg-gray-200 transition">
+    Return
+  </button>
+</div>
+
   <script src="/PathToMath/src/Utils/navBar.js"></script>
-  <script src="/PathToMath/src/Videos/videos.js" type="module"></script>
+  <script src="/PathToMath/src/video_page/videopage.js" type="module"></script>
 </body>
 
 </html>

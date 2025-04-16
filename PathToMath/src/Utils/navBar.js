@@ -64,11 +64,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const link = document.createElement('a');
 
         // Dynamically fix link if it's a video
-        if (item.link && item.link.startsWith("#") && item.label && item.link.includes("videos")) {
-            link.href = `/PathToMath/video_page.html${item.link}`;
+        if (item.link && item.link.startsWith("#") && item.label && item.link.includes("Videos")) {
+            link.href = `/PathToMath/src/video_page/video_page.html${item.link}`;
+        } else if (item.link && item.link.startsWith("#")) {
+            link.href = `/PathToMath/index.html${item.link}`;
         } else {
             link.href = item.link || '#';
-        }
+        }        
 
         link.textContent = item.label;
         link.classList.add('block', 'py-2', 'px-4', 'text-gray-800', 'hover:underline', 'transition', 'duration-200', 'ease-in-out');
