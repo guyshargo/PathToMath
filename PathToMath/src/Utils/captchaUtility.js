@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const registrationFormCaptcha = document.getElementById('registration-form-captcha');
     const captchaAttemptsError = document.getElementById('captcha-attempts-error');
-
+ 
     let currentCaptchaType = 'image';
     let arithmeticNum1, arithmeticNum2, arithmeticExpectedAnswer;
     let imageChallengeData;
