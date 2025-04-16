@@ -69,36 +69,56 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     5: {
       Addition: [
-        "https://www.youtube.com/embed/v2fCp1w06zI"
+        "https://www.youtube.com/embed/nHQ7VZ2oT9w?si=TNK4MfMSO0mWWBW9",
+        "https://www.youtube.com/embed/4AAR_ZgIjPU?si=dqhfZYyCOxZcmjYh",
+        "https://www.youtube.com/embed/Akq-yxkwi5k?si=ilJ85NT5Vh4jS2FB"
       ],
       Substraction: [
-        "https://www.youtube.com/embed/NpULleQdXq8"
+        "https://www.youtube.com/embed/EaSxvUxheJo?si=1pyooElrMw5XMxuk",
+        "https://www.youtube.com/embed/apRK3uYnUMI?si=i9QGbvbD84Q92Zw2",
+        "https://www.youtube.com/embed/w3smfQko4QM?si=rsl7hJ1LzPacPP9n"
       ],
       Multiplication: [
-        "https://www.youtube.com/embed/KQZiwXGmZHg"
+        "https://www.youtube.com/embed/0MqP7aeTszM?si=B8gEmJtif1gcded2",
+        "https://www.youtube.com/embed/FJ5qLWP3Fqo?si=nZSWAXZUupSn5a4I",
+        "https://www.youtube.com/embed/-sxfriO_IV0?si=JBmC1Cv_BJG0rSgv"
       ],
       Division: [
-        "https://www.youtube.com/embed/q1SE5g1bUac"
+        "https://www.youtube.com/embed/6Ij98BwDcOg?si=C0G3eYniYyhMrjW0",
+        "https://www.youtube.com/embed/HdU_rf7eMTI?si=eKKYog9pOmJQ6P6y",
+        "https://www.youtube.com/embed/OYilodqVddA?si=vqOyrnIV07JbeDTN"
       ],
       Percentage: [
-        "https://www.youtube.com/embed/j9YpkHxvUnk"
+        "https://www.youtube.com/embed/JeVSmq1Nrpw?si=-Q8Q7JdwkZdkBmEH",
+        "https://www.youtube.com/embed/XGOMLR_4zD4?si=qSiJMOF_X9ZWH7IR",
+        "https://www.youtube.com/embed/rR95Cbcjzus?si=4v3jRzx-x8HCRdxe"
       ]
     },
     6: {
       Addition: [
-        "https://www.youtube.com/embed/32cv3soZt_w"
+        "https://www.youtube.com/embed/mAvuom42NyY?si=3nTEghn9pcFxvgOW",
+        "https://www.youtube.com/embed/pynfj2bYRms?si=Pah5Uw8wU1ruxxGy",
+        "https://www.youtube.com/embed/rDA5TMlyQ4s?si=iiELS4OOvl7mYKQf"
       ],
       Substraction: [
-        "https://www.youtube.com/embed/oqS5O8F1VnY"
+        "https://www.youtube.com/embed/Y6M89-6106I?si=vaGhGt6RbUP0qRAI",
+        "https://www.youtube.com/embed/tP6GBkKVVS0?si=96yWgS-RCWts9c_4",
+        "https://www.youtube.com/embed/VeaPMq2U-NQ?si=aHoQPakaFXWF7B2r"
       ],
       Multiplication: [
-        "https://www.youtube.com/embed/NhlvHMzv7hA"
+        "https://www.youtube.com/embed/SZ5RUeXWw2M?si=W8cnntQQzqsNyqDM",
+        "https://www.youtube.com/embed/7cYcuHZaEME?si=nkSQF8aS-S8K-RSX",
+        "https://www.youtube.com/embed/RVYwunbpMHA?si=CQr7yK_rvP-tu04l"
       ],
       Division: [
-        "https://www.youtube.com/embed/jKiPYLq8Fhs"
+        "https://www.youtube.com/embed/HdU_rf7eMTI?si=HJ86TyOHu2t9EWX5",
+        "https://www.youtube.com/embed/HdU_rf7eMTI?si=eKKYog9pOmJQ6P6y",
+        "https://www.youtube.com/embed/LGqBQrUYua4?si=9L4cYWoFbbqlQ0ql"
       ],
       Percentage: [
-        "https://www.youtube.com/embed/MEy1JHOPt1s"
+        "https://www.youtube.com/embed/rR95Cbcjzus?si=tSpTIwR0R_kPnrQ7",
+        "https://www.youtube.com/embed/JeVSmq1Nrpw?si=xSchPX_kIb9WxT3V",
+        "https://www.youtube.com/embed/NJ31kZey01I?si=YYq-rOHwgnjjQ-aq"
       ]
     }
   };
