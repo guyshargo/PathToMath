@@ -1,20 +1,25 @@
 //Default User
 const userEmail = "alice@gmail.com";
-let userData;
-document.addEventListener('DOMContentLoaded', () => {
+let userData = null;
+document.addEventListener('DOMContentLoaded', async () => {
   //onload fill days and load fake user data
   FillDailyChallenge();
   //if the user exists in local storage load from there
   if (localStorage.getItem("currentUser")!=undefined||localStorage.getItem("currentUser")!=null) {
     userData = JSON.parse(localStorage.getItem("currentUser"));
   } else {
-    loadFakeUser(); // only fetch if no local data
+    userData = await loadFakeUser();
+    if (!userData) alert("Problem with fetching user");
   }
   //populate the data
   const savedGrade = userData.currentGrade;
   document.getElementById("grades").value = savedGrade;
   document.getElementById("grades-mobile").value = savedGrade;
-  document.getElementById("AvatarImg").setAttribute("src", userData.avatar);    
+  document.getElementById("AvatarImg").setAttribute("src", userData.avatar); 
+  document.getElementById("grades-mobile").value = savedGrade;
+  document.getElementById("AvatarImg").setAttribute("src", userData.avatar);
+  //load badges achivments
+  loadBadges(); 
   //Adding an event listener to detect grade changes and updating it in the local storage
   document.getElementById("grades").addEventListener("change", (e) => {
     setSelectedGrade(e.target.value);
@@ -37,30 +42,61 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 
-//Load Fake User
-function loadFakeUser() {
-  //fetching the fake user from the Users.Json
-  fetch('./src/Utils/Users.JSON')
-.then(response => response.json())
-.then(users => {
-  //fetch the specific user with this email
-   userData = users[userEmail];
-  if (userData) {
-    // Store the full user data in localStorage
-    localStorage.setItem("currentUser", JSON.stringify(userData));
-
-    // Save selected Grade
-    localStorage.setItem("selectedGrade", userData.currentGrade);
-    console.log("User data loaded into localStorage:", userData);
-  } else {
-    console.error("User not found.");
+/**
+ * loadFakeUser: Loads fake user from json file
+ * @returns user
+ */
+async function loadFakeUser() {
+  try {
+    //wait for fetch
+    const response = await fetch('/src/Utils/Users.JSON'); 
+    //wait for json response
+    const users = await response.json();
+    //get user from json respose according to mail
+    const user = users[userEmail];
+    //if user isnt undefind
+    if (user) {
+      //save to local storage
+      localStorage.setItem("currentUser", JSON.stringify(user));
+      localStorage.setItem("selectedGrade", user.currentGrade);
+      //return the user
+      return user;
+    } else {
+      console.error("User not found.");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    return null;
   }
-})
-.catch(error => {
-  console.error("Error fetching user data:", error);
+}
+/**
+ * loadBadges: loading the completed badges and setting the progress bar
+ */
+function loadBadges() {
+  //gettting the badge's circle
+  const circles = document.querySelectorAll('.circle');
+  //badge progress bar
+  const badgebar = document.getElementById("badges-bar");
+  //badge precentege 
+  const badgetext = document.getElementById("badges-text");
+  //amount of badges overall
+  const maxBadges =6;
+  let badgeCount = 0;
+//go over each circle and check if its completed
+circles.forEach(circle => {
+  const badgeValue = circle.getAttribute("value");
+  if(userData.badges[userData.currentGrade-1].includes(badgeValue))
+  {
+    badgeCount+=1;
+    circle.classList.add("circleGolden");
+  }
+  badgebar.value = badgeCount;
+  //get bar precentage
+  const percentage = Math.round((badgeCount / maxBadges) * 100);
+  badgetext.innerHTML =  `${percentage}% completed keep going!`;
 });
 }
-
 /**
  * FillDailyChallenge: add the completed and the current day challenge
  */

@@ -50,7 +50,18 @@
           "Division": 1,
           "Percentage": 1
         }
-      }
+      },
+        "badges": [
+          [],
+          [],
+          ["plusBadge","multiplyBadge"],
+          [],
+          [],
+          [],
+          [],
+          []
+        ]
+      
     }
   }
   
