@@ -362,7 +362,7 @@ function dailyQuizDone() {
     const todayIndex = new Date().getDay();
     const todayName = dayNames[todayIndex];
 
-    localStorage.setItem(todayName, "done");
+    localStorage.setItem(todayName, data.finished);
 }
 
 loadGameLevel();

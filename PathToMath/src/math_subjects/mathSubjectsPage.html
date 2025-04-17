@@ -3,41 +3,46 @@
 
 <head>
   <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Learn a Subject | Path2Math</title>
+  <title>Path2Math</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="navBar.css" />
+  <link rel="stylesheet" href="/src/Utils/navBar.css">
+  <link rel="stylesheet" href="/src/Utils/Styles/mainPage.css">
 </head>
 
 <body class="bg-white font-sans antialiased min-h-screen flex flex-col items-center">
 
-  <!-- Header -->
-<header id="header">
-    <div class="navBarContainer shadow-md py-10">
-        <nav id="dynamic-menu-container" class="container mx-auto px-4 flex items-center justify-between">
-            <a  class="block w-fit" href="/PathToMath/index.html"><img class="h-10 w-auto max-w-full object-contain"src="/PathToMath/src/Images/logo.png" /></a>
+  <!-- Navbar -->
+  <header id="header" class="">
+    <div class="navBarContainer shadow-md py-5 px-0">
+      <div class="container px-3 flex items-center  max-w-full">
+        <img id="mobile-menu-button" class="w-10 h-10 object-contain mr-5 md:hidden" src="/src/Images/mobilemenu.png" />
+        <a class="block w-fit sm:w-fit" href="/PathToMath/index.html"><img class="h-10 w-auto max-w-full object-contain"
+            src="/src/Images/logo.png" /></a>
+        <nav id="dynamic-menu-container" class="hidden md:flex max-w-full container">
         </nav>
+      </div>
     </div>
-</header>
-    <h2 class="text-center text-2xl font-bold text-black">Learn a subject:</h2>
+    <nav id="mobile-menu" class="md:hidden">
+
+    </nav>
+  </header>
+
+  <h2 class="text-center text-2xl font-bold text-black">Learn a subject:</h2>
   <!-- Math Subjects Choice Blocks -->
   <main class="flex flex-col items-center justify-center flex-grow px-4 py-10">
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
-      <button class="bg-yellow-200 text-yellow-800 w-40 h-40 flex items-center justify-center text-6xl rounded-2xl shadow hover:brightness-95 transition">+</button>
-      <button class="bg-pink-200 text-pink-800 w-40 h-40 flex items-center justify-center text-6xl rounded-2xl shadow hover:brightness-95 transition">−</button>
-      <button class="bg-orange-200 text-orange-800 w-40 h-40 flex items-center justify-center text-6xl rounded-2xl shadow hover:brightness-95 transition">×</button>
-      <button class="bg-green-200 text-green-800 w-40 h-40 flex items-center justify-center text-6xl rounded-2xl shadow hover:brightness-95 transition">÷</button>
-      <button class="bg-purple-200 text-purple-800 w-40 h-40 flex items-center justify-center text-6xl rounded-2xl shadow hover:brightness-95 transition">%</button>
-      <button class="bg-red-200 text-red-800 w-40 h-40 flex items-center justify-center text-6xl rounded-2xl shadow hover:brightness-95 transition">½</button>
-    </div>
+    <div id="btnGridMath" class="grid grid-cols-2 md:grid-cols-3 gap-8"></div>
 
-  <!-- Bottom-Left Return Button -->
-  <button class="absolute bottom-6 left-6 bg-gray-100 text-black font-bold px-6 py-3 rounded shadow hover:bg-gray-200 transition">
-    Return
-  </button>
+    <!-- Bottom-Left Return Button -->
+    <button
+      class="absolute bottom-6 left-6 bg-gray-100 text-black font-bold px-6 py-3 rounded shadow hover:bg-gray-200 transition">
+      Return
+    </button>
   </main>
 
-  <script src="navBar.js"></script>
+  <script src="/src/Utils/navBar.js"></script>
+  <script src="/src/math_subjects/mathSubjectsPage.js"></script>
 </body>
 
 </html>
