@@ -118,5 +118,7 @@ function changeAvatar(event){
       //add the img to the avatr's div 
       avatarsDiv.appendChild(img);
     }
-    
+}
+function returnBtnClicked() {
+  window.location.href = "../index.html";
 }

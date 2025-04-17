@@ -128,7 +128,6 @@ function FillDailyChallenge() {
     if (localStorage.getItem(dayVal) !== null) {
       dayCircle.classList.add('completed');
     }
-
     // If today then show bubble + mark as active
     if (dayVal === todayName) {
       //if not already compeleted
