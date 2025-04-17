@@ -39,7 +39,7 @@ function loadSubjectLevels() {
     if (finishData) {
         localStorage.removeItem("finishedGame");
 
-        if (data.finishedLevel < Number(finishData.level)){
+        if (data.finishedLevel < Number(finishData.level)) {
             data.finishedLevel = Number(finishData.level);
         }
     }
@@ -104,7 +104,7 @@ function createGrid(data) {
 function renderGrid(grid) {
     for (let levelObj of grid) {
         let levelBtn = document.createElement("button");
-        levelBtn.classList.add("levelButton");
+        levelBtn.classList.add("levelButton", "w-24", "h-24", "md:w-32", "md:h-32", "xl:h-48","xl:w-48");
 
         if (levelObj.disable) {
             levelBtn.classList.add("cursor-not-allowed");
