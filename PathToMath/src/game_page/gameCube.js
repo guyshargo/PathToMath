@@ -170,7 +170,7 @@ function addCubesBtnHTML(cube,idx) {
         "hover:bg-blue-100", "transition", "duration-300", "ease-in-out"
     );
     const img = document.createElement('img');
-    img.src = `/PathToMath/src/game_page/diceImage/${cube}.png`; // load image by value of given cube
+    img.src = `/src/game_page/diceImage/${cube}.png`; // load image by value of given cube
     img.alt = `${cube}.png`;
     img.classList.add( "w-16", "h-16");
     button.appendChild(img);
