@@ -1,4 +1,3 @@
-
 const levelHeader = document.getElementById('gameLevelHeader');
 const gameHeader = document.getElementById('gameHeader');
 const gameOptions = document.getElementById('gameOptions');
@@ -30,7 +29,7 @@ function resetGame() {
 }
 
 // function to generate new question with new sum to calculate
-function generateQuestion(){
+function generateQuestion() {
     let sum = Math.floor(Math.random() * 15) + 1;
     let cubesOptions = [];
     cubesOptions = generateCubes(sum);
@@ -43,27 +42,27 @@ function generateQuestion(){
 }
 
 //create random dice cubes
-function generateCubes(sum){
+function generateCubes(sum) {
     let validCubes = false;
     let cubes = [];
 
-    while (!validCubes){
+    while (!validCubes) {
         cubes = [];
-        for (let i=0; i < 6; i++){
+        for (let i = 0; i < 6; i++) {
             cubes.push(Math.floor(Math.random() * 6) + 1);
         }
-        validCubes = isCubesValid(cubes,sum);
+        validCubes = isCubesValid(cubes, sum);
     }
     return cubes;
 }
 
 //check if possible to create sum from given cubes
-function isCubesValid(cubesArr, target, index = 0){
-    if (target == 0){ 
+function isCubesValid(cubesArr, target, index = 0) {
+    if (target == 0) {
         return true;
     }
-    if (index >= cubesArr.length){
-         return false;
+    if (index >= cubesArr.length) {
+        return false;
     }
     return isCubesValid(cubesArr, target - cubesArr[index], index + 1) || isCubesValid(cubesArr, target, index + 1);
 }
@@ -94,12 +93,12 @@ function findSolution(cubes, target) {
     let i = n, j = target;
     while (j !== 0) {
         if (parent[i][j] !== j) {
-            sol.push(i - 1); 
+            sol.push(i - 1);
             j = parent[i][j];
         }
         i--;
     }
-    return sol.reverse(); 
+    return sol.reverse();
 }
 
 
@@ -117,11 +116,11 @@ function renderGame() {
     checkButton.id = "answer";
     checkButton.classList.add("text-2xl", "bg-pink", "border-4", "border-blue-200",
         "shadow-md", "rounded-lg", "px-8", "py-4", "hover:bg-red-100", "transition");
-        checkButton.textContent = "Check";
+    checkButton.textContent = "Check";
 
     questionObject = questions[0];
     gameHeader.innerHTML = questionObject.question;
-    for (let i=0; i < questionObject.options.length; i++) {
+    for (let i = 0; i < questionObject.options.length; i++) {
         addCubesBtnHTML(questionObject.options[i], i);
     }
     checkButton.onclick = function () {
@@ -145,14 +144,14 @@ function renderGame() {
                 // Insert result message at the TOP of gameAnswer                   
                 gameAnswer.insertBefore(resultEl, checkButton);
                 selected = [];
-    
+
                 // Reset cube button 
                 gameOptions.querySelectorAll('button').forEach(btn => {
                     btn.classList.remove("bg-gray-300");
                     btn.classList.add("bg-white");
                 });
             } else {
-                checkAnswer(selectedSum, checkButton);   
+                checkAnswer(selectedSum, checkButton);
             }
         }
     };
@@ -160,10 +159,10 @@ function renderGame() {
 }
 
 // create cubes objects on screen
-function addCubesBtnHTML(cube,idx) {
+function addCubesBtnHTML(cube, idx) {
     const button = document.createElement('button');
     button.id = idx;
-    button.value = cube; 
+    button.value = cube;
     button.classList.add(
         "bg-white", "border-4", "border-blue-300", "shadow-lg",
         "rounded-xl", "w-24", "h-24", "flex", "items-center", "justify-center",
@@ -172,7 +171,7 @@ function addCubesBtnHTML(cube,idx) {
     const img = document.createElement('img');
     img.src = `/src/game_page/diceImage/${cube}.png`; // load image by value of given cube
     img.alt = `${cube}.png`;
-    img.classList.add( "w-16", "h-16");
+    img.classList.add("w-16", "h-16");
     button.appendChild(img);
 
     // highlight selected cubes
@@ -205,7 +204,7 @@ function checkAnswer(sumAnswer, button) {
         answerText = `Wrong! your sum is ${sumAnswer}, you are out of tries.`;
         color = "red";
         //suggest solution when player failed
-        solve = findSolution(questionObject.options,questionObject.answer);
+        solve = findSolution(questionObject.options, questionObject.answer);
         solve.forEach(idx => {
             const cubeBtn = document.getElementById(idx);
             cubeBtn.classList.remove("bg-white", "bg-gray-300");
@@ -231,18 +230,18 @@ function checkAnswer(sumAnswer, button) {
     nextBtn.id = "nextQuestionBtn";
     nextBtn.onclick = () => nextQuestionClicked();
     nextBtn.classList.add(`border-${color}-300`);
-    nextBtn.classList.add("rounded-lg","border-4","bg-gray-100", "text-black","justify-center",
+    nextBtn.classList.add("rounded-lg", "border-4", "bg-gray-100", "text-black", "justify-center",
         "font-bold", "px-6", "py-3", "rounded", "shadow", "hover:bg-gray-200", "transition");
     nextBtn.textContent = "Next Question";
     //show next question button instead "check" button
-    gameAnswer.replaceChild(nextBtn,button);
+    gameAnswer.replaceChild(nextBtn, button);
 }
 
 // function for load next question
 function nextQuestionClicked() {
     questions.splice(0, 1);
     resetGame();
-    
+
     if (questions.length >= 1) {
         renderGame();
     } else {
@@ -251,7 +250,7 @@ function nextQuestionClicked() {
         let endGameBtn = document.createElement("button");
         endGameBtn.id = "endGameBtn";
         endGameBtn.classList.add("text-3xl", "bg-white", "border-4", "border-blue-200",
-            "shadow-md", "rounded-lg", "px-8", "py-5", "hover:bg-blue-300", "transition","justify-center");
+            "shadow-md", "rounded-lg", "px-8", "py-5", "hover:bg-blue-300", "transition", "justify-center");
         //finish level and moving forword to next level
         if (correctAnswers >= 4) {
             levelHeader.textContent = `Great! You answered ${correctAnswers} / ${numOfQuestions} Correct Answers.`;
@@ -276,8 +275,8 @@ function nextQuestionClicked() {
             endGameBtn.textContent = "Try Again?";
         }
         gameAnswer.appendChild(endGameBtn);
-        
-        
+
+
     }
 }
 // load game
@@ -288,12 +287,20 @@ function loadGame() {
 }
 
 // function to create game
-function createGame(){
-    levelHeader.textContent = "Cube Addition";
-    questions = [];
-    while (questions.length < numOfQuestions){
-        const question = generateQuestion();
-        questions.push(question);
+function createGame() {
+    const gameData = localStorage.getItem('game');
+    data = JSON.parse(gameData);
+
+    if (data) {
+        levelHeader.textContent = "Cube Addition";
+        questions = [];
+        while (questions.length < numOfQuestions) {
+            const question = generateQuestion();
+            questions.push(question);
+        }
+    }
+    else{
+
     }
 }
 

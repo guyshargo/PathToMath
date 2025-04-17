@@ -1,11 +1,9 @@
 const gridHeader = document.getElementById('gridHeader');
 const levelGrid = document.getElementById('levelGrid');
 
+let user = JSON.parse(localStorage.getItem('currentUser'));
 let numOfLevels = 30;
-const data = {
-    subject: "Addition",
-    finishedLevel: 10
-}
+let data;
 
 function makeLevel(level) {
     let color = "";
@@ -30,18 +28,24 @@ function makeLevel(level) {
 }
 
 function loadSubjectLevels() {
-    //const gameData = localStorage.getItem('game');
-    //const data = JSON.parse(gameData);
-
+    const gameSubject = localStorage.getItem("Subject");
+    const currentGrade = user.currentGrade;
     const finishedGame = localStorage.getItem("finishedGame");
     const finishData = JSON.parse(finishedGame);
 
     if (finishData) {
         localStorage.removeItem("finishedGame");
 
-        if (data.finishedLevel < Number(finishData.level)) {
-            data.finishedLevel = Number(finishData.level);
+        const levelForSubject = user.gradeLevel[currentGrade - 1][`${gameSubject}`];
+        if (levelForSubject < Number(finishData.level)) {
+            user.gradeLevel[currentGrade - 1][`${gameSubject}`] = Number(finishData.level);
+            localStorage.setItem("currentUser", JSON.stringify(user));
         }
+    }
+
+    data = {
+        subject: gameSubject,
+        finishedLevel: user.gradeLevel[currentGrade - 1][`${gameSubject}`]
     }
 
     if (data) {
@@ -104,7 +108,7 @@ function createGrid(data) {
 function renderGrid(grid) {
     for (let levelObj of grid) {
         let levelBtn = document.createElement("button");
-        levelBtn.classList.add("levelButton", "w-24", "h-24", "md:w-32", "md:h-32", "xl:h-48","xl:w-48");
+        levelBtn.classList.add("levelButton", "w-24", "h-24", "md:w-32", "md:h-32", "xl:h-48", "xl:w-48");
 
         if (levelObj.disable) {
             levelBtn.classList.add("cursor-not-allowed");
@@ -122,7 +126,12 @@ function renderGrid(grid) {
                     finished: finished
                 }));
 
-                window.location.href = "../game_page/gamepage.html";
+                if (levelBtn.id % 3 == 0 && data.subject == "Addition") {
+                    window.location.href = "../game_page/gameCube.html";
+                }
+                else {
+                    window.location.href = "../game_page/gamepage.html";
+                }
             }
         }
 
