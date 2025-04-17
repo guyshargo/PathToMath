@@ -3,6 +3,7 @@ const gameHeader = document.getElementById('gameHeader');
 const gameOptions = document.getElementById('gameOptions');
 const gameAnswer = document.getElementById('gameAnswer');
 const game = document.getElementById('game');
+const returnBtn = document.getElementById("returnBtn");
 
 let correctAnswers = 0;
 let questions = [];
@@ -193,16 +194,29 @@ function createGame(data) {
  * Loads the game level configuration and starts generating the game.
  */
 function loadGameLevel() {
-    const gameData = localStorage.getItem('game');
-    data = JSON.parse(gameData);
+    const dailyData = localStorage.getItem('dailyQuiz');
+    data = JSON.parse(dailyData);
 
     if (data) {
+        data.daily = true;
+        returnBtn.onclick = () => { dailyQuizDone(); window.location.href = "../index.html"; }
         createGame(data);
         renderGame();
     }
     else {
-        levelHeader.textContent = "Undefined Level";
-        gameHeader.innerHTML = "Undefined";
+        const gameData = localStorage.getItem('game');
+        data = JSON.parse(gameData);
+
+        if (data) {
+            data.daily = false;
+            returnBtn.onclick = () => { window.location.href = "../subject_levels/subjectsLevelsPage.html"; }
+            createGame(data);
+            renderGame();
+        }
+        else {
+            levelHeader.textContent = "Undefined Level";
+            gameHeader.innerHTML = "Undefined";
+        }
     }
 }
 
@@ -310,13 +324,24 @@ function nextQuestionClicked() {
             levelHeader.textContent = `Great! You answered ${correctAnswers} / ${numOfQuestions} Correct Answers.`;
             data.finished = true;
 
-            localStorage.setItem("finishedGame", JSON.stringify(data));
-            localStorage.removeItem("game");
-
             endGameBtn.onclick = function () {
-                window.location.href = "../subject_levels/subjectsLevelsPage.html";
+                if(data.daily){
+                    localStorage.removeItem("dailyQuiz");
+                }
+                else{
+                    localStorage.removeItem("game");
+                }
+                returnBtn.click();
             };
-            endGameBtn.textContent = "Next Level";
+
+            if (data.daily) {
+                endGameBtn.textContent = "Back to Main";
+            }
+            else {
+                localStorage.setItem("finishedGame", JSON.stringify(data));
+                endGameBtn.textContent = "Next Level";
+            }
+
         }
         else {
             levelHeader.textContent = `Oh no! You answered ${correctAnswers} / ${numOfQuestions} Correct Answers.`;
@@ -332,7 +357,12 @@ function nextQuestionClicked() {
     }
 }
 
-function returnBtnClicked() {
-    window.location.href = "../subject_levels/subjectsLevelsPage.html";
+function dailyQuizDone() {
+    const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const todayIndex = new Date().getDay();
+    const todayName = dayNames[todayIndex];
+
+    localStorage.setItem(todayName, "done");
 }
+
 loadGameLevel();
