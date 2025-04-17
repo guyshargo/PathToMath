@@ -43,7 +43,6 @@ function setSelectedGrade(grade) {
   location.reload();
 }
 
-
 /**
  * loadFakeUser: Loads fake user from json file
  * @returns user
@@ -149,16 +148,20 @@ document.addEventListener("DOMContentLoaded", () => {
   quizBtn.onclick = dailyQuiz;
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+  const problemButton = document.getElementById("problemButton");
+  problemButton.onclick = problemButtonClick;
+});
+
 function dailyQuiz() {
   const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   const todayIndex = new Date().getDay();
   const todayName = dayNames[todayIndex];
 
   let finishedDaily = localStorage.getItem(todayName);
-  console.log(finishedDaily);
 
   if (!finishedDaily) {
-    if (userData && userData.currentGrade && userData.grade) {
+    if (userData && userData.currentGrade) {
       const currentGrade = userData.currentGrade;
 
       let options = [];
@@ -182,10 +185,14 @@ function dailyQuiz() {
       let randLevel = Math.floor(Math.random() * 30 + 1);
 
       localStorage.setItem("dailyQuiz", JSON.stringify({ subject: randSubject, level: randLevel, finished: false }));
-      window.location.href = "src/game_page/gamepage.html";
+      window.location.href = "../src/game_page/gamepage.html";
     }
   }
-  else{
+  else {
     alert("Already finished the daily quiz");
   }
+}
+
+function problemButtonClick() {
+  window.location.href = "/src/math_subjects/mathSubjectsPage.html";
 }
