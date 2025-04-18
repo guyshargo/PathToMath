@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (item.link && item.link.startsWith("#") && item.label && item.link.includes("Videos")) {
             link.href = `/PathToMath/src/video_page/video_page.html${item.link}`;
         } else if (item.link && item.link.startsWith("#")) {
-            link.href = `/PathToMath/index.html${item.link}`;
+            link.href = `/PathToMath/src/video_page/tutorial_topics.html${item.link}`;
         } else {
             link.href = item.link || '#';
         }        
