@@ -199,7 +199,6 @@ function loadGameLevel() {
 
     if (data) {
         data.daily = true;
-        returnBtn.onclick = () => { dailyQuizDone(); window.location.href = "../index.html"; }
         createGame(data);
         renderGame();
     }
@@ -209,7 +208,6 @@ function loadGameLevel() {
 
         if (data) {
             data.daily = false;
-            returnBtn.onclick = () => { window.location.href = "../subject_levels/subjectsLevelsPage.html"; }
             createGame(data);
             renderGame();
         }
@@ -331,7 +329,6 @@ function nextQuestionClicked() {
                 else{
                     localStorage.removeItem("game");
                 }
-                returnBtn.click();
             };
 
             if (data.daily) {
@@ -355,6 +352,10 @@ function nextQuestionClicked() {
 
         game.appendChild(endGameBtn);
     }
+}
+
+function returnBtnClicked(){
+    history.back();
 }
 
 function dailyQuizDone() {

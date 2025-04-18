@@ -1,5 +1,5 @@
 
-const subjectLabels = ['Addition', 'Subtraction', 'Multiplication', 'Division', 'Percentage'];
+const subjectLabels = ['Addition', 'Subtraction', 'Multiply', 'Division', 'Percentage'];
 
 document.addEventListener('DOMContentLoaded', () => {
     //regular computer sized container
@@ -22,7 +22,7 @@ const menuData = [
         submenu: [
             { label: 'Addition', link: '/src/subject_levels/subjectsLevelsPage.html' , class: "Addition"},
             { label: 'Subtraction', link: '/src/subject_levels/subjectsLevelsPage.html',class: "Subtraction"},
-            { label: 'Multiplication', link: '/src/subject_levels/subjectsLevelsPage.html',class: "Multiplication"},
+            { label: 'Multiply', link: '/src/subject_levels/subjectsLevelsPage.html',class: "Multiply"},
             { label: 'Division', link: '/src/subject_levels/subjectsLevelsPage.html',class: "Division"},
             { label: 'Percentage', link: '/src/subject_levels/subjectsLevelsPage.html',class: "Percentage"}
         ],
