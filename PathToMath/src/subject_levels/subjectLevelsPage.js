@@ -4,6 +4,7 @@ const levelGrid = document.getElementById('levelGrid');
 let user = JSON.parse(localStorage.getItem('currentUser'));
 let numOfLevels = 30;
 let data;
+const retVal = localStorage.getItem("subjectPage");
 
 function makeLevel(level) {
     let color = "";
@@ -149,6 +150,10 @@ function renderGrid(grid) {
         });
         levelGrid.appendChild(levelBtn);
     }
+}
+
+function returnBtnClicked(){
+    history.back();
 }
 
 loadSubjectLevels();
