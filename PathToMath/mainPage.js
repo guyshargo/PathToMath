@@ -2,6 +2,11 @@
 const userEmail = "alice@gmail.com";
 let userData = null;
 document.addEventListener('DOMContentLoaded', async () => {
+  // remove daily quiz if entered and returned to main
+  if(localStorage.getItem("dailyQuiz")){
+    localStorage.removeItem("dailyQuiz");
+  }
+
   //if the user exists in local storage load from there
   if (localStorage.getItem("currentUser") != undefined || localStorage.getItem("currentUser") != null) {
     userData = JSON.parse(localStorage.getItem("currentUser"));
@@ -124,17 +129,20 @@ function FillDailyChallenge() {
       dayCircle.classList.remove('completed');
     }
 
+    let dailyDone = JSON.parse(localStorage.getItem(dayVal));
+
     // If completed day (save in localStorage)
-    if (localStorage.getItem(dayVal) !== null) {
+    if (dailyDone) {
       dayCircle.classList.add('completed');
     }
+    
     // If today then show bubble + mark as active
     if (dayVal === todayName) {
       const currentDate = new Date().toISOString().split('T')[0];
       userData.lastDailyCompleted = currentDate;
 
       //if not already compeleted
-      if (!localStorage.getItem(dayVal)) {
+      if (!dailyDone) {
         bubble.classList.remove('hidden');
         dayCircle.classList.add('active');
         return;
@@ -158,7 +166,7 @@ function dailyQuiz() {
   const todayIndex = new Date().getDay();
   const todayName = dayNames[todayIndex];
 
-  let finishedDaily = localStorage.getItem(todayName);
+  let finishedDaily = JSON.parse(localStorage.getItem(todayName));
 
   if (!finishedDaily) {
     if (userData && userData.currentGrade) {
@@ -166,6 +174,7 @@ function dailyQuiz() {
 
       let options = [];
       switch (currentGrade) {
+        case 6:
         case 5:
           options.push("Percentage");
         case 4:
