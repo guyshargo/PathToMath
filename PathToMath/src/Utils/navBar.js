@@ -28,20 +28,17 @@ const menuData = [
         ],
         class: "MathProblems"
     },
-    {
-        //Tutorial Videos Page
-        label: 'Tutorial Videos',
-        link: '#videos',
-        //Tutorial Videos Subjects
-        submenu:[
-            { label: 'Addition', link: '#add' , class: "Addition"},
-            { label: 'Subtraction', link: '#sub',class: "Subtraction"},
-            { label: 'Multiplication', link: '#mult',class: "Multiplication"},
-            { label: 'Division', link: '#div',class: "Division"},
-            { label: 'Percentage', link: '#prec',class: "Percentage"}
-        ],
-        class:"TutorialVideos"
-    },
+      {label: 'Tutorial Videos',
+            link: '#videos',
+            submenu: [
+                { label: 'Addition', link: '#AdditionVideos' },
+                { label: 'Substraction', link: '#SubstractionVideos' },
+                { label: 'Multiplication', link: '#MultiplicationVideos' },
+                { label: 'Division', link: '#DivisionVideos' },
+                { label: 'Percentage', link: '#PercentageVideos' }
+            ],
+            class: "TutorialVideos"
+        },
     {
         //Profile Page
         label: 'Profile',
@@ -74,6 +71,14 @@ function createMenuItem(item) {
     link.textContent = item.label; // Set the text content to the label of the menu item
     //adding design to the link
     link.classList.add('block', 'py-2', 'px-4', 'text-gray-800', 'hover:underline', 'transition', 'duration-200', 'ease-in-out');
+  // Dynamically fix link if it's a video
+        if (item.link && item.link.startsWith("#") && item.label && item.link.includes("Videos")) {
+            link.href = /PathToMath/src/video_page/video_page.html${item.link};
+        } else if (item.link && item.link.startsWith("#")) {
+            link.href = /PathToMath/src/video_page/tutorial_topics.html${item.link};
+        } else {
+            link.href = item.link || '#';
+        }
     //if header's class name is equal to the current item label mark it- current page
     if (item.class && header.classList.contains(item.class)) {
         listItem.classList.add("active-regular-menu");
