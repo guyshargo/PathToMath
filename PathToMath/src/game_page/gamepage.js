@@ -342,6 +342,7 @@ function generateEnd() {
         endGameBtn.onclick = function () {
             if (data.daily) {
                 localStorage.removeItem("dailyQuiz");
+                dailyQuizDone();
             }
             else {
                 localStorage.removeItem("game");

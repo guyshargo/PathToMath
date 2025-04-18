@@ -3,7 +3,7 @@ const userEmail = "alice@gmail.com";
 let userData = null;
 document.addEventListener('DOMContentLoaded', async () => {
   // remove daily quiz if entered and returned to main
-  if(localStorage.getItem("dailyQuiz")){
+  if (localStorage.getItem("dailyQuiz")) {
     localStorage.removeItem("dailyQuiz");
   }
 
@@ -130,12 +130,13 @@ function FillDailyChallenge() {
     }
 
     let dailyDone = JSON.parse(localStorage.getItem(dayVal));
+    console.log(dailyDone);
 
     // If completed day (save in localStorage)
     if (dailyDone) {
       dayCircle.classList.add('completed');
     }
-    
+
     // If today then show bubble + mark as active
     if (dayVal === todayName) {
       const currentDate = new Date().toISOString().split('T')[0];
@@ -152,13 +153,22 @@ function FillDailyChallenge() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const quizBtn = document.getElementById("dailyQuizBtn");
-  quizBtn.onclick = dailyQuiz;
+  const videoBtn = document.getElementById("videosBtn");
+  videoBtn.onclick = () => {
+    window.location.href = "/src/video_page/tutorial_topics.html";
+  };
 });
 
 document.addEventListener("DOMContentLoaded", () => {
   const problemButton = document.getElementById("problemButton");
-  problemButton.onclick = problemButtonClick;
+  problemButton.onclick = () => {
+    window.location.href = "/src/math_subjects/mathSubjectsPage.html";
+  };
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const quizBtn = document.getElementById("dailyQuizBtn");
+  quizBtn.onclick = dailyQuiz;
 });
 
 function dailyQuiz() {
@@ -200,8 +210,4 @@ function dailyQuiz() {
   else {
     alert("Already finished the daily quiz");
   }
-}
-
-function problemButtonClick() {
-  window.location.href = "/src/math_subjects/mathSubjectsPage.html";
 }
