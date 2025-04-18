@@ -20,10 +20,11 @@ function resetGame() {
     gameOptions.innerHTML = "";
 
     let nextBtn = document.getElementById("nextQuestionBtn");
-    let endGameBtn = document.getElementById("endGameBtn");
-
+    let endContainer = document.getElementById("endContainer");
     if (nextBtn) document.body.removeChild(nextBtn);
-    if (endGameBtn) game.removeChild(endGameBtn);
+    if (endContainer) game.removeChild(endContainer);
+
+    game.style.backgroundColor = "white";
 }
 
 /**
@@ -315,46 +316,70 @@ function nextQuestionClicked() {
         renderGame();
     }
     else {
-        let endGameBtn = document.createElement("button");
-        endGameBtn.id = "endGameBtn";
-        endGameBtn.classList.add("text-3xl", "bg-white", "border-4", "border-blue-200",
-            "shadow-md", "rounded-lg", "px-8", "py-5", "hover:bg-blue-300", "transition");
+        game.appendChild(generateEnd());
+    }
+}
 
-        if (correctAnswers >= 4) {
-            levelHeader.textContent = `Great! You answered ${correctAnswers} / ${numOfQuestions} Correct Answers.`;
-            data.finished = true;
+function generateEnd() {
+    const endContainer = document.createElement("div");
+    let endGameBtn = document.createElement("button");
+    let endImg = document.createElement("img");
+    let color = "";
 
-            endGameBtn.onclick = function () {
-                if(data.daily){
-                    localStorage.removeItem("dailyQuiz");
-                }
-                else{
-                    localStorage.removeItem("game");
-                }
-                returnBtn.click();
-            };
+    endContainer.id = "endContainer";
+    endContainer.classList.add("flex", "flex-col", "items-center", "justify-center", "gap-4");
+    endImg.classList.add("h-60","w-auto","max-w-full","object-contain");
+    endGameBtn.classList.add("text-3xl",  "border-4", "shadow-md", "rounded-lg", "px-8", "py-5",  "transition");
 
+    if (correctAnswers >= 4) {
+        data.finished = true;
+        color = "green";
+        game.style.backgroundColor = "#D6F6D5";
+        
+        levelHeader.textContent = `Great! You answered ${correctAnswers} / ${numOfQuestions} Correct Answers.`;
+        gameHeader.textContent ="Continue to the next level!";
+        endImg.src = "/src/Images/success.png";
+
+        endGameBtn.onclick = function () {
             if (data.daily) {
-                endGameBtn.textContent = "Back to Main";
+                localStorage.removeItem("dailyQuiz");
             }
             else {
-                localStorage.setItem("finishedGame", JSON.stringify(data));
-                endGameBtn.textContent = "Next Level";
+                localStorage.removeItem("game");
             }
+            returnBtn.click();
+        };
 
+        if (data.daily) {
+            endGameBtn.textContent = "Back to Main";
         }
         else {
-            levelHeader.textContent = `Oh no! You answered ${correctAnswers} / ${numOfQuestions} Correct Answers.`;
-            endGameBtn.onclick = function () {
-                correctAnswers = 0;
-                resetGame();
-                loadGameLevel();
-            };
-            endGameBtn.textContent = "Try Again?";
+            localStorage.setItem("finishedGame", JSON.stringify(data));
+            endGameBtn.textContent = "Complete";
         }
 
-        game.appendChild(endGameBtn);
     }
+    else {
+        color = "red";
+        game.style.backgroundColor = "#ffd3d3";
+
+        levelHeader.textContent = `Oh no! You answered ${correctAnswers} / ${numOfQuestions} Correct Answers.`;
+        gameHeader.textContent ="Try Again?";
+        endImg.src = "/src/Images/failure.png";
+
+        endGameBtn.onclick = function () {
+            correctAnswers = 0;
+            resetGame();
+            loadGameLevel();
+        };
+        endGameBtn.textContent = "Again!";
+    }
+
+    endGameBtn.classList.add(`bg-${color}-100`,`border-${color}-200`, `hover:bg-${color}-300`);
+
+    endContainer.appendChild(endImg);
+    endContainer.appendChild(endGameBtn);
+    return endContainer;
 }
 
 function dailyQuizDone() {

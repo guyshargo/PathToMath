@@ -7,6 +7,7 @@ function loadButtons() {
         let buttons = [];
         const currentGrade = currentUser.currentGrade;
         switch (currentGrade) {
+            case 6:
             case 5:
                 buttons.push("Percentage");
             case 4:
