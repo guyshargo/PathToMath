@@ -37,6 +37,7 @@
 .active-regular-menu{
     font-weight: bold;
     background:#FFD064;
+    border-color: #FFD064;
 }
 .active-mobile-menu{
     font-weight: bold;
