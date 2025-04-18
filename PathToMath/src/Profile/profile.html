@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="/src/Profile/profile.css">
 </head>
 
-<body class="font-sans antialiased max-h-full max-w-full">
+<body class="font-sans antialiased max-w-full overflow-x-hidden">
   <header id="header" class="Profile">
     <div class="navBarContainer shadow-md py-5 px-0">
       <div class="container px-3 flex items-center  max-w-full">
@@ -74,7 +74,7 @@
     
     <!-- Bottom-Left Return Button -->
     <button 
-        class="absolute bottom-6 left-6 bg-gray-100 text-black font-bold px-6 py-3 rounded shadow hover:bg-gray-200 transition" onclick="returnBtnClicked()">
+        class="relative left-0 md:absolute md:bottom-6 md:left-6 bg-gray-100 text-black font-bold px-6 py-3 rounded shadow hover:bg-gray-200 transition" onclick="returnBtnClicked()">
         Return
     </button>
   </div>

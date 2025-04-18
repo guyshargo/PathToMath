@@ -20,11 +20,11 @@ const menuData = [
         link: '#home',
         //SubMenu: Math subjects
         submenu: [
-            { label: 'Addition', link: '/src/subject_levels/subjectsLevelsPage.html'},
-            { label: 'Subtraction', link: '/src/subject_levels/subjectsLevelsPage.html'},
-            { label: 'Multiplication', link: '/src/subject_levels/subjectsLevelsPage.html'},
-            { label: 'Division', link: '/src/subject_levels/subjectsLevelsPage.html'},
-            { label: 'Percentage', link: '/src/subject_levels/subjectsLevelsPage.html'}
+            { label: 'Addition', link: '/src/subject_levels/subjectsLevelsPage.html' , class: "Addition"},
+            { label: 'Subtraction', link: '/src/subject_levels/subjectsLevelsPage.html',class: "Subtraction"},
+            { label: 'Multiplication', link: '/src/subject_levels/subjectsLevelsPage.html',class: "Multiplication"},
+            { label: 'Division', link: '/src/subject_levels/subjectsLevelsPage.html',class: "Division"},
+            { label: 'Percentage', link: '/src/subject_levels/subjectsLevelsPage.html',class: "Percentage"}
         ],
         class: "MathProblems"
     },
@@ -34,11 +34,11 @@ const menuData = [
         link: '#videos',
         //Tutorial Videos Subjects
         submenu:[
-            { label: 'Addition', link: '#AddingVideos'},
-            { label: 'Substraction', link: '#SubstractionVideos'},
-            { label: 'Multiplication', link: '#MultipicationVideos'},
-            { label: 'Division', link: '#DivisionVideos'},
-            { label: 'Percentage', link: '#PercentageVideos'}
+            { label: 'Addition', link: '#add' , class: "Addition"},
+            { label: 'Subtraction', link: '#sub',class: "Subtraction"},
+            { label: 'Multiplication', link: '#mult',class: "Multiplication"},
+            { label: 'Division', link: '#div',class: "Division"},
+            { label: 'Percentage', link: '#prec',class: "Percentage"}
         ],
         class:"TutorialVideos"
     },
@@ -75,8 +75,8 @@ function createMenuItem(item) {
     //adding design to the link
     link.classList.add('block', 'py-2', 'px-4', 'text-gray-800', 'hover:underline', 'transition', 'duration-200', 'ease-in-out');
     //if header's class name is equal to the current item label mark it- current page
-    if(header.className==item.class){
-        listItem.classList.add("active-regular-menu")
+    if (item.class && header.classList.contains(item.class)) {
+        listItem.classList.add("active-regular-menu");
     }
 
     //add onclick to the link
