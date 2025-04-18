@@ -22,10 +22,10 @@ function resetGame() {
     game.classList.remove("hidden");
 
     let nextBtn = document.getElementById("nextQuestionBtn");
-    let endGameBtn = document.getElementById("endGameBtn");
+    let endDiv = document.getElementById("endDiv");
 
     if (nextBtn) document.body.removeChild(nextBtn);
-    if (endGameBtn) game.removeChild(endGameBtn);
+    if (endDiv) gameAnswer.removeChild(endDiv);
 }
 
 // function to generate new question with new sum to calculate
@@ -246,37 +246,7 @@ function nextQuestionClicked() {
         renderGame();
     } else {
         game.classList.add("hidden");
-
-        let endGameBtn = document.createElement("button");
-        endGameBtn.id = "endGameBtn";
-        endGameBtn.classList.add("text-3xl", "bg-white", "border-4", "border-blue-200",
-            "shadow-md", "rounded-lg", "px-8", "py-5", "hover:bg-blue-300", "transition", "justify-center");
-        //finish level and moving forword to next level
-        if (correctAnswers >= 4) {
-            levelHeader.textContent = `Great! You answered ${correctAnswers} / ${numOfQuestions} Correct Answers.`;
-            data.finished = true;
-            localStorage.setItem("finishedGame", JSON.stringify(data));
-            localStorage.removeItem("game");
-
-            endGameBtn.onclick = function () {
-                window.location.href = "../subject_levels/subjectsLevelsPage.html";
-            };
-            endGameBtn.textContent = "Next Level";
-
-        } else {
-            levelHeader.textContent = `Oh no! You answered ${correctAnswers} / ${numOfQuestions} Correct Answers.`;
-            endGameBtn.onclick = function () {
-                correctAnswers = 0;
-                questions = [];
-                selected = [];
-                loadGame();
-            };
-
-            endGameBtn.textContent = "Try Again?";
-        }
-        gameAnswer.appendChild(endGameBtn);
-
-
+        gameAnswer.appendChild(generateEnd());
     }
 }
 // load game
@@ -299,13 +269,75 @@ function createGame() {
             questions.push(question);
         }
     }
-    else{
-
-    }
 }
 
 function returnBtnClicked() {
     window.location.href = "../subject_levels/subjectsLevelsPage.html";
+}
+
+function generateEnd() {
+    let endDiv = document.createElement("div");
+    let endContainer = document.createElement("div");
+    let endGameBtn = document.createElement("button");
+    let endImg = document.createElement("img");
+    let endLabel = document.createElement("label");
+    let color = "";
+
+    endContainer.id = "endContainer";
+    endContainer.classList.add("flex", "flex-col", "items-center", "justify-center", "gap-4");
+    
+    endDiv.id = "endDiv";
+    endDiv.classList.add("border-4", "border-blue-200", "rounded-lg", "p-3", "inline-block", "shadow-md", "max-w-sm");
+
+    endImg.classList.add("h-60", "w-auto", "max-w-full", "object-contain");
+    
+    endGameBtn.classList.add("text-3xl", "border-4", "shadow-md", "rounded-lg", "px-8", "py-5", "transition");
+
+    endLabel.classList.add("text-2xl", "font-bold", "p-3");
+
+    if (correctAnswers >= 4) {
+        data.finished = true;
+        color = "green";
+        endDiv.style.backgroundColor = "#D6F6D5";
+
+        levelHeader.textContent = `Great! You answered ${correctAnswers} / ${numOfQuestions} Correct Answers.`;
+        endLabel.textContent = "Continue to the next level!";
+        endImg.src = "/src/Images/successCube.png";
+
+        localStorage.setItem("finishedGame", JSON.stringify(data));
+        localStorage.removeItem("game");
+
+        endGameBtn.onclick = function () {
+            window.location.href = "../subject_levels/subjectsLevelsPage.html";
+        };
+
+        endGameBtn.textContent = "Next Level";
+    }
+    else {
+        color = "red";
+        endDiv.style.backgroundColor = "#ffd3d3";
+
+        levelHeader.textContent = `Oh no! You answered ${correctAnswers} / ${numOfQuestions} Correct Answers.`;
+        endLabel.textContent = "Maybe try again?";
+        endImg.src = "/src/Images/failureCube.png";
+
+        endGameBtn.onclick = function () {
+            correctAnswers = 0;
+            questions = [];
+            selected = [];
+            loadGame();
+        };
+
+        endGameBtn.textContent = "Again!";
+    }
+
+    endGameBtn.classList.add(`bg-${color}-100`, `border-${color}-200`, `hover:bg-${color}-300`);
+
+    endContainer.appendChild(endLabel);
+    endContainer.appendChild(endImg);
+    endContainer.appendChild(endGameBtn);
+    endDiv.appendChild(endContainer);
+    return endDiv;
 }
 
 loadGame();
