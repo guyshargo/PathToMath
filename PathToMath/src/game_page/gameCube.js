@@ -14,7 +14,9 @@ let selected = [];
 let tries;
 let solve = []
 
-//reset game
+/**
+ * Reset game and UI
+ */
 function resetGame() {
     gameHeader.innerHTML = "";
     gameAnswer.innerHTML = "";
@@ -28,7 +30,9 @@ function resetGame() {
     if (endDiv) gameAnswer.removeChild(endDiv);
 }
 
-// function to generate new question with new sum to calculate
+/** Generate a new math question with a target sum and dice options
+ * @return {Object} - An object containing the question text, options, and answer
+ */
 function generateQuestion() {
     let sum = Math.floor(Math.random() * 15) + 1;
     let cubesOptions = [];
@@ -41,7 +45,10 @@ function generateQuestion() {
     };
 }
 
-//create random dice cubes
+/** Generate random dice values and ensure a valid combination to reach the target sum
+ * @param {number} sum - The target sum the dice must be able to form
+ * @return {number[]} - Array of dice values
+ */
 function generateCubes(sum) {
     let validCubes = false;
     let cubes = [];
@@ -56,7 +63,12 @@ function generateCubes(sum) {
     return cubes;
 }
 
-//check if possible to create sum from given cubes
+/** Recursively check if a target sum can be formed from given list of cubes
+ * @param {number[]} cubesArr - Array of cube values
+ * @param {number} target - Target sum to check
+ * @param {number} index - Current index in cubesArr
+ * @return {boolean} - True if a valid combination exists
+ */
 function isCubesValid(cubesArr, target, index = 0) {
     if (target == 0) {
         return true;
@@ -67,7 +79,11 @@ function isCubesValid(cubesArr, target, index = 0) {
     return isCubesValid(cubesArr, target - cubesArr[index], index + 1) || isCubesValid(cubesArr, target, index + 1);
 }
 
-// function to find suggested solution. using dynamic programing.
+/** Find indices of cubes that can form the target sum using dynamic programming
+ * @param {number[]} cubes - Array of cube values
+ * @param {number} target - Target sum
+ * @return {number[]} - Indices of cubes forming the solution
+ */
 function findSolution(cubes, target) {
     const n = cubes.length;
     const dp = Array.from({ length: n + 1 }, () => Array(target + 1).fill(false));
@@ -101,7 +117,9 @@ function findSolution(cubes, target) {
     return sol.reverse();
 }
 
-
+/**
+ * Render the current question and options on the screen
+ */
 function renderGame() {
     selected = [];
     gameOptions.innerHTML = '';
@@ -110,7 +128,6 @@ function renderGame() {
     tries = 2;
     const resultEl = document.createElement('div');
     resultEl.textContent = ``;
-
 
     const checkButton = document.createElement('button');
     checkButton.id = "answer";
@@ -158,7 +175,10 @@ function renderGame() {
     gameAnswer.appendChild(checkButton);
 }
 
-// create cubes objects on screen
+/** Create and display a dice button
+ * @param {number} cube - Value of the cube
+ * @param {number} idx - Index used as button ID
+ */
 function addCubesBtnHTML(cube, idx) {
     const button = document.createElement('button');
     button.id = idx;
@@ -192,7 +212,10 @@ function addCubesBtnHTML(cube, idx) {
     gameOptions.appendChild(button);
 }
 
-// functiopn to check if user answer is correct
+/** Check user's selected sum against the correct answer
+ * @param {number} sumAnswer - The user's selected sum
+ * @param {HTMLElement} button - The check button element
+ */
 function checkAnswer(sumAnswer, button) {
     let answerText = "";
     let color = "";
@@ -237,7 +260,7 @@ function checkAnswer(sumAnswer, button) {
     gameAnswer.replaceChild(nextBtn, button);
 }
 
-// function for load next question
+/** Handle logic for progressing to the next question */
 function nextQuestionClicked() {
     questions.splice(0, 1);
     resetGame();
@@ -249,14 +272,15 @@ function nextQuestionClicked() {
         gameAnswer.appendChild(generateEnd());
     }
 }
-// load game
+
+/** Load the game from local storage and initialize it */
 function loadGame() {
     resetGame();
     createGame();
     renderGame();
 }
 
-// function to create game
+/** Create question list for the game */
 function createGame() {
     const gameData = localStorage.getItem('game');
     data = JSON.parse(gameData);
@@ -271,10 +295,14 @@ function createGame() {
     }
 }
 
+/** Redirect to the subject level selection page */
 function returnBtnClicked() {
     window.location.href = "../subject_levels/subjectsLevelsPage.html";
 }
 
+/** Generate and return the final results display
+ * @return {HTMLElement} - The end game result element
+ */
 function generateEnd() {
     let endDiv = document.createElement("div");
     let endContainer = document.createElement("div");
@@ -285,12 +313,12 @@ function generateEnd() {
 
     endContainer.id = "endContainer";
     endContainer.classList.add("flex", "flex-col", "items-center", "justify-center", "gap-4");
-    
+
     endDiv.id = "endDiv";
     endDiv.classList.add("border-4", "border-blue-200", "rounded-lg", "p-3", "inline-block", "shadow-md", "max-w-sm");
 
     endImg.classList.add("h-60", "w-auto", "max-w-full", "object-contain");
-    
+
     endGameBtn.classList.add("text-3xl", "border-4", "shadow-md", "rounded-lg", "px-8", "py-5", "transition");
 
     endLabel.classList.add("text-2xl", "font-bold", "p-3");
@@ -340,4 +368,5 @@ function generateEnd() {
     return endDiv;
 }
 
+/** Start the game when page loads */
 loadGame();

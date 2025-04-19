@@ -38,7 +38,7 @@ function setupButtons(buttons) {
 
         let mathButton = document.createElement("button");
         mathButton.classList.add("w-40", "h-40", "flex", "items-center", "justify-center",
-            "rounded-2xl", "shadow", "hover:brightness-95", "transition","font-bold", "flex-col");
+            "rounded-2xl", "shadow", "hover:brightness-95", "transition", "font-bold", "flex-col");
 
         mathButton.id = subject;
         const buttonTitle = document.createElement("div")
@@ -67,7 +67,7 @@ function setupButtons(buttons) {
                 color: "purple",
                 signSymbol: "%"
             }
-        };  
+        };
 
         // Set color and sign symbol based on subject
         let color = config[subject].color;
@@ -90,9 +90,11 @@ function buttonClick(subject) {
     localStorage.setItem("Subject", subject);
     window.location.href = "../subject_levels/subjectsLevelsPage.html";
 }
+
 // Return button
-function returnBtnClicked(){
-    window.location.href ="../index.html";
+function returnBtnClicked() {
+    window.location.href = "../index.html";
 }
+
 // Function to load buttons when the page is loaded
 loadButtons();
