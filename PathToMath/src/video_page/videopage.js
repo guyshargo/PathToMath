@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   loadVideoByHash();
 
-  // = run every time the URL hash changes (#AdditionVideos → #SubstractionVideos)
+  //  run every time the URL hash changes (#AdditionVideos  #SubstractionVideos)
   window.addEventListener('hashchange', loadVideoByHash);
 });
 

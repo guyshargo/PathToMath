@@ -124,13 +124,12 @@ function FillDailyChallenge() {
     if (!dayVal || !dayCircle) return;
 
     // Reset all progress on Sunday
-    if (todayName === "Sunday") {
+    if (todayName === "Sunday"&&localStorage.getItem(dayVal)) {
       localStorage.removeItem(dayVal);
       dayCircle.classList.remove('completed');
     }
 
     let dailyDone = JSON.parse(localStorage.getItem(dayVal));
-    console.log(dailyDone);
 
     // If completed day (save in localStorage)
     if (dailyDone) {
