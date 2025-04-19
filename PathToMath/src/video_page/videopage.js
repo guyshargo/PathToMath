@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const videoContainer = document.getElementById('videoContainer');
   const selectedGrade = parseInt(localStorage.getItem("selectedGrade") || "1");
-
+  
   // Grade → Topic → Array of Videos
   const gradeVideos = {
     1: {
@@ -157,13 +157,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
   
+  function loadVideoByHash() {
+    const topic = getTopicFromHash();
+    const videoUrls = gradeVideos[selectedGrade]?.[topic];
 
-  const topic = getTopicFromHash();
-  const videoUrls = gradeVideos[selectedGrade]?.[topic];
-
-  if (videoUrls && videoUrls.length > 0) {
-    renderVideo(topic, videoUrls);
-  } else {
-    videoContainer.innerHTML = `<p class="text-lg text-red-600">No video found for topic <strong>${topic}</strong> in grade <strong>${selectedGrade}</strong>.</p>`;
+    if (videoUrls && videoUrls.length > 0) {
+      renderVideo(topic, videoUrls);
+    } else {
+      videoContainer.innerHTML = `<p class="text-lg text-red-600">No video found for topic <strong>${topic}</strong> in grade <strong>${selectedGrade}</strong>.</p>`;
+    }
   }
+
+  loadVideoByHash();
+
+  // = run every time the URL hash changes (#AdditionVideos → #SubstractionVideos)
+  window.addEventListener('hashchange', loadVideoByHash);
 });
+

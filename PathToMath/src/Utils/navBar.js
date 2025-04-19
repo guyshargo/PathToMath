@@ -17,7 +17,7 @@ const menuData = [
     {
         //Math Problems page
         label: 'Math Problems', // Main menu item
-        link: '#home',
+        link: '/src/math_subjects/mathSubjectsPage.html',
         //SubMenu: Math subjects
         submenu: [
             { label: 'Addition', link: '/src/subject_levels/subjectsLevelsPage.html' , class: "Addition"},
@@ -32,8 +32,8 @@ const menuData = [
             link: '#videos',
             submenu: [
                 { label: 'Addition', link: '#AdditionVideos' },
-                { label: 'Substraction', link: '#SubstractionVideos' },
-                { label: 'Multiplication', link: '#MultiplicationVideos' },
+                { label: 'Subtraction', link: '#SubstractionVideos' },
+                { label: 'Multiply', link: '#MultiplicationVideos' },
                 { label: 'Division', link: '#DivisionVideos' },
                 { label: 'Percentage', link: '#PercentageVideos' }
             ],
@@ -49,8 +49,8 @@ const menuData = [
 //Topic's Grade Limit
 const topicGrade = {
     "Addition": 1,
-    "Substraction": 1,    
-    "Multiplication": 3,      
+    "Subtraction": 1,    
+    "Multiply": 3,      
     "Division": 4,
     "Percentage": 5         
   };

@@ -92,7 +92,7 @@ function buttonClick(subject) {
 }
 // Return button
 function returnBtnClicked(){
-    history.back();
+    window.location.href ="../index.html";
 }
 // Function to load buttons when the page is loaded
 loadButtons();

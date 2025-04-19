@@ -153,7 +153,7 @@ function renderGrid(grid) {
 }
 
 function returnBtnClicked(){
-    history.back();
+   window.location.href ="/src/math_subjects/mathSubjectsPage.html";
 }
 
 loadSubjectLevels();
