@@ -12,7 +12,7 @@ let numOfQuestions = 5;
 let data;
 
 /**
- * Resets the game interface by clearing all game content and removing any buttons.
+ * Reset game and UI
  */
 function resetGame() {
     gameHeader.innerHTML = "";
@@ -27,10 +27,8 @@ function resetGame() {
     game.style.backgroundColor = "white";
 }
 
-/**
- * Generates a random number based on the game level.
- * @param {number} level - The current game level used to adjust the difficulty.
- * @returns {number} A random integer within the appropriate range for the level.
+/** Generate a new math question with a target sum and dice options
+ * @return {Object} - An object containing the question text, options, and answer
  */
 function generateVariable(level) {
     let mathLevel = Math.floor(level / 10) + 1;
@@ -41,12 +39,11 @@ function generateVariable(level) {
 
 /**
  * Generates an incorrect option for the multiple-choice answers.
- * @param {string} subject - The math subject.
  * @param {number} level - The current difficulty level.
  * @param {number} answer - The correct answer to base the fake option around.
  * @returns {number} A random number that is close to the actual answer.
  */
-function generateOption(subject, level, answer) {
+function generateOption(level, answer) {
     let mathLevel = Math.floor(level / 10) + 1;
     let offset = Math.max(2, mathLevel * 2);
     let minBorder;
@@ -99,18 +96,13 @@ function makeQuestion(subject, level) {
 
         case "Percentage":
             mathAction = "%";
-            var2 = generateVariable(level);
+
             const simplePercents = [5, 10, 20];
-            let chosenPercent = simplePercents[Math.floor(Math.random() * simplePercents.length)];
-            let attemptCount = 0;
+            const chosenPercent = simplePercents[Math.floor(Math.random() * simplePercents.length)];
 
-            while (chosenPercent === 5 && var2 < 20 && attemptCount < 10) {
-                var2 = generateVariable(level);
-                attemptCount++;
-            }
-
-            if (attemptCount >= 10) {
-                var2 = Math.max(var2, 20);
+            var2 = generateVariable(level);
+            if (chosenPercent === 5 && var2 < 20) {
+                var2 = 20;
             }
 
             var1 = Math.round((chosenPercent / 100) * var2);
@@ -128,12 +120,13 @@ function makeQuestion(subject, level) {
     }
 
     while (options.length < 3) {
-        let fakeAnswer = generateOption(subject, level, answer);
+        let fakeAnswer = generateOption(level, answer);
 
         if (options.indexOf(fakeAnswer) == -1 && fakeAnswer != answer) {
             options.push(fakeAnswer);
         }
     }
+
     let insertIndex = Math.floor(Math.random() * options.length + 1);
     options.splice(insertIndex, 0, answer);
 
@@ -190,7 +183,6 @@ function createGame(data) {
     }
 }
 
-
 /**
  * Loads the game level configuration and starts generating the game.
  */
@@ -236,12 +228,19 @@ function renderGame() {
  */
 function addOptionHTML(option) {
     const button = document.createElement('button');
+    let btnText = "";
+
     button.id = option;
 
     button.classList.add("text-3xl", "bg-white", "border-4", "border-blue-200",
         "shadow-md", "rounded-lg", "px-8", "py-5", "hover:bg-blue-300", "transition");
 
-    button.textContent = option;
+    btnText += option;
+    if (data.subject == "Percentage") {
+        btnText += "%";
+    }
+    button.textContent = btnText;
+
     button.onclick = function () {
         optionClicked(button.id, button);
     };
@@ -318,7 +317,10 @@ function nextQuestionClicked() {
     }
 }
 
-
+/**
+ * Generates the final screen displayed at the end of the game
+ * @returns {HTMLElement} A div element containing the end-game summary and action button.
+ */
 function generateEnd() {
     const endContainer = document.createElement("div");
     let endGameBtn = document.createElement("button");
@@ -327,16 +329,16 @@ function generateEnd() {
 
     endContainer.id = "endContainer";
     endContainer.classList.add("flex", "flex-col", "items-center", "justify-center", "gap-4");
-    endImg.classList.add("h-60","w-auto","max-w-full","object-contain");
-    endGameBtn.classList.add("text-3xl",  "border-4", "shadow-md", "rounded-lg", "px-8", "py-5",  "transition");
+    endImg.classList.add("h-60", "w-auto", "max-w-full", "object-contain");
+    endGameBtn.classList.add("text-3xl", "border-4", "shadow-md", "rounded-lg", "px-8", "py-5", "transition");
 
     if (correctAnswers >= 4) {
         data.finished = true;
         color = "green";
         game.style.backgroundColor = "#D6F6D5";
-        
+
         levelHeader.textContent = `Great! You answered ${correctAnswers} / ${numOfQuestions} Correct Answers.`;
-        gameHeader.textContent ="Continue to the next level!";
+        gameHeader.textContent = "Continue to the next level!";
         endImg.src = "/src/Images/success.png";
 
         endGameBtn.onclick = function () {
@@ -364,7 +366,7 @@ function generateEnd() {
         game.style.backgroundColor = "#ffd3d3";
 
         levelHeader.textContent = `Oh no! You answered ${correctAnswers} / ${numOfQuestions} Correct Answers.`;
-        gameHeader.textContent ="Try Again?";
+        gameHeader.textContent = "Try Again?";
         endImg.src = "/src/Images/failure.png";
 
         endGameBtn.onclick = function () {
@@ -375,17 +377,24 @@ function generateEnd() {
         endGameBtn.textContent = "Again!";
     }
 
-    endGameBtn.classList.add(`bg-${color}-100`,`border-${color}-200`, `hover:bg-${color}-300`);
+    endGameBtn.classList.add(`bg-${color}-100`, `border-${color}-200`, `hover:bg-${color}-300`);
 
     endContainer.appendChild(endImg);
     endContainer.appendChild(endGameBtn);
     return endContainer;
 }
 
-function returnBtnClicked(){
+/**
+ * Handles the "return" button click, navigating back to the previous page.
+ */
+function returnBtnClicked() {
     history.back();
 }
 
+/**
+ * Marks the daily quiz as completed for the current day
+ * by saving a flag in localStorage based on the day of the week.
+ */
 function dailyQuizDone() {
     const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const todayIndex = new Date().getDay();
@@ -394,4 +403,5 @@ function dailyQuizDone() {
     localStorage.setItem(todayName, data.finished);
 }
 
+/** Start the game when page loads */
 loadGameLevel();

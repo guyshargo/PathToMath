@@ -6,6 +6,11 @@ let numOfLevels = 30;
 let data;
 const retVal = localStorage.getItem("subjectPage");
 
+/**
+ * Generates a level object with associated color, font color, and disabled state based on progress.
+ * @param {number} level - The level number to create.
+ * @returns {{level: number, color: string, fontColor: string, disable: boolean}} The level display data.
+ */
 function makeLevel(level) {
     let color = "";
     let fontColor = "";
@@ -28,6 +33,9 @@ function makeLevel(level) {
     return { level: level, color: color, fontColor: fontColor, disable: disable };
 }
 
+/**
+ * Loads the subject levels grid based on current user progress and updates if the user finished a level.
+ */
 function loadSubjectLevels() {
     const gameSubject = localStorage.getItem("Subject");
     const currentGrade = user.currentGrade;
@@ -63,12 +71,20 @@ function loadSubjectLevels() {
 
 }
 
+/**
+ * Renders the header UI including the progress bar.
+ */
 function renderHeader() {
     const progressBar = document.getElementById("progressBar");
     progressBar.value = data.finishedLevel;
     progressBar.max = numOfLevels;
 }
 
+/**
+ * Creates the level grid based on the subject and user progress.
+ * @param {Object} data - The subject and progress data.
+ * @returns {Array<Object>} The grid data.
+ */
 function createGrid(data) {
     let grid = [];
 
@@ -106,6 +122,10 @@ function createGrid(data) {
     return grid;
 }
 
+/**
+ * Renders the level buttons on the page based on the grid data.
+ * @param {Array<Object>} grid - The level grid to render.
+ */
 function renderGrid(grid) {
     for (let levelObj of grid) {
         let levelBtn = document.createElement("button");
@@ -152,8 +172,12 @@ function renderGrid(grid) {
     }
 }
 
+/**
+ * Handles click on the return button to navigate back to the subject selection page.
+ */
 function returnBtnClicked(){
    window.location.href ="/src/math_subjects/mathSubjectsPage.html";
 }
 
+/** Load levels when page loads */
 loadSubjectLevels();
