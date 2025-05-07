@@ -19,7 +19,7 @@ function subMenu({ items }) {
         (topicGrade[item.label]<=grade)&&(
         <li key={item.label}>
           <a
-            className='block px-4 py-2 text-sm hover:bg-sky-100'
+            className='block px-4 py-2 text-sm hover:bg-sky-100 text-black'
             href={item.link}
           >
             {item.label}

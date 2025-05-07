@@ -1,5 +1,7 @@
 import React from 'react'
 import DynamicMenu from './DynamicMenu'
+import { useLoginStatus } from '../Main/LoginStatusComponent';
+
 import { useState } from 'react'
 import logo from '../../assets/Images/logo.png'
 import starIcon from '../../assets/Images/star.png'
@@ -9,11 +11,13 @@ import LoginIcon from '../../assets/Images/login.png'
 import LogoutIcon from '../../assets/Images/logout.png'
 import TutorialVideosIcon from '../../assets/Images/helpVideos.png'
 
-function Header({ isLoggedIn, setIsLoggedIn }) {
+function Header() {
     const [isMobileOpen, setIsMobileOpen] = useState(false);
     const toggleMobileMenu = () => {
         setIsMobileOpen(!isMobileOpen);
     };
+    const { isLoggedIn } = useLoginStatus();
+    
     // Main menu item
     const menuData = [
         {
@@ -86,9 +90,9 @@ if (isLoggedIn) {
 return (
     <header className="flex flex-col xl:flex-row items-start xl:items-center justify-between w-full py-6 px-6 md:px-20 bg-blue-400 drop-shadow-md playful-font relative">
       <div className="flex justify-between items-center w-full xl:w-auto">
-        <a href="a">
-          <img src={logo} alt="Logo" className="w-52 hover:scale-105 transition-all" />
-        </a>
+      <a href="a" className="hover:scale-105 transition-all">
+    <img src={logo} alt="Logo" className="w-62 rounded-2xl" />
+      </a>
         <button className="xl:hidden text-3xl text-white cursor-pointer" onClick={toggleMobileMenu}>
         {/* simple hamburger menu for mobile view */}
           {isMobileOpen ? '✖' : '☰'}

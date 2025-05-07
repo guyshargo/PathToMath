@@ -1,19 +1,21 @@
-import React from 'react';
+import React from 'react'
 import './App.css'
-import { useState } from 'react';
+import { useState } from 'react'
 import Header from './components/header/header'
-import { GradeProvider } from './components/Main/GradeComponent';
-
+import { GradeProvider } from './components/Main/GradeComponent'
+import { LoginStatusProvider } from "./components/Main/LoginStatusComponent"
+import Footer from './components/footer/Footer'
 function App() {
-  //login status
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // default: not logged in
 
   return (
+    <LoginStatusProvider>
     <GradeProvider>
     <div className="app">
-      <Header isLoggedIn = {isLoggedIn} setIsLoggedIn = {setIsLoggedIn}/>
+      <Header/>
+      <Footer/>
     </div>
     </GradeProvider>
+    </LoginStatusProvider>
   )
 }
 export default App
