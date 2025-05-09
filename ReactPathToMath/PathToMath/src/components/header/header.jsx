@@ -1,6 +1,6 @@
 import React from 'react'
 import DynamicMenu from './DynamicMenu'
-import { useLoginStatus } from '../Main/LoginStatusComponent';
+import { useLoginStatus } from '../Utils/LoginStatusComponent';
 
 import { useState } from 'react'
 import logo from '../../assets/Images/logo.png'
@@ -88,10 +88,10 @@ if (isLoggedIn) {
         });
 }
 return (
-    <header className="flex flex-col xl:flex-row items-start xl:items-center justify-between w-full py-6 px-6 md:px-20 bg-blue-400 drop-shadow-md playful-font relative">
+    <header className="flex flex-col xl:flex-row items-start xl:items-center z-30 justify-between w-full py-6 px-6 md:px-20 bg-blue-400 drop-shadow-md playful-font relative">
       <div className="flex justify-between items-center w-full xl:w-auto">
       <a href="a" className="hover:scale-105 transition-all">
-    <img src={logo} alt="Logo" className="w-62 rounded-2xl" />
+    <img src={logo} alt="Logo" className="  w-60 rounded-2xl" />
       </a>
         <button className="xl:hidden text-3xl text-white cursor-pointer" onClick={toggleMobileMenu}>
         {/* simple hamburger menu for mobile view */}
