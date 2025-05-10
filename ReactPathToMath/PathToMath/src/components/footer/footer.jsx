@@ -26,9 +26,9 @@ function Footer() {
   }, []);
 
   return (
-    <footer className="w-full relative bg-orange-300 border-t-4 border-orange-500 text-white text-center py-2 mt-10 shadow-xl bottom-0 playful-font overflow-hidden">
-      <p className={`text-xl px-4 flex items-center justify-center gap-3 transition-opacity duration-500 ease-in-out ${fade ? 'opacity-100' : 'opacity-0'}`}>
-        <span className="w-8 h-8 flex items-center justify-center rounded-full bg-white/90 text-yellow-500 shadow-md text-xl">
+    <footer className="w-full bg-orange-300 border-t-4 border-orange-500 text-white text-center py-1 shadow-xl playful-font">
+      <p className={`text-lg px-4 flex items-center justify-center gap-3 transition-opacity duration-500 ease-in-out ${fade ? 'opacity-100' : 'opacity-0'}`}>
+        <span className="w-6 h-6 flex items-center justify-center rounded-full bg-white/90 text-yellow-500 shadow-md text-sm">
         💡
         </span>
         {slogans[currentSloganIndex]}

@@ -3,7 +3,15 @@ body{
   height: 100vh;
 
 }
-
+.background-image {
+  background-image: url("./assets/images/nature.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100%;
+  width: 100%;
+  left: 0; 
+}
 .dark-background {
   background-color: rgb(0, 0, 0);
   opacity: 0.2;
