@@ -23,7 +23,7 @@ function Header() {
         {
             //Home page
             label: 'Home', 
-            link: '',
+            link: '/',
             icon: starIcon,
             colorClass: "bg-blue-700 hover:bg-blue-600",
             submenuColor: "hover:bg-blue-500",
@@ -32,38 +32,38 @@ function Header() {
         {
             //Math Problems page
             label: 'Math Problems', 
-            link: '/src/math_subjects/mathSubjectsPage.html',
+            link: '/subjects',
             icon: MathProbLogo,
             colorClass: "bg-orange-500 hover:bg-orange-600",
             submenuColor: "hover:bg-orange-400",
             submenu: [
-                { label: 'Addition', link: '/src/subject_levels/subjectsLevelsPage.html', class: "Addition" },
-                { label: 'Subtraction', link: '/src/subject_levels/subjectsLevelsPage.html', class: "Subtraction" },
-                { label: 'Multiply', link: '/src/subject_levels/subjectsLevelsPage.html', class: "Multiply" },
-                { label: 'Division', link: '/src/subject_levels/subjectsLevelsPage.html', class: "Division" },
-                { label: 'Percentage', link: '/src/subject_levels/subjectsLevelsPage.html', class: "Percentage" }
+                { label: 'Addition', link: '/subjects', class: "Addition" },
+                { label: 'Subtraction', link: '/subjects', class: "Subtraction" },
+                { label: 'Multiply', link: '/subjects', class: "Multiply" },
+                { label: 'Division', link: '/subjects', class: "Division" },
+                { label: 'Percentage', link: '/subjects', class: "Percentage" }
             ],
             className: "MathProblems"
         },
         {
             label: 'Tutorial Videos',
-            link: '#videos',
+            link: '/videos',
             icon:TutorialVideosIcon,
             colorClass: "bg-red-500 hover:bg-red-600",
             submenuColor: "hover:bg-red-400",
             submenu: [
-                { label: 'Addition', link: '#AdditionVideos' },
-                { label: 'Subtraction', link: '#SubstractionVideos' },
-                { label: 'Multiply', link: '#MultiplicationVideos' },
-                { label: 'Division', link: '#DivisionVideos' },
-                { label: 'Percentage', link: '#PercentageVideos' }
+                { label: 'Addition', link: '/videos' },
+                { label: 'Subtraction', link: '/videos' },
+                { label: 'Multiply', link: '/videos' },
+                { label: 'Division', link: '/videos' },
+                { label: 'Percentage', link: '/videos' }
             ],
             class: "TutorialVideos"
         },
         {
             //Profile Page
             label: 'Profile',
-            link: '/src/Profile/profile.html',
+            link: '/profile',
             icon: ProfileIcon,
             colorClass: "bg-green-500 hover:bg-green-600",
             submenuColor: "hover:bg-green-400",
@@ -75,7 +75,7 @@ function Header() {
 if (isLoggedIn) {
     menuData.push({
         label: 'Logout',
-        link: '#',
+        link: '/',
         colorClass: 'bg-purple-500 hover:bg-purple-600',
         icon: LogoutIcon
     });
