@@ -12,7 +12,7 @@ function HomePage() {
                     <img 
                         src={placeHolderAvatar} 
                         alt="Avatar" 
-                        className="object-contain max-h-92 w-auto translate-y-4 -mr-6" // Adjusted positioning
+                        className="object-contain max-h-92 w-auto translate-y-4 -mr-6"
                     />
                 </div>
             </div>

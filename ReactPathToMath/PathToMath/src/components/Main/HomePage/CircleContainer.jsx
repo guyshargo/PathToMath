@@ -3,7 +3,7 @@ import SubjectCircle from './SubjectCircle';
 import mathCircle from '../../../assets/Images/math_circle.png';
 import vidsCircle from '../../../assets/Images/vids_circle.png';
 import badgeCircle from '../../../assets/Images/badge_circle.png';
-
+import popquiz_circle from '../../../assets/Images/popquiz_circle.png';
 const circleData = [
   {
     title: 'Math Problems',
@@ -18,7 +18,7 @@ const circleData = [
   {
     title: 'Pop Quiz',
     description: 'Take quick quizzes to test yourself!',
-    imageSrc: mathCircle,
+    imageSrc: popquiz_circle,
   },
   {
     title: 'Badges',
