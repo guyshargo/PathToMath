@@ -1,34 +1,34 @@
-import React from 'react'
-import {BrowserRouter as Router,Routes,Route} from 'react-router-dom'
-import './App.css'
-import { useState } from 'react'
-import Header from './components/header/header'
-import { GradeProvider } from './components/Main/GradeComponent'
-import { SubjectProvider } from './components/Main/SubjectComponent'
-import { LoginStatusProvider } from "./components/Main/LoginStatusComponent"
-import Footer from './components/footer/Footer'
-import MathSubjectsComponent from './components/math_subjects/MathSubjectsComponent'
-import GameLevel from './components/game_level/GameLevel'
+import React from 'react';
+import './App.css';
+import Header from './components/header/header';
+import { GradeProvider } from './components/Utils/GradeComponent';
+import { LoginStatusProvider } from './components/Utils/LoginStatusComponent';
+import Footer from './components/footer/footer';
+import HomePage from './components/Main/HomePage/HomePage';
 
 function App() {
   return (
     <LoginStatusProvider>
       <GradeProvider>
-        <SubjectProvider>
-          <Router>
-            <div className="app">
-              <Header />
-              <Routes>
-                <Route path="/" element={<MathSubjectsComponent />} />
-                <Route path="/gameLevel" element={<GameLevel />} />
-              </Routes>
-              <Footer />
-            </div>
-          </Router>
-        </SubjectProvider>
+        <div className="flex flex-col min-h-screen overflow-x-hidden relative">
+          {/* Header - Fixed position at top */}
+          <header className="sticky top-0 z-10 w-full bg-white">
+            <Header />
+          </header>
+
+          {/* Main Content - with appropriate padding/margin */}
+          <main className="flex-grow w-full pt-4 background-image">
+            <HomePage />
+          </main>
+
+          {/* Footer */}
+          <footer className="w-full bg-white">
+            <Footer />
+          </footer>
+        </div>
       </GradeProvider>
     </LoginStatusProvider>
   );
 }
 
-export default App
+export default App;

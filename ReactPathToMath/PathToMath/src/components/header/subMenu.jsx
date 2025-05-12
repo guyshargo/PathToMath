@@ -1,5 +1,5 @@
 import React from 'react';
-import { useGrade } from '../Main/GradeComponent';
+import { useGrade } from '../Utils/GradeComponent';
 
 // Topic's Grade Limit
 const topicGrade = {
