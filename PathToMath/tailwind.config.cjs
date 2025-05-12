@@ -2,7 +2,16 @@ module.exports = {
   content: ["./*.{html,js,ts}"],
   darkMode: 'class',
   theme: {
-    extends:{},
+    extends:{animation: {
+        softBounce: 'softBounce 0.6s ease-in-out 1',
+      },
+      keyframes: {
+        softBounce: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '20%': { transform: 'translateY(-8px)' }
+        },
+      },
+    },
     screens: {
       'sm': '640px',
       //=> @media(min-width: 640px){...}
