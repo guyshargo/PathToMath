@@ -18,7 +18,7 @@ function SubjectCircle({ imageSrc, title, description }) {
 
         {/* Back Side */}
         <div className="absolute w-full h-full rotate-y-180 backface-hidden flex items-center justify-center">
-          <div className="w-44 h-44 rounded-full bg-orange-100 shadow-md border-4 border-white flex items-center justify-center p-4 text-center">
+          <div className="w-44 h-44 rounded-full bg-orange-300 shadow-md border-4 border-white flex items-center justify-center p-4 text-center">
             <p className="text-base text-gray-800">{description}</p>
           </div>
         </div>
