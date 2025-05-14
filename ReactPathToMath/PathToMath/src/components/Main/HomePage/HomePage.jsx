@@ -14,6 +14,7 @@ function HomePage() {
                         alt="Avatar" 
                         className="object-contain max-h-92 w-auto translate-y-4 -mr-6"
                     />
+                {/* Avatar Speech Bubble */}
                 </div>
                       <div className="absolute -top-10 right-10 bg-yellow-200 cursor-default rounded-xl p-4 shadow-lg border-4 border-yellow-400 text-yellow-700 font-bold text-lg whitespace-nowrap animate-bounce">
                         Are you ready to learn math?
