@@ -2,7 +2,7 @@ import React from 'react';
 
 function ChildProgressCard({ child }) {
   return (
-    <div className="bg-white rounded-2xl border-4 border-blue-700 p-4 shadow-md flex flex-col items-center text-center mx-auto max-w-[360px] w-full">
+    <div className="background-image pt-5 rounded-2xl border-4 border-blue-700 p-4 shadow-md flex flex-col items-center text-center mx-auto max-w-[360px] w-full">
       <img
         src={child.avatar}
         alt={`${child.name}'s avatar`}
