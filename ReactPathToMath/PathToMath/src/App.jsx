@@ -4,8 +4,7 @@ import Header from './components/header/header';
 import { GradeProvider } from './components/Utils/GradeComponent';
 import { LoginStatusProvider } from './components/Utils/LoginStatusComponent';
 import Footer from './components/footer/footer';
-import HomePage from './components/Main/HomePage/HomePage';
-import ParentPage from './components/Main/ParentPage/ParentPage';
+import { Outlet } from 'react-router-dom'
 
 function App() {
   return (
@@ -18,8 +17,8 @@ function App() {
           </header>
 
           {/* Main Content - with appropriate padding/margin */}
-          <main className="flex-grow w-full ">
-            <HomePage />
+          <main className="flex-grow w-full pt-4 background-image">
+            <Outlet />
           </main>
 
           {/* Footer */}

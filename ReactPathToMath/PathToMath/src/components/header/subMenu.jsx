@@ -1,5 +1,6 @@
 import React from 'react';
 import { useGrade } from '../Utils/GradeComponent';
+import { Link } from 'react-router-dom';
 
 // Topic's Grade Limit
 const topicGrade = {
@@ -18,12 +19,12 @@ function subMenu({ items }) {
       {items.map((item) => (
         (topicGrade[item.label]<=grade)&&(
         <li key={item.label}>
-          <a
+          <Link
             className='block px-4 py-2 text-sm hover:bg-sky-100 text-black'
-            href={item.link}
+            to={item.link} 
           >
             {item.label}
-          </a>
+          </Link>
         </li>
       )))}
     </ul>
