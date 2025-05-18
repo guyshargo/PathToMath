@@ -10,16 +10,14 @@ function App() {
   return (
     <LoginStatusProvider>
       <GradeProvider>
-        <div className="flex flex-col relative">
+        <div className="flex min-h-screen flex-col relative">
           {/* Header - Fixed position at top */}
           <header className="sticky top-0 z-10 w-full bg-white">
             <Header />
           </header>
 
           {/* Main Content - with appropriate padding/margin */}
-          <main className="flex-grow w-full pt-4 background-image">
-            <Outlet />
-          </main>
+          <Outlet className="flex-grow w-full" />
 
           {/* Footer */}
           <footer className="w-full bg-white ">

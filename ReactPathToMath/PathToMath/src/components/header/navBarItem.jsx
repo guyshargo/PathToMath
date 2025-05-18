@@ -5,7 +5,7 @@ function NavBarItem({ item, isMobile }) {
   return (
     <li className="relative group " key={item.label}>
       <div>
-        <Link to={item.link} className={`flex navBarItem whitespace-nowrap items-center gap-2 px-4 py-2 rounded-md transition-all ${item.colorClass || 'bg-white text-black hover:bg-gray-200'}`}>
+        <Link to={item.link} className={`flex navBarItem whitespace-nowrap items-center gap-2 px-4 py-2 rounded-full transition-all ${item.colorClass || 'bg-white text-black hover:bg-gray-200'}`}>
           {item.icon && (
             <img src={item.icon} alt="" className="w-5 h-5 object-contain" />
           )}<span className="drop-shadow-lg object-contain">{item.label}</span>
