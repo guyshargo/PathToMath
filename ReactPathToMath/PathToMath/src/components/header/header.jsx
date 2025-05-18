@@ -3,7 +3,7 @@ import DynamicMenu from './DynamicMenu'
 import { useLoginStatus } from '../Utils/LoginStatusComponent';
 import { Link } from 'react-router-dom';
 import { useState } from 'react'
-import logo from '../../assets/Images/logo.png'
+import logo from '../../assets/Images/logo copy.png'
 import starIcon from '../../assets/Images/star.png'
 import MathProbLogo from '../../assets/Images/MathProblemsLogo.png'
 import ProfileIcon from '../../assets/Images/profile.png'

@@ -1,10 +1,12 @@
 body{
   width: 100vw;
   height: 100vh;
+    overflow-x: hidden;
+
 
 }
 .background-image {
-  background-image: url("./assets/images/nature.png");
+  background-image: url("./assets/images/nature2.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -25,4 +27,20 @@ body{
   color: white;
   padding: 10px 20px;
   text-decoration: none;
+}
+
+.perspective {
+  perspective: 1000px;
+}
+
+.transform-style-preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
 }
