@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from 'react';
 
 // Create the LoginContext
-const LoginStautsContext = createContext();
+const LoginStatusContext = createContext();
 
 // Create the LoginProvider component
 export const LoginStatusProvider = ({ children }) => {
@@ -11,10 +11,10 @@ export const LoginStatusProvider = ({ children }) => {
     const logout = () => setIsLoggedIn(false);
 
     return (
-        <LoginStautsContext.Provider value={{ isLoggedIn, login, logout }}>
+        <LoginStatusContext.Provider value={{ isLoggedIn, login, logout }}>
             {children}
-        </LoginStautsContext.Provider>
+        </LoginStatusContext.Provider>
     );
 };
 
-export const useLoginStatus = () => useContext(LoginStautsContext);
+export const useLoginStatus = () => useContext(LoginStatusContext);
