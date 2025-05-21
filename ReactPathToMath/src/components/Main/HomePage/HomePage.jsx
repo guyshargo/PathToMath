@@ -1,5 +1,5 @@
 import React from 'react';
-import ProfileDiv from '../HomePage/ProfileDiv';
+import ProfileDiv from './ProfileDiv';
 import placeHolderAvatar from '../../../assets/Images/Avatars/avatar8.png';
 import CirclesContainer from './CircleContainer';
 
