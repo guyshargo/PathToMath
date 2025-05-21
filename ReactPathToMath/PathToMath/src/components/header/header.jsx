@@ -60,19 +60,21 @@ function Header() {
       ],
       class: "TutorialVideos"
     },
-    {
-      //Profile Page
-      label: 'Profile',
-      link: '/profile',
-      icon: ProfileIcon,
-      colorClass: "bg-green-500 hover:bg-green-600",
-      submenuColor: "hover:bg-green-400",
-      class: "Profile",
-    },
   ];
 
   // Add Login or Logout dynamically
   if (isLoggedIn) {
+    menuData.push(
+      {
+        //Profile Page
+        label: 'Profile',
+        link: '/profile',
+        icon: ProfileIcon,
+        colorClass: "bg-green-500 hover:bg-green-600",
+        submenuColor: "hover:bg-green-400",
+        class: "Profile",
+      });
+
     menuData.push({
       label: 'Logout',
       link: '/',
@@ -80,6 +82,13 @@ function Header() {
       icon: LogoutIcon
     });
   } else {
+    menuData.push({
+      label: 'Signup',
+      link: '/signup',
+      colorClass: "bg-green-500 hover:bg-green-600",
+      icon: null
+    });
+
     menuData.push({
       label: 'Login',
       link: '/login',

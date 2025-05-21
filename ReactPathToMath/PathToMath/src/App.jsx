@@ -6,7 +6,6 @@ import { LoginStatusProvider } from './components/Utils/LoginStatusComponent';
 import Footer from './components/footer/footer';
 import { Outlet } from 'react-router-dom'
 
-
 function App() {
   return (
     <LoginStatusProvider>
