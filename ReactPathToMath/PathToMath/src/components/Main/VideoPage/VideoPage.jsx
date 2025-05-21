@@ -24,7 +24,6 @@ const VideoPage = () => {
     };
 
     return (
-
         <div
             className="relative min-h-[100vh] w-full flex flex-col items-center justify-start pt-12 pb-24 px-4 overflow-hidden"
             style={{

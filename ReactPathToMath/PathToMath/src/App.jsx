@@ -6,6 +6,7 @@ import { LoginStatusProvider } from './components/Utils/LoginStatusComponent';
 import Footer from './components/footer/footer';
 import { Outlet } from 'react-router-dom'
 
+
 function App() {
   return (
     <LoginStatusProvider>
@@ -16,7 +17,6 @@ function App() {
             <Header />
           </header>
 
-          {/* Main Content - with appropriate padding/margin */}
           <Outlet className="flex-grow w-full" />
 
           {/* Footer */}
