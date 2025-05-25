@@ -37,9 +37,8 @@ function CirclesContainer() {
   return (
     <div className="flex flex-wrap justify-center gap-6 mt-8 w-full h-1/2">
       {circleData.map(({ imageSrc, title, description, link }, index) => (
-        <Link to={link}>
+        <Link to={link} key={index}>
           <SubjectCircle
-            key={index}
             imageSrc={imageSrc}
             title={title}
             description={description}
