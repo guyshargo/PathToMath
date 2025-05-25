@@ -11,7 +11,7 @@ const circleData = [
     title: 'Math Problems',
     description: 'Solve fun puzzles to improve your skills!',
     imageSrc: mathCircle,
-    link: '/math-problems',
+    link: '/subjects',
   },
   {
     title: 'Tutorial Videos',

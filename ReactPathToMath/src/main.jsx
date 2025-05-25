@@ -9,8 +9,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
  */
 import HomePage from './components/Main/HomePage/HomePage.jsx'
 import LoginSignup from './components/Main/LoginSignupPage/LoginSignup.jsx'
-import Subjects from './components/Main/SubjectsPage/SubjectsPage.jsx'
-import Levels from './components/Main/LevelsPage/LevelsPage.jsx'
+import SubjectsPage from './components/Main/SubjectsPage/SubjectsPage.jsx'
+import LevelsPage from './components/Main/LevelsPage/LevelsPage.jsx'
 import Game from './components/Main/Games/CubeGame.jsx'
 import VideoPage from './components/Main/VideoPage/VideoPage.jsx'
 import Profile from './components/Main/ProfilePage/ProfilePage.jsx'
@@ -27,9 +27,9 @@ const router = createBrowserRouter([
       { path: '/', element: <HomePage />, },
       { path: '/login', element: <LoginSignup action="Login" />, },
       { path: '/signup', element: <LoginSignup action="Signup" />, },
-      { path: '/subjects', element: <Subjects />, },
-      { path: '/levels', element: <Levels />, },
-      { path: '/games', element: <Game />, },
+      { path: '/subjects', element: <SubjectsPage />, },
+      { path: '/subjects/:subjectGame', element: <LevelsPage />, },
+      { path: '/:subjectGame/play', element: <Game />, },
       { path: '/videos', element: <VideoPage />, },
       { path: '/videos/:subject', element: <RelevantVideo />, },
       { path: '/profile', element: <Profile />, },

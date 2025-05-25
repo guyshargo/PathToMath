@@ -2,29 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ButtonComponent from '../../Utils/Button';
 import GameContainer from './GameContainer';
 import { useNavigate } from 'react-router-dom';
-
-const subjectMap = {
-    "Addition": {
-        "mathAction": "+",
-        "function": (a, b) => a + b
-    },
-    "Subtraction": {
-        "mathAction": "-",
-        "function": (a, b) => a - b
-    },
-    "Multiplication": {
-        "mathAction": "X",
-        "function": (a, b) => a * b
-    },
-    "Division": {
-        "mathAction": "/",
-        "function": (a, b) => a / b
-    },
-    "Percentage": {
-        "mathAction": "%",
-        "function": (a, b) => a / b * 100
-    }
-};
+import { useParams } from 'react-router-dom';
 
 /**
  * Cube Game Component
@@ -32,7 +10,34 @@ const subjectMap = {
  * @param {string} props.gameSubject - The subject of the game
  * @param {number} props.gameLevel - The level of the game
  */
-export default function CubeGame({ gameSubject, gameLevel }) {
+const CubeGame = () =>  {
+    const subjectMap = {
+        "Addition": {
+            "mathAction": "+",
+            "function": (a, b) => a + b
+        },
+        "Subtraction": {
+            "mathAction": "-",
+            "function": (a, b) => a - b
+        },
+        "Multiplication": {
+            "mathAction": "X",
+            "function": (a, b) => a * b
+        },
+        "Division": {
+            "mathAction": "/",
+            "function": (a, b) => a / b
+        },
+        "Percentage": {
+            "mathAction": "%",
+            "function": (a, b) => a / b * 100
+        }
+    };
+
+    const { subjectGame} = useParams();
+    const { levelNum } = useState();
+    const gameLevel = Number(levelNum);
+    
     const navigate = useNavigate();
     const [correctAnswers, setCorrectAnswers] = useState(0);
     const [questions, setQuestions] = useState([]);
@@ -74,8 +79,8 @@ export default function CubeGame({ gameSubject, gameLevel }) {
     };
 
     const makeQuestion = () => {
-        const mathAction = subjectMap[gameSubject].mathAction;
-        const mathFunction = subjectMap[gameSubject].function;
+        const mathAction = subjectMap[subjectGame].mathAction;
+        const mathFunction = subjectMap[subjectGame].function;
 
         const var1 = generateVariable();
         const var2 = generateVariable();
@@ -94,7 +99,7 @@ export default function CubeGame({ gameSubject, gameLevel }) {
         const insertIndex = Math.floor(Math.random() * options.length + 1);
         options.splice(insertIndex, 0, answer);
 
-        if (gameSubject === "Percentage") {
+        if (subjectGame === "Percentage") {
             questionText = `What percent is ${var1} of ${var2}?`;
         } else {
             questionText = `What's ${var1} ${mathAction} ${var2}?`;
@@ -119,7 +124,7 @@ export default function CubeGame({ gameSubject, gameLevel }) {
                 const isSameOrder = question.var1 === existing.var1 && question.var2 === existing.var2;
                 const isReversedOrder = question.var1 === existing.var2 && question.var2 === existing.var1;
 
-                if ((gameSubject === "Addition" || gameSubject === "Multiply") && (isSameOrder || isReversedOrder)) {
+                if ((subjectGame === "Addition" || subjectGame === "Multiply") && (isSameOrder || isReversedOrder)) {
                     isDuplicate = true;
                     break;
                 } else if (isSameOrder) {
@@ -186,7 +191,7 @@ export default function CubeGame({ gameSubject, gameLevel }) {
                 key={index}
                 id={option}
                 onClick={() => optionClicked(questionObject.answer, option)}
-                label={gameSubject === "Percentage" ? `${option}%` : option}
+                label={subjectGame === "Percentage" ? `${option}%` : option}
                 bgColor={selectedOption === option ? 
                     (option === questionObject.answer ? "bg-green-200" : "bg-red-200") : 
                     "bg-gray-100"}
@@ -202,15 +207,15 @@ export default function CubeGame({ gameSubject, gameLevel }) {
         return () => {
             resetGame();
         };
-    }, [gameSubject, gameLevel]);
+    }, [subjectGame, gameLevel]);
 
     return (
-        <GameContainer gameName="Cube Game" gameSubject={gameSubject} gameLevel={gameLevel}>
+
+        <GameContainer gameName="Cube Game" gameSubject={subjectGame} gameLevel={gameLevel}>
             <div id="game" className="border-8 border-blue-200 rounded-lg p-9 inline-block shadow-lg">
                 <div id="gameHeader" className="text-5xl font-bold mb-6 p-6">
                     {!endGame ? questionObject?.question || "Loading..." : endGameObject?.text}
                 </div>
-
                 <div className="grid grid-cols-2 gap-10">
                     {!endGame ? generateOptions() : (
                         <div className="flex flex-col items-center justify-center gap-4">
@@ -247,3 +252,5 @@ export default function CubeGame({ gameSubject, gameLevel }) {
         </GameContainer>
     );
 }
+
+export default CubeGame;
