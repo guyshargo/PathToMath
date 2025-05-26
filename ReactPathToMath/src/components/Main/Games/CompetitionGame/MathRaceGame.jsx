@@ -7,15 +7,15 @@ import QuestionBox from './QuestionBox';
 // Sample questions for the game
 const questions = [
   { id: 1, question: '5 + 7', answer: '12' },
-  { id: 2, question: '3 * 4', answer: '12' },
-  { id: 3, question: '9 - 6', answer: '3' },
-  { id: 4, question: '8 / 2', answer: '4' },
-  { id: 5, question: '10 - 3', answer: '7' },
+  { id: 2, question: '3 + 4', answer: '7' },
+  { id: 3, question: '9 + 6', answer: '15' },
+  { id: 4, question: '8 + 2', answer: '10' },
+  { id: 5, question: '10 + 3', answer: '13' },
   { id: 6, question: '6 + 1', answer: '7' },
-  { id: 7, question: '4 * 2', answer: '8' },
-  { id: 8, question: '18 / 3', answer: '6' },
+  { id: 7, question: '4 + 2', answer: '6' },
+  { id: 8, question: '18 + 3', answer: '21' },
   { id: 9, question: '9 + 5', answer: '14' },
-  { id: 10, question: '7 - 2', answer: '5' },
+  { id: 10, question: '7 + 2', answer: '9' },
 ];
 
 const TRACK_LENGTH = questions.length + 1; // Total number of blocks in the race track, +1 for the "Finish" cube
@@ -99,7 +99,7 @@ function MathRaceGame() {
         ) : (
           <button
             onClick={startGame}
-            className="bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-3 rounded-full text-xl shadow-lg transition-transform duration-300 cursor-pointer hover:scale-110"
+            className="bg-orange-400 hover:bg-orange-500 text-white px-6 py-3 rounded-full text-xl shadow-lg transition-transform duration-300 cursor-pointer hover:scale-110"
           >
             🏁 Start Race
           </button>
