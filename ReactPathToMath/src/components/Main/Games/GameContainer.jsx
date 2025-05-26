@@ -34,7 +34,7 @@ function GameContainer({ gameName, gameSubject, gameLevel, children }) {
             }}
         >
             {/* Game Header */}
-            <div className="text-center p-6.5">
+            <div className="text-center p-9">
                 {/* Main game name with race flag */}
                 <h1 className="text-6xl font-extrabold text-black flex justify-center items-center space-x-3 select-none">
                     <span>{gameName}</span>
