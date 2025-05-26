@@ -86,8 +86,7 @@ function MathRaceGame() {
 
   return (
     <GameContainer gameName="Math Race" gameSubject="Addition" gameLevel="Easy">
-      {/* Show Start Button if game hasn't started */}
-      {/* Start Button or Restart Message */}
+      {/* Start Button for first race or Restart Race for additional races */}
       {!started && (
         message ? (
           <button
