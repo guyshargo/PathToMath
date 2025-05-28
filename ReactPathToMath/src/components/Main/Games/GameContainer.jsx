@@ -34,7 +34,7 @@ function GameContainer({ gameName, gameSubject, gameLevel, children }) {
             }}
         >
             {/* Game Header */}
-            <div className="text-center p-6">
+            <div className="text-center p-8">
                 {/* Main game name with race flag */}
                 <h1 className="text-6xl font-extrabold text-black flex justify-center items-center space-x-3 select-none">
                     <span>{gameName}</span>
@@ -42,7 +42,7 @@ function GameContainer({ gameName, gameSubject, gameLevel, children }) {
                 </h1>
 
                 {/* Subject and Level badges */}
-                <div className="mt-4 flex justify-center space-x-4">
+                <div className="flex justify-center space-x-4">
                     <span className="bg-yellow-300 text-yellow-900 font-semibold px-4 py-1 rounded-full shadow-md select-none">
                         {gameSubject}
                     </span>

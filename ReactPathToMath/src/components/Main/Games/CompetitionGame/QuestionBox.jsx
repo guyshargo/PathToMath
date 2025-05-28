@@ -10,7 +10,7 @@ function QuestionBox({ question, userAnswer, setUserAnswer, onSubmit }) {
   return (
     <form onSubmit={handleSubmit} className="mb-6">
       {/* Display the current question */}
-      <div className="text-2xl font-medium mb-2">Question: {question}</div>
+      <div className="text-2xl font-medium mb-2">{question}</div>
 
       {/* Input field for the user's answer */}
       <input
@@ -22,7 +22,7 @@ function QuestionBox({ question, userAnswer, setUserAnswer, onSubmit }) {
       />
 
       {/* Submit button */}
-      <button type="submit" className="bg-green-600 text-white px-4 py-2 rounded">
+      <button type="submit" className="bg-green-600 text-white px-4 py-2 rounded cursor-pointer">
         Submit
       </button>
     </form>
