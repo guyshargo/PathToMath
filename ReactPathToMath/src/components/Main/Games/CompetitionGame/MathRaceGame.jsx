@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import GameContainer from '../GameContainer';
-import Track from './Track';
 import QuestionBox from './QuestionBox';
 import generateQuestions from '../GameLogic';
+import FeedbackMessage from './FeedbackMessage';
+import CountdownDisplay from './CountdownDisplay';
+import StartButton from './StartButton';
+import TrackSection from './TrackSection';
 
 const NUM_QUESTIONS = 10; // Number of questions in the race
 
@@ -17,16 +20,6 @@ function MathRaceGame() {
   const [questions, setQuestions] = useState([]); // Array of generated math questions for the race
   const botTimer = useRef(null);  // Opponent bot's interval timer
   const [countdown, setCountdown] = useState(null); // Countdown before game starts
-  const [countdownVisible, setCountdownVisible] = useState(false);
-
-  // Countdown effect for the beggining of a race
-  useEffect(() => {
-    if (countdown !== null) {
-      setCountdownVisible(true);
-      const timeout = setTimeout(() => setCountdownVisible(false), 600);
-      return () => clearTimeout(timeout);
-    }
-  }, [countdown]);
 
   // Generate questions on mount, so track is visible immediately when the game loads
   useEffect(() => {
@@ -80,6 +73,7 @@ function MathRaceGame() {
             setCountdown(null);
             setStarted(true); // Game actually starts
           }, 1000);
+          return 'Race!';
         }
         return typeof prev === 'number' ? prev - 1 : prev;
       });
@@ -120,44 +114,17 @@ function MathRaceGame() {
 
   return (
     <GameContainer gameName="Math Race" gameSubject="Addition" gameLevel="Easy">
+
     {/* Show start race button (for first race) or try again message (for next races)
     when the game is not running (before clicking start race or after a race finished and try again needs to be clicked) */}
-      {!started && countdown === null && (message ? (
-          <button
-            onClick={startCountdown}
-            className="mt-4 text-2xl cursor-pointer font-extrabold text-black bg-yellow-300 rounded-full py-3 px-6 shadow-md text-center select-none transition-transform duration-300 hover:scale-105"
-          >
-            {message}
-          </button>
-        ) : (
-          <button
-            onClick={startCountdown}
-            className="bg-orange-400 hover:bg-orange-500 text-white px-6 py-3 rounded-full text-xl shadow-lg transition-transform duration-300 cursor-pointer hover:scale-110"
-          >
-            🏁 Start Race
-          </button>
-        ))}
-
-      {/* Countdown visual before game starts */}
-      {countdown !== null && (
-      <div
-        key={countdown}
-        className={`transition-all ease-in-out
-          ${countdownVisible ? 'opacity-100 scale-150' : 'opacity-0 scale-50'}
-        `}
-      >
-        <div
-          className={`text-6xl font-extrabold text-center my-6
-            ${countdown === 3 ? 'text-red-700' : ''}
-            ${countdown === 2 ? 'text-yellow-500' : ''}
-            ${countdown === 1 ? 'text-green-700' : ''}
-            ${countdown === 'Race!' ? 'text-black' : ''}
-          `}
-        >
-          {countdown === 'Race!' ? '🏁 Race!' : countdown}
+      {!started && countdown === null && (
+        <div className="flex justify-center">
+          <StartButton onClick={startCountdown} message={message} />
         </div>
-      </div>
-    )}
+      )}
+
+      {/* Use CountdownDisplay component for visuals before game starts */}
+      <CountdownDisplay countdown={countdown} />
 
       {/* Show the question box only when the game has started */}
       {started && (
@@ -166,25 +133,13 @@ function MathRaceGame() {
           userAnswer={userAnswer}
           setUserAnswer={setUserAnswer}
           onSubmit={handleAnswerSubmit}
+          feedback={<FeedbackMessage message={message} />}
         />
       )}
 
-      {/* Correct\Incorrect messages during game */}
-      {started && message && message !== 'You Win! Race Again?' && message !== 'Opponent wins! Try Again?' && (
-  <div className="text-xl text-white bg-blue-500 rounded-lg py-2 text-center mx-auto max-w-md inline-block px-4">
-    {message}
-  </div>
-)}
-
-
       {/* Show tracks if questions are loaded */}
       {TRACK_LENGTH > 1 && (
-        <div className="my-6">
-          <div className="font-bold text-lg text-black">Your Track:</div>
-          <Track position={userPos} length={TRACK_LENGTH} color="bg-green-600" startLabel="Start" endLabel="Finish" />
-          <div className="font-bold mt-6 text-lg text-black">Opponent Track:</div>
-          <Track position={botPos} length={TRACK_LENGTH} color="bg-red-600" startLabel="Start" endLabel="Finish" />
-        </div>
+        <TrackSection userPos={userPos} botPos={botPos} trackLength={TRACK_LENGTH} />
       )}
     </GameContainer>
   );
