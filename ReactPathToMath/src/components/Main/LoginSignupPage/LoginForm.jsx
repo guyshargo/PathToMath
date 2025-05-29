@@ -6,6 +6,7 @@ import parents_icon from '../../../assets/Images/LoginSignup/parents.png';
 import email_icon from '../../../assets/Images/LoginSignup/email.png';
 import password_icon from '../../../assets/Images/LoginSignup/padlock.png';
 import ReCAPTCHA from 'react-google-recaptcha';
+import { getUserByMail } from '../../../services/UserService'; 
 
 const SITE_KEY = "6LduyzUrAAAAAD4JsV4SGOX-T-3flctoYprYUc0N";
 
@@ -16,13 +17,29 @@ const LoginForm = ({ formData, setFormData, onSubmit }) => {
     setCaptchaToken(value);
   };
 
-  const handleSubmit = () => {
-    if (!captchaToken) {
-      alert("Please verify you're not a robot 🤖");
-      return;
+const handleSubmit = async () => {
+  if (!captchaToken) {
+    alert("Please verify you're not a robot 🤖");
+    return;
+  }
+
+  const email = formData.email.trim();
+
+  try {
+    const user = await getUserByMail(email);
+
+    if (!user) {
+      alert("User not found 😢");
+      console.log("No user found for:", email);
+    } else {
+      console.log("✅ Found user:", user);
+      alert(`Hello, ${user.name || "User"}!`);
     }
-    onSubmit();
-  };
+  } catch (error) {
+    console.error("❌ Error fetching user:", error);
+    alert("Error fetching user");
+  }
+};
 
   return (
     <div className="bg-blue-100 p-10 rounded-3xl shadow-xl w-full max-w-sm border-4 border-blue-300">
