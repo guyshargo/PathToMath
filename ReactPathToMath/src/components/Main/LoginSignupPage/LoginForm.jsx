@@ -6,7 +6,7 @@ import parents_icon from '../../../assets/Images/LoginSignup/parents.png';
 import email_icon from '../../../assets/Images/LoginSignup/email.png';
 import password_icon from '../../../assets/Images/LoginSignup/padlock.png';
 import ReCAPTCHA from 'react-google-recaptcha';
-
+import {getUserByMail} from '../../../services/userService';
 const SITE_KEY = "6LduyzUrAAAAAD4JsV4SGOX-T-3flctoYprYUc0N";
 
 const LoginForm = ({ formData, setFormData, onSubmit }) => {
