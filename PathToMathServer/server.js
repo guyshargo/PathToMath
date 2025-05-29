@@ -1,29 +1,35 @@
-// Import Express
+require('dotenv').config(); // for local environment variables
+
 const express = require('express');
 const app = express();
-const PORT = 3000;
-//connect to DB
+const PORT = process.env.PORT || 3000;
+
+// Connect to MongoDB Atlas
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://127.0.0.1:27017/PathToMath/Users').then(() => console.log('Connected!'));
-//enable working with json
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => console.log('Connected to MongoDB Atlas!'))
+  .catch(err => console.error('MongoDB connection error:', err));
+
+// Enable JSON parsing
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 
-//enable working with request from client port (5173)
+// Enable CORS
 const cors = require("cors");
 app.use(cors());
 app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin",  "http://localhost:5173");
-    res.header("Access-Control-Allow-Headers",  
-              "Origin,X-Requested-With, Content-Type, Accept");
-    next();
+  res.header("Access-Control-Allow-Origin", process.env.CLIENT_ORIGIN || "http://localhost:5173");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
 });
-//use users route
+
+// Use routes
 var users = require("./routes/users.route");
-app.use("/api/users",users);
-// Start the server
+app.use("/api/users", users);
+
+// Start server
 app.listen(PORT, (err) => {
-    if(!err) console.log('Server is running on port',PORT);
-    else console.log("Error, can't start server", err)
+  if (!err) console.log('Server is running on port', PORT);
+  else console.log("Error, can't start server", err);
 });
