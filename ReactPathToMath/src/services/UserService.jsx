@@ -1,6 +1,9 @@
 import axios from 'axios';
-const URL= '/api/users'
-//get all users
+
+const BASE_URL = 'http://localhost:3000';
+const URL = `${BASE_URL}/api/users`;
+
+// Get all users
 export const getUsers = async () => {
   try {
     const response = await axios.get(URL);
@@ -10,17 +13,19 @@ export const getUsers = async () => {
     throw error;
   }
 };
-//get user by email
+
+// Get user by email
 export const getUserByMail = async (email) => {
   try {
-    const response = await axios.get(`${URL}/${email}`);
+    const response = await axios.get(`${URL}/${encodeURIComponent(email)}`); // ✅ encode email
     return response.data;
   } catch (error) {
     console.error('Error fetching user:', error);
     throw error;
   }
 };
-//add new user
+
+// Add new user
 export const addUser = async (user) => {
   try {
     const response = await axios.post(`${URL}/register`, user);
@@ -30,10 +35,11 @@ export const addUser = async (user) => {
     throw error;
   }
 };
-//update user by email
+
+// Update user by email
 export const updateUser = async (email, user) => {
   try {
-    const response = await axios.put(`${URL}/update/${email}`, user);
+    const response = await axios.put(`${URL}/update/${encodeURIComponent(email)}`, user); // (optional) encode here too
     return response.data;
   } catch (error) {
     console.error('Error updating user:', error);
@@ -42,8 +48,8 @@ export const updateUser = async (email, user) => {
 };
 
 export default {
-    getUsers,
-    getUserByMail,
-    addUser,
-    updateUser
+  getUsers,
+  getUserByMail,
+  addUser,
+  updateUser
 };
