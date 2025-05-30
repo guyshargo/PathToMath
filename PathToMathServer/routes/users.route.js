@@ -10,9 +10,12 @@ usersRouter.get("/", async (req,res)=>{
 
 //GET request for user by email
 usersRouter.get("/:email", async (req,res)=>{
-    let users = await User.find({name: req.params.email});
-    res.status(200).send(users);
+    const email = req.params.email;
+    const user = await User.findOne({ email });
+    if (!user) return res.status(404).send({ message: "User not found" });
+    res.status(200).send(user);
 });
+
 //POST request to add new user
 usersRouter.post("/register", async (req,res)=>{
     let user = new User(req.body);
