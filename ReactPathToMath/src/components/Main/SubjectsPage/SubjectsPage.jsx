@@ -7,11 +7,12 @@ import divisionIcon from '../../../assets/Images/Math_icon/division1.png';
 import percentageIcon from '../../../assets/Images/Math_icon/percentage.png';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { useGrade } from '../../Utils/GradeComponent.jsx'; // Assuming this is a custom hook that provides the current grade
 
 const SubjectsPage = () => {
     const navigate = useNavigate();
     const [selectedTopic, setSelectedTopic] = useState(null);
-
+    const { grade } = useGrade(); // Assuming useGrade is a custom hook that provides the current grade
     const subjectsButtonConfigs = [
         { name: "Addition", icon: additionIcon, signSymbol: "+" },
         { name: "Subtraction", icon: subtractionIcon, signSymbol: "-" },
@@ -24,7 +25,12 @@ const SubjectsPage = () => {
         setSelectedTopic(topic);
         navigate(`/subject/${topic}`);
     };
-
+    let buttons = [];
+    if (grade === 1) {
+        buttons = subjectsButtonConfigs.slice(0, grade + 1);
+    } else {
+        buttons = subjectsButtonConfigs.slice(0, grade);
+    }
     return (
         <div
             className="relative min-h-[100vh] w-full flex flex-col items-center justify-start pt-12 pb-24 px-4 overflow-hidden"
@@ -40,7 +46,7 @@ const SubjectsPage = () => {
             </h1>
 
             <div className="flex flex-wrap justify-center gap-10 z-10">
-                {subjectsButtonConfigs.map((subject, index) => (
+                {buttons.map((subject, index) => (
                     <div
                         key={index}
                         className="p-10 w-70 h-70 flex flex-col items-center justify-center transition-transform duration-200 hover:scale-105"
