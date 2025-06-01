@@ -6,23 +6,14 @@ import parents_icon from '../../../assets/Images/LoginSignup/parents.png';
 import email_icon from '../../../assets/Images/LoginSignup/email.png';
 import password_icon from '../../../assets/Images/LoginSignup/padlock.png';
 import ReCAPTCHA from 'react-google-recaptcha';
-
 const SITE_KEY = "6LduyzUrAAAAAD4JsV4SGOX-T-3flctoYprYUc0N";
 
 const LoginForm = ({ formData, setFormData, onSubmit }) => {
   const [captchaToken, setCaptchaToken] = useState(null);
-
   const handleRecaptcha = (value) => {
     setCaptchaToken(value);
   };
 
-  const handleSubmit = () => {
-    if (!captchaToken) {
-      alert("Please verify you're not a robot 🤖");
-      return;
-    }
-    onSubmit();
-  };
 
   return (
     <div className="bg-blue-100 p-10 rounded-3xl shadow-xl w-full max-w-sm border-4 border-blue-300">
@@ -80,7 +71,7 @@ const LoginForm = ({ formData, setFormData, onSubmit }) => {
         bgColor="bg-gradient-to-r from-blue-500 to-blue-700"
         textColor="text-white"
         size="lg"
-        onClick={handleSubmit}
+        onClick={onSubmit}
       />
 
       <div className="text-center text-sm text-blue-700 cursor-pointer mt-3">

@@ -1,39 +1,11 @@
 import React from 'react';
 import ChildProgressCard from './ChildProgressCard';
-import avatar1 from '../../../assets/Images/Avatars/avatar1.png';
-import avatar6 from '../../../assets/Images/Avatars/avatar6.png';
+import {useUser} from '../../Utils/UserContext';
 
-// Mock child data
-const sampleChildren = [
-  {
-    id: 'child1',
-    name: 'Jordi',
-    puzzlesSolved: 42,
-    badgesEarned: 5,
-    grade: '4th Grade',
-    avatar: avatar1,
-    subjects: [
-      { name: 'Addition', completed: 10, total: 10 },
-      { name: 'Subtraction', completed: 7, total: 10 },
-      { name: 'Multiplication', completed: 10, total: 10 },
-    ],
-  },
-  {
-    id: 'child2',
-    name: 'Shahar',
-    puzzlesSolved: 28,
-    badgesEarned: 3,
-    grade: '2nd Grade',
-    avatar: avatar6,
-    subjects: [
-      { name: 'Addition', completed: 6, total: 10 },
-      { name: 'Subtraction', completed: 10, total: 10 },
-    ],
-  },
-];
 
 
 function ParentPage() {
+  const { user } = useUser();
   return (
     <div className="w-full h-full playful-font">
       {/* Main content container */}
@@ -54,9 +26,7 @@ function ParentPage() {
 
           {/* Flex container for child cards */}
           <div className="flex flex-wrap justify-center gap-6">
-            {sampleChildren.map((child) => (
-              <ChildProgressCard key={child.id} child={child} />
-            ))}
+              <ChildProgressCard key={user.id} child={user} />
           </div>
         </div>
       </div>

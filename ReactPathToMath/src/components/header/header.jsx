@@ -77,7 +77,7 @@ function Header() {
 
     menuData.push({
       label: 'Logout',
-      link: '/',
+      link: '/logout',
       colorClass: 'bg-purple-500 hover:bg-purple-600',
       icon: LogoutIcon
     });
