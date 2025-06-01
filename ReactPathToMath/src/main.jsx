@@ -13,7 +13,7 @@ import SubjectsPage from './components/Main/SubjectsPage/SubjectsPage.jsx'
 import LevelsPage from './components/Main/LevelsPage/LevelsPage.jsx'
 import OptionsGame from './components/Main/Games/OptionsGame.jsx'
 import GameCube from './components/Main/Games/GameCube.jsx'
-
+import RaceGame from './components/Main/Games/RaceGame/RaceGame.jsx'
 import VideoPage from './components/Main/VideoPage/VideoPage.jsx'
 import Profile from './components/Main/ProfilePage/ProfilePage.jsx'
 import RelevantVideo from './components/Main/VideoPage/RelevantVideo.jsx'
@@ -35,6 +35,7 @@ const router = createBrowserRouter([
       { path: '/subjects/:subjectGame', element: <LevelsPage />, },
       { path: '/OptionsGame/:subjectGame/:level', element: <OptionsGame />, },
       { path: '/GameCube/:subjectGame/:level', element: <GameCube />, },
+      { path: '/RaceGame/:subjectGame/:level', element: <RaceGame />, },
       { path: '/videos', element: <VideoPage />, },
       { path: '/videos/:subject', element: <RelevantVideo />, },
       { path: '/profile', element: <Profile />, },

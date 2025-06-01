@@ -54,7 +54,7 @@ function CirclesContainer() {
               </div>
             )}
 
-            <Link to={link}>
+            <Link to={link} key={index}>
               <SubjectCircle
                 imageSrc={imageSrc}
                 title={title}
