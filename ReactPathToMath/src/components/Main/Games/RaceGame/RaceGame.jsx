@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useGrade } from '../../../Utils/GradeComponent';
-import { getUserByMail } from '../../../../services/UserService';
 import GameContainer from '../GameContainer';
 import QuestionBox from './QuestionBox';
 import generateQuestions from '../GameLogic';
@@ -12,7 +11,7 @@ import TrackSection from './TrackSection';
 
 const NUM_QUESTIONS = 10; // Number of questions in the race
 
-function RaceGame({ userEmail }) {
+function RaceGame() {
   // Game state flags and data
   const { grade } = useGrade();
   const { subjectName} = useParams();
@@ -30,27 +29,10 @@ function RaceGame({ userEmail }) {
 
   // Fetch user data when component mounts or when userEmail or gameSubject changes
   useEffect(() => {
-  if (!userEmail) {
-    // No user email — generate questions at grade level 1 directly
-    const generated = generateQuestions(subjectName, 1, NUM_QUESTIONS, 1);
-    console.log('Generated questions (no user):', generated);
+    const level = grade || 1;
+    const generated = generateQuestions(subjectName, level, NUM_QUESTIONS, 1);
     setQuestions(generated);
-    return;
-  }
-    getUserByMail(userEmail)
-      .then((data) => {
-        // Determine the user's level for the current subject and grade
-        const level = data.gradeLevel?.[data.grade - 1]?.[subjectName] ?? 1;
-
-        // Generate questions dynamically based on subject, level, number, and difficulty (1)
-        const generated = generateQuestions(subjectName, level, NUM_QUESTIONS, 1);
-        console.log('Generated questions (with user):', generated);
-        setQuestions(generated);
-      })
-      .catch((error) => {
-        console.error('Failed to fetch user data:', error);
-      });
-  }, [userEmail, subjectName]);
+  }, [grade, subjectName]);
 
   // The total length of the track is number of questions + a "Finish" block
   // Show full length (NUM_QUESTIONS + 1) even if questions haven't loaded yet
