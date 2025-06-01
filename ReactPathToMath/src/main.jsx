@@ -16,6 +16,8 @@ import VideoPage from './components/Main/VideoPage/VideoPage.jsx'
 import Profile from './components/Main/ProfilePage/ProfilePage.jsx'
 import RelevantVideo from './components/Main/VideoPage/RelevantVideo.jsx'
 import ParentPage from './components/Main/ParentPage/ParentPage.jsx';
+import LogoutPage from './components/Main/LoginSignupPage/Logout.jsx';
+
 /**
  * Router for the app
  */
@@ -34,7 +36,7 @@ const router = createBrowserRouter([
       { path: '/videos/:subject', element: <RelevantVideo />, },
       { path: '/profile', element: <Profile />, },
       { path: '/ParentPage', element: <ParentPage />, },
-
+      { path: '/logout', element: <LogoutPage /> }
     ],
   },
 ])

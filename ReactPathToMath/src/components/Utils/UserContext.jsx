@@ -93,7 +93,7 @@ const checkIfUserExists = async (email) => {
 };
 
   return (
-    <UserContext.Provider value={{ user, setUser, loadUser,getUserByMailNoSet, register, update, logout, checkIfUserExists }}>
+    <UserContext.Provider value={{ user, setUser, loadUser,getUserByMailNoSet, register, update, logoutUser, checkIfUserExists }}>
       {children}
     </UserContext.Provider>
   );

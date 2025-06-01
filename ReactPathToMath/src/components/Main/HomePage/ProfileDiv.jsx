@@ -16,7 +16,7 @@ function ProfileDiv() {
             
             {/* Avatar Card */}
             <ProfileCard 
-                label={isLoggedIn.isLoggedIn ? `Hello ${user.name}` : "Hello Guest!"}
+                label={isLoggedIn.isLoggedIn ? `Hello ${user?.name}` : "Hello Guest!"}
                 icon={profile} 
                 buttonLabel={isLoggedIn.isLoggedIn ? "Edit Profile" : "Log In"} 
                 buttonColor="bg-blue-400" 
