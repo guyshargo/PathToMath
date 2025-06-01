@@ -15,7 +15,9 @@ const NUM_QUESTIONS = 10; // Number of questions in the race
 function RaceGame({ userEmail }) {
   // Game state flags and data
   const { grade } = useGrade();
-  const { subjectName: gameSubject } = useParams();
+  const { subjectName} = useParams();
+  console.log('Current gameSubject:', subjectName);
+
   const [started, setStarted] = useState(false); // Is the game currently running?
   const [userPos, setUserPos] = useState(0); // User's current position on the track
   const [botPos, setBotPos] = useState(0); // Opponent bot position on the track
@@ -28,21 +30,27 @@ function RaceGame({ userEmail }) {
 
   // Fetch user data when component mounts or when userEmail or gameSubject changes
   useEffect(() => {
-    if (!userEmail) return;
-
+  if (!userEmail) {
+    // No user email — generate questions at grade level 1 directly
+    const generated = generateQuestions(subjectName, 1, NUM_QUESTIONS, 1);
+    console.log('Generated questions (no user):', generated);
+    setQuestions(generated);
+    return;
+  }
     getUserByMail(userEmail)
       .then((data) => {
         // Determine the user's level for the current subject and grade
-        const level = data.gradeLevel?.[data.grade - 1]?.[gameSubject];
+        const level = data.gradeLevel?.[data.grade - 1]?.[subjectName] ?? 1;
 
         // Generate questions dynamically based on subject, level, number, and difficulty (1)
-        const generated = generateQuestions(gameSubject, level, NUM_QUESTIONS, 1);
+        const generated = generateQuestions(subjectName, level, NUM_QUESTIONS, 1);
+        console.log('Generated questions (with user):', generated);
         setQuestions(generated);
       })
       .catch((error) => {
         console.error('Failed to fetch user data:', error);
       });
-  }, [userEmail, gameSubject]);
+  }, [userEmail, subjectName]);
 
   // The total length of the track is number of questions + a "Finish" block
   // Show full length (NUM_QUESTIONS + 1) even if questions haven't loaded yet
@@ -131,7 +139,7 @@ function RaceGame({ userEmail }) {
   };
 
   return (
-    <GameContainer gameName="Math Race" gameSubject={gameSubject} gameLevel={`Grade ${grade}`}>
+    <GameContainer gameName="Math Race" gameSubject={subjectName} gameLevel={`Grade ${grade}`}>
       {/* Show start race button (for first race) or try again message (for next races)
           when the game is not running (before clicking start race or after a race finished and try again needs to be clicked) */}
       {!started && countdown === null && (
