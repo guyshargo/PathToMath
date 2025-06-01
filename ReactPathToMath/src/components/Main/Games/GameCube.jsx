@@ -8,12 +8,15 @@ import { useLocation } from 'react-router-dom';
 import { useGrade } from '../../Utils/GradeComponent.jsx';
 import Cubes from './cubes.jsx';
 
-const GameCube = ({gameSubject,gameLevel}) => {
+const GameCube = () => {
     const MAX_TRIES = 2;
     const MAX_QUESTIONS = 5;
     const location = useLocation();
     
-
+   const { subjectGame, level } = useParams();
+    const gameSubject = subjectGame;
+    const gameLevel = parseInt(level);
+    
     const navigate = useNavigate();
     const { grade } = useGrade();
     const generate_question = () => {

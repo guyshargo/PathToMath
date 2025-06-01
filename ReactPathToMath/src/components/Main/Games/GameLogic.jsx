@@ -1,3 +1,4 @@
+import React from 'react';
 /** Subject Map */
 const subjectMap = {
     "Addition": {
@@ -262,7 +263,7 @@ const generateQuestions = (gameSubject, gameLevel, numOfQuestions = 1, numOfOpti
             const isSameOrder = question.var1 === existing.var1 && question.var2 === existing.var2;
             const isReversedOrder = question.var1 === existing.var2 && question.var2 === existing.var1;
 
-            if ((gameSubject === "Addition" || gameSubject === "Multiply") && (isSameOrder || isReversedOrder)) {
+            if ((gameSubject === "Addition" || gameSubject === "Multiplication") && (isSameOrder || isReversedOrder)) {
                 isDuplicate = true;
                 break;
             } else if (isSameOrder) {

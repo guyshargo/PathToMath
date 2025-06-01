@@ -3,7 +3,8 @@ import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 const gameArray = [
-    { 'name': 'OptionsGame' }
+    { 'name': 'OptionsGame' },
+    { 'name': 'GameCube' },
 ]
 
 const LevelCircle = ({ currentLevel, numOfLevels }) => {
