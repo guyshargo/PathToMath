@@ -61,8 +61,8 @@ const LoginSignup = ({ action }) => {
         // Save user in context and localStorage
         setUser(user);
         localStorage.setItem("userEmail", user.email);
-        if( role === "parent") {
-          navigate("/parentPage");
+        if( role === "Parent") {
+          navigate("/ParentPage");
         } else {
           navigate("/");
         }

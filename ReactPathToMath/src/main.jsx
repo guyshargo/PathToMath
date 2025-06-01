@@ -15,7 +15,7 @@ import Game from './components/Main/Games/CubeGame.jsx'
 import VideoPage from './components/Main/VideoPage/VideoPage.jsx'
 import Profile from './components/Main/ProfilePage/ProfilePage.jsx'
 import RelevantVideo from './components/Main/VideoPage/RelevantVideo.jsx'
-
+import ParentPage from './components/Main/ParentPage/ParentPage.jsx';
 /**
  * Router for the app
  */
@@ -33,6 +33,8 @@ const router = createBrowserRouter([
       { path: '/videos', element: <VideoPage />, },
       { path: '/videos/:subject', element: <RelevantVideo />, },
       { path: '/profile', element: <Profile />, },
+      { path: '/ParentPage', element: <ParentPage />, },
+
     ],
   },
 ])
