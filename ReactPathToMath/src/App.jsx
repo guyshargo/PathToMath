@@ -5,10 +5,11 @@ import { GradeProvider } from './components/Utils/GradeComponent';
 import { LoginStatusProvider } from './components/Utils/LoginStatusComponent';
 import Footer from './components/footer/footer';
 import { Outlet } from 'react-router-dom'
-
+import { UserProvider } from './components/Utils/UserContext';
 function App() {
   return (
     <LoginStatusProvider>
+      <UserProvider>
       <GradeProvider>
         <div className="flex min-h-screen flex-col relative">
           {/* Header - Fixed position at top */}
@@ -24,7 +25,9 @@ function App() {
           </footer>
         </div>
       </GradeProvider>
-    </LoginStatusProvider>
+     </UserProvider>
+         </LoginStatusProvider>
+
   );
 }
 

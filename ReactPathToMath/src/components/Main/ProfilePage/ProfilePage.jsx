@@ -1,40 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import background from '../../../assets/Images/Background/profileBg.jpg';
+import { useUser } from '../../Utils/UserContext';
 
-const defaultUserData = {
-    "name": "Alice",
-    "email": "alice@gmail.com",
-    "password": "alice123",
-    "currentGrade": 3,
-    "avatar": "./src/Images/Avatars/avatar1.png",
-    "streak": 5,
-    "lastDailyCompleted": "2025-04-14",
-    "gradeLevel": [
-        { "Addition": 0, "Subtraction": 0, "Multiply": 0, "Division": 0, "Percentage": 0 },
-        { "Addition": 0, "Subtraction": 0, "Multiply": 0, "Division": 0, "Percentage": 0 },
-        { "Addition": 0, "Subtraction": 0, "Multiply": 0, "Division": 0, "Percentage": 0 },
-        { "Addition": 0, "Subtraction": 0, "Multiply": 0, "Division": 0, "Percentage": 0 },
-        { "Addition": 0, "Subtraction": 0, "Multiply": 0, "Division": 0, "Percentage": 0 },
-        { "Addition": 0, "Subtraction": 0, "Multiply": 0, "Division": 0, "Percentage": 0 }
-    ],
-    "badges": [
-        [],
-        [],
-        ["plusBadge", "multiplyBadge"],
-        [],
-        [],
-        [],
-        [],
-        []
-    ]
-};
-
-const ProfilePage = ({ user }) => {
-    const [userData, setUserData] = useState(user || defaultUserData);
+const ProfilePage = () => {
+    const { user, update } = useUser();
+    const [userData, setUserData] = useState(user);
     const [isAlert, setIsAlert] = useState(false);
     const [message, setMessage] = useState({ message: "", isSuccess: false });
     const [showAvatarSection, setShowAvatarSection] = useState(false);
-    const [avatar, setAvatar] = useState(userData.avatar);
+    const [avatar, setAvatar] = useState(user?.avatar || "./src/assets/Images/Avatars/avatar1.png");
     const showPassword = useRef(false);
 
     /**
@@ -54,31 +28,45 @@ const ProfilePage = ({ user }) => {
      * @param {Event} event - The form submission event.
      * @returns {void}
      */
-    const updateProfile = (event) => {
-        event.preventDefault();
-        const formData = new FormData(event.target);
-
-        const isEmpty = !formData.get("name") || !formData.get("email") || !formData.get("password");
-        const isSame = formData.get("name") == userData.name && formData.get("email") == userData.email &&
-            formData.get("password") == userData.password && formData.get("grade") == userData.currentGrade &&
-            avatar == userData.avatar;
-
-        if (isEmpty || isSame) {
-            showAlert("No changes made", false);
-            return;
-        }
-
-        setUserData({
-            ...userData,
-            name: formData.get("name") || userData.name,
-            email: formData.get("email") || userData.email,
-            password: formData.get("password") || userData.password,
-            currentGrade: formData.get("grade") || userData.currentGrade,
-            avatar: avatar || userData.avatar,
-        });
-
-        showAlert("Profile Updated Successfully!", true);
+   const updateProfile = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    // Extract form data and check for changes
+    const updatedUser = {
+        ...user,
+        name: formData.get("name") || user.name,
+        email: formData.get("email") || user.email,
+        password: formData.get("password") || user.password,
+        grade: parseInt(formData.get("grade")) || user.grade,
+        avatar: avatar || user.avatar,
     };
+    // Check if any fields have changed
+    const isSame =
+        updatedUser.name === user.name &&
+        updatedUser.email === user.email &&
+        updatedUser.password === user.password &&
+        updatedUser.grade === user.grade &&
+        updatedUser.avatar === user.avatar;
+    // Check if any required fields are empty
+    const isEmpty =
+        !formData.get("name") ||
+        !formData.get("email") ||
+        !formData.get("password");
+    // If no changes or empty fields, show alert and return
+    if (isEmpty || isSame) {
+        showAlert("No changes made", false);
+        return;
+    }
+
+    try {
+        // Update user data in context
+        await update(user.email, updatedUser);
+        showAlert("Profile Updated Successfully!", true);
+    } catch (err) {
+        console.error("Failed to update user:", err);
+        showAlert("Failed to update profile", false);
+    }
+};
 
     /**
      * Renders an alert box based on the message and success flag.
@@ -123,7 +111,7 @@ const ProfilePage = ({ user }) => {
      * @returns {JSX.Element}
      */
     const AvatarOptions = () => {
-        const avatars = ["avatar1", "avatar2", "avatar3", "avatar4png"];
+        const avatars = ["avatar1", "avatar2", "avatar3", "avatar4", "avatar5", "avatar6", "avatar7"];
 
         const fileWithoutExtenstion = (path) => {
             const fileName = path.split("/").pop(); // e.g., "avatar1.png"
@@ -137,11 +125,11 @@ const ProfilePage = ({ user }) => {
          * @returns {JSX.Element}
          */
         const Avatar = ({ avatarEndSrc }) => {
-            const currentAvatar = fileWithoutExtenstion(userData.avatar);
+            const currentAvatar = fileWithoutExtenstion(user.avatar);
             const selectedAvatar = fileWithoutExtenstion(avatar);
             const borderColor = selectedAvatar == avatarEndSrc ? "border-blue-500" : currentAvatar == avatarEndSrc ? "border-blue-200" : "border-transparent";
 
-            const avatarSrc = `./src/Images/Avatars/${avatarEndSrc}.png`;
+            const avatarSrc = `./src/assets/Images/Avatars/${avatarEndSrc}.png`;
 
             const handleAvatarClick = () => {
                 setAvatar(avatarSrc);
@@ -154,10 +142,10 @@ const ProfilePage = ({ user }) => {
         };
 
         return (
-            <div className="fixed top-0 left-0 w-full h-full bg-black flex items-center justify-center">
-                <div className="bg-white p-2 rounded-xl grid grid-cols-1 justify-center gap-6 w-3/4 md:w-1/2 h-1/2 z-50">
+            <div className="fixed top-0 my-4 left-0 w-full h-full bg-black flex items-center justify-center">
+                <div className="bg-white p-2 rounded-xl w-3/4 md:w-1/2 h-3/4 z-40 overflow-y-auto">
                     <div className='justify-center'>
-                        <h1 className="lg:text-6xl sm:text-5xl text-3xl font-extrabold text-center">Choose Avatar:</h1>
+                        <h1 className="mb-3 lg:text-6xl sm:text-5xl text-3xl font-extrabold text-center">Choose Avatar:</h1>
                     </div>
                     <div className='flex flex-wrap gap-7 justify-center'>
                         {avatars.map((av) => (
@@ -200,7 +188,7 @@ const ProfilePage = ({ user }) => {
                     <select
                         name="grade"
                         className="w-full p-2 rounded shadow bg-white hover:cursor-pointer"
-                        defaultValue={userData.currentGrade}
+                        defaultValue={user.grade}
                     >
                         {gradeOptions.map((option) => (
                             <option key={option.value} value={option.value}>
@@ -231,10 +219,10 @@ const ProfilePage = ({ user }) => {
                 <div className="w-full w-2/3">
                     <input
                         id={field}
-                        placeholder={userData[field]}
+                        placeholder={user[field]}
                         name={field}
                         type={isPassword && showPassword.current ? "text" : type}
-                        defaultValue={userData[field]}
+                        defaultValue={user[field]}
                         className="p-2 rounded shadow bg-white w-full"
                     />
                     {isPassword && (
@@ -269,16 +257,25 @@ const ProfilePage = ({ user }) => {
         );
     };
 
-    return (
-        <div className="bg-cover bg-center flex-grow w-full h-full" style={{ backgroundImage: `url(${background})` }}>
-            <div className='font-sans antialiased flex-col align-middle justify-items-center justify-center items-center w-full h-full p-20'>
-                {isAlert && <Alert message={message.message} isSuccess={message.isSuccess} />}
-                {showAvatarSection && <AvatarOptions />}
-                <h2 className="text-white text-2xl font-extrabold mb-7 py-7 tracking-widest">Lets Edit Your Profile:</h2>
-                {body()}
-            </div>
+return (
+    <div className="bg-cover bg-center flex-grow w-full h-full" style={{ backgroundImage: `url(${background})` }}>
+        <div className='font-sans antialiased flex-col align-middle justify-items-center justify-center items-center w-full h-full p-20'>
+            {!user ? (
+                <div className="text-center bg-white bg-opacity-90 p-10 rounded-xl shadow-md max-w-md mx-auto">
+                    <h2 className="text-2xl font-bold mb-4 text-blue-800">Please log in to edit your profile</h2>
+                    <p className="text-gray-700">You must be logged in to view and update your profile.</p>
+                </div>
+            ) : (
+                <>
+                    {isAlert && <Alert message={message.message} isSuccess={message.isSuccess} />}
+                    {showAvatarSection && <AvatarOptions />}
+                    <h2 className="text-white text-2xl font-extrabold mb-7 py-7 tracking-widest">Let's Edit Your Profile:</h2>
+                    {body()}
+                </>
+            )}
         </div>
-    );
+    </div>
+);
 };
 
 export default ProfilePage;

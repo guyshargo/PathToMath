@@ -3,10 +3,12 @@ import { useLoginStatus } from '../../Utils/LoginStatusComponent';
 import ProfileCard from './ProfileCard';
 import ChooseGrade from './ChooseGradeComponent';
 import profile from "../../../assets/Images/profile.png"; 
+import {useUser} from '../../Utils/UserContext'
 import { useNavigate } from 'react-router-dom';
 
 function ProfileDiv() {
     const isLoggedIn = useLoginStatus();
+    const { user } = useUser();
     const navigate = useNavigate();
 
     return (
@@ -14,12 +16,12 @@ function ProfileDiv() {
             
             {/* Avatar Card */}
             <ProfileCard 
-                label={isLoggedIn.isLoggedIn ? "Hello Jordi!" : "Hello Guest!"} 
+                label={isLoggedIn.isLoggedIn ? `Hello ${user.name}` : "Hello Guest!"}
                 icon={profile} 
                 buttonLabel={isLoggedIn.isLoggedIn ? "Edit Profile" : "Log In"} 
                 buttonColor="bg-blue-400" 
                 buttonTextColor="text-white"
-                buttonAction={() => isLoggedIn.isLoggedIn ? console.log("Edit Profile Clicked") : navigate("/login")}
+                buttonAction={() => isLoggedIn.isLoggedIn ? navigate("/profile"): navigate("/login")}
             />
             {/* Grade Selector Section */}
                 <ChooseGrade />

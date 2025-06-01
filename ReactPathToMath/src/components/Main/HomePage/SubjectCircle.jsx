@@ -1,5 +1,4 @@
 import React from 'react';
-
 function SubjectCircle({ imageSrc, title, description }) {
   return (
     <div className="relative w-56 h-64 perspective group cursor-pointer playful-font">

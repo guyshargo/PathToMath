@@ -2,14 +2,17 @@ import React from 'react';
 import ProfileDiv from './ProfileDiv';
 import placeHolderAvatar from '../../../assets/Images/Avatars/avatar8.png';
 import CirclesContainer from './CircleContainer';
-
+import {useUser} from '../../Utils/UserContext'
 function HomePage() {
+    const { user } = useUser();
+    // Access the user context to get user data
+
     return (
         <div className="background-image pt-5 pb-4 flex-grow w-full h-full flex flex-row justify-center items-center ">
             <div className="mt-5 pt-5 mb-4 hidden lg:flex w-1/3 h-full justify-end items-center relative">
                 <div className="flex w-full h-full items-center justify-end" >
                     <img 
-                        src={placeHolderAvatar} 
+                        src={user?.avatar || placeHolderAvatar} 
                         alt="Avatar" 
                         className="object-contain max-h-92 w-auto translate-y-4 -mr-6"
                     />
