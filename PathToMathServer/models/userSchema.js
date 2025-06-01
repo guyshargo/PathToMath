@@ -6,7 +6,7 @@ const gradeLevelSchema = new mongoose.Schema(
   {
     Addition: { type: Number, default: 0 },
     Subtraction: { type: Number, default: 0 },
-    Multiply: { type: Number, default: 0 },
+    Multiplication: { type: Number, default: 0 },
     Division: { type: Number, default: 0 },
     Percentage: { type: Number, default: 0 }
   },
@@ -16,7 +16,7 @@ const gradeLevelSchema = new mongoose.Schema(
 const defaultGradeLevels = () => Array(6).fill({
   Addition: 0,
   Subtraction: 0,
-  Multiply: 0,
+  Multiplication: 0,
   Division: 0,
   Percentage: 0
 });

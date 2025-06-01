@@ -10,7 +10,7 @@ import { useParams } from 'react-router-dom';
  * @param {string} props.gameSubject - The subject of the game
  * @param {number} props.gameLevel - The level of the game
  */
-const CubeGame = () =>  {
+const OptionsGame = () =>  {
     const subjectMap = {
         "Addition": {
             "mathAction": "+",
@@ -34,9 +34,9 @@ const CubeGame = () =>  {
         }
     };
 
-    const { subjectGame} = useParams();
-    const { levelNum } = useState();
-    const gameLevel = Number(levelNum);
+    const { subjectGame, level } = useParams();
+    const gameLevel = Number(level);
+    console.log(subjectGame, gameLevel);
     
     const navigate = useNavigate();
     const [correctAnswers, setCorrectAnswers] = useState(0);
@@ -124,7 +124,7 @@ const CubeGame = () =>  {
                 const isSameOrder = question.var1 === existing.var1 && question.var2 === existing.var2;
                 const isReversedOrder = question.var1 === existing.var2 && question.var2 === existing.var1;
 
-                if ((subjectGame === "Addition" || subjectGame === "Multiply") && (isSameOrder || isReversedOrder)) {
+                if ((subjectGame === "Addition" || subjectGame === "Multiplication") && (isSameOrder || isReversedOrder)) {
                     isDuplicate = true;
                     break;
                 } else if (isSameOrder) {
@@ -253,4 +253,4 @@ const CubeGame = () =>  {
     );
 }
 
-export default CubeGame;
+export default OptionsGame;

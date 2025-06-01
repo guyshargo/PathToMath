@@ -11,7 +11,7 @@ import HomePage from './components/Main/HomePage/HomePage.jsx'
 import LoginSignup from './components/Main/LoginSignupPage/LoginSignup.jsx'
 import SubjectsPage from './components/Main/SubjectsPage/SubjectsPage.jsx'
 import LevelsPage from './components/Main/LevelsPage/LevelsPage.jsx'
-import Game from './components/Main/Games/CubeGame.jsx'
+import OptionsGame from './components/Main/Games/OptionsGame.jsx'
 import VideoPage from './components/Main/VideoPage/VideoPage.jsx'
 import Profile from './components/Main/ProfilePage/ProfilePage.jsx'
 import RelevantVideo from './components/Main/VideoPage/RelevantVideo.jsx'
@@ -31,7 +31,7 @@ const router = createBrowserRouter([
       { path: '/signup', element: <LoginSignup action="Signup" />, },
       { path: '/subjects', element: <SubjectsPage />, },
       { path: '/subjects/:subjectGame', element: <LevelsPage />, },
-      { path: '/:subjectGame/play', element: <Game />, },
+      { path: '/OptionsGame/:subjectGame/:level', element: <OptionsGame />, },
       { path: '/videos', element: <VideoPage />, },
       { path: '/videos/:subject', element: <RelevantVideo />, },
       { path: '/profile', element: <Profile />, },

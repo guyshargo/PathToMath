@@ -15,8 +15,8 @@ import { useParams } from 'react-router-dom';
  */
 function GameContainer({ gameName, gameSubject, children }) {
     const navigate = useNavigate();
-    const location = useLocation();
-    const gameLevel = location.state?.levelNum
+    const { level } = useParams();
+    const gameLevel = Number(level);
 
     const title = gameName + " - " + gameSubject + " - " + gameLevel;
     /**
@@ -29,11 +29,11 @@ function GameContainer({ gameName, gameSubject, children }) {
     return (
         <div className="bg-blue-50 font-sans antialiased min-h-screen">
             {/* Game Header */}
-            <h1 className="text-5xl font-bold p-3"></h1>
+            <h1 className="text-5xl font-bold p-3">{title}</h1>
 
             {/* Game Container */}
             <div className="text-center space-y-6 scale-110">
-                <GameCube  gameSubject={gameSubject} gameLevel={gameLevel} />
+                {children}
             </div>
             <h1>
                 {gameLevel}

@@ -39,7 +39,7 @@ function Header() {
       submenu: [
         { label: 'Addition', link: '/subjects/Addition', class: "Addition" },
         { label: 'Subtraction', link: '/subjects/Subtraction', class: "Subtraction" },
-        { label: 'Multiply', link: '/subjects/Multiply', class: "Multiply" },
+        { label: 'Multiplication', link: '/subjects/Multiplication', class: "Multiplication" },
         { label: 'Division', link: '/subjects/Division', class: "Division" },
         { label: 'Percentage', link: '/subjects/Percentage', class: "Percentage" }
       ],
@@ -54,7 +54,7 @@ function Header() {
       submenu: [
         { label: 'Addition', link: '/videos/Addition' },
         { label: 'Subtraction', link: '/videos/Subtraction' },
-        { label: 'Multiply', link: '/videos/Multiply' },
+        { label: 'Multiplication', link: '/videos/Multiplication' },
         { label: 'Division', link: '/videos/Division' },
         { label: 'Percentage', link: '/videos/Percentage' }
       ],

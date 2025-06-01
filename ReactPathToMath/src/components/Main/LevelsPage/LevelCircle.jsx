@@ -1,26 +1,34 @@
-
 import React from 'react';
-import { useState } from 'react';
-import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-const LevelCircle = ({currentLevel,numOfLevels} ) => {
+
+const gameArray = [
+    { 'name': 'OptionsGame' }
+]
+
+const LevelCircle = ({ currentLevel, numOfLevels }) => {
     const navigate = useNavigate();
     const { subjectGame } = useParams();
     const levels = [];
     for (let i = 1; i <= numOfLevels; i++) {
         if (i < currentLevel) {
-            levels.push({ levelNum: i, color: "bg-green-400",canPlay: true });
+            levels.push({ levelNum: i, color: "bg-green-400", canPlay: true });
         } else if (i === currentLevel) {
-            levels.push({ levelNum: i, color: "bg-orange-400",canPlay: true });
+            levels.push({ levelNum: i, color: "bg-orange-400", canPlay: true });
         } else {
             levels.push({ levelNum: i, color: "bg-red-300", canPlay: false });
         }
     }
 
+    const randomGame = () => {
+        const randomIndex = Math.floor(Math.random() * gameArray.length);
+        const randomGame = gameArray[randomIndex];
+        navigate(`/${randomGame.name}/${subjectGame}/${currentLevel}`);
+    }
+
     return (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5 w-full max-w-screen-lg p-1">
-            {levels.map(({ levelNum, color,canPlay }, index) => (
+            {levels.map(({ levelNum, color, canPlay }, index) => (
                 <button
                     key={`level-${levelNum}-${index}`} // Ensure the key is unique
                     className={`
@@ -31,12 +39,12 @@ const LevelCircle = ({currentLevel,numOfLevels} ) => {
                         transition-transform duration-200
                         ${canPlay ? 'hover:scale-105 hover:animate-pulse' : ''}
                     `}
-                    title = {!canPlay ? "Level Locked" : ""}
+                    title={!canPlay ? "Level Locked" : ""}
                     disabled={!canPlay}
                     onClick={() => {
-                        navigate(`/${subjectGame}/play`, { state: { levelNum } });
+                        randomGame();
                     }}
-                    >
+                >
                     {levelNum}
                 </button>
             ))}

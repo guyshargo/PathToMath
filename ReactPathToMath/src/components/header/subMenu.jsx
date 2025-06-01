@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const topicGrade = {
   "Addition": 1,
   "Subtraction": 1,
-  "Multiply": 3,
+  "Multiplication": 3,
   "Division": 4,
   "Percentage": 5
 };
