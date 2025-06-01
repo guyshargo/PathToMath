@@ -27,7 +27,7 @@ export const GradeProvider = ({ children }) => {
         await update(user.email, { grade: newGrade }); 
         console.log(user.grade);
       } catch (err) {
-        console.error('❌ Failed to update user grade:', err);
+        console.error('Failed to update user grade:', err);
       }
     }
   };

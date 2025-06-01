@@ -34,7 +34,7 @@ export const UserProvider = ({ children }) => {
       setUser(fetchedUser);
       return fetchedUser;
     } catch (error) {
-      console.error('❌ Failed to load user:', error);
+      console.error(' Failed to load user:', error);
       return null;
     }
   };
@@ -47,7 +47,7 @@ export const UserProvider = ({ children }) => {
       localStorage.setItem('userEmail', newUser.email);
       return newUser;
     } catch (error) {
-      console.error('❌ Registration failed:', error);
+      console.error('Registration failed:', error);
       throw error;
     }
   };
@@ -75,7 +75,7 @@ const getUserByMailNoSet = async (email) => {
   try {
     return await getUserByMail(email);
   } catch (error) {
-    console.error('❌ Error fetching user by email:', error);
+    console.error('Error fetching user by email:', error);
     throw error; // rethrow to handle in calling function
   }
 };

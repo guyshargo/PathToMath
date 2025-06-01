@@ -47,7 +47,7 @@ function CirclesContainer() {
           <div key={index} className="relative">
             {isPopQuiz && user && (
               <div className="absolute right-5 z-2 top-3">
-                <img src={streak_icon} alt="streak" className="w-15 h-15" />
+                <img src={streak_icon} alt="streak" className="streak w-15 h-15"/>
                 <span className="absolute inset-0 flex items-center justify-center text-yellow-900 font-bold text-lg">
                   {user.streak}
                 </span>
