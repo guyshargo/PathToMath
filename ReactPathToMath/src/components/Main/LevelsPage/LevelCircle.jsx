@@ -7,7 +7,7 @@ const gameArray = [
     { 'name': 'RaceGame' },
 ]
 
-const LevelCircle = ({ currentLevel, numOfLevels }) => {
+const LevelCircle = ({ currentLevel, numOfLevels, grade }) => {
     const navigate = useNavigate();
     const { subjectGame } = useParams();
     const levels = [];
@@ -24,7 +24,11 @@ const LevelCircle = ({ currentLevel, numOfLevels }) => {
     const randomGame = () => {
         const randomIndex = Math.floor(Math.random() * gameArray.length);
         const randomGame = gameArray[randomIndex];
-        navigate(`/${randomGame.name}/${subjectGame}/${currentLevel}`);
+
+        // Add GameCube only in Addition
+        if (subjectGame === "Addition") gameArray.push({ name: "GameCube" });
+
+        navigate(`/${randomGame.name}/${subjectGame}/${grade}/${currentLevel}`);
     }
 
     return (

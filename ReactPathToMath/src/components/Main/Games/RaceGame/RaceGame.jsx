@@ -13,10 +13,8 @@ const NUM_QUESTIONS = 10; // Number of questions in the race
 
 function RaceGame() {
   // Game state flags and data
-  const { grade } = useGrade();
-  const { subjectGame, level } = useParams();
+  const { subjectGame, grade, level } = useParams();
   const subjectName = subjectGame; // Subject name from URL params
-  console.log('Current gameSubject:', subjectName);
 
   const [started, setStarted] = useState(false); // Is the game currently running?
   const [userPos, setUserPos] = useState(0); // User's current position on the track

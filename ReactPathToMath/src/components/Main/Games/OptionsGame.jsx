@@ -10,7 +10,7 @@ import { useParams } from 'react-router-dom';
  * Cube Game Component
  */
 export default function OptionsGame() {
-    const { subjectGame, level } = useParams();
+    const { subjectGame, grade, level } = useParams();
     const gameSubject = subjectGame;
     const gameLevel = parseInt(level);
     const navigate = useNavigate();
@@ -97,7 +97,7 @@ export default function OptionsGame() {
         setCorrectAnswers(0);
 
         // Set the questions for the game and the current question as the first in the array
-        const questions = generateQuestions(gameSubject, gameLevel, numOfQuestions, numOfOptions);
+        const questions = generateQuestions(gameSubject, grade, gameLevel, numOfQuestions, numOfOptions);
         setQuestions(questions);
         setCurrentQuestion(questions[0]);
     };
@@ -179,11 +179,6 @@ export default function OptionsGame() {
         resetGame();
         loadGameLevel();
     }, [gameSubject, gameLevel]);
-
-    // Add effect to track currentQuestion changes
-    useEffect(() => {
-        console.log('Current Question:', currentQuestion);
-    }, [currentQuestion]);
 
     return (
         <GameContainer gameName="Options Game" gameSubject={gameSubject} gameLevel={gameLevel}>

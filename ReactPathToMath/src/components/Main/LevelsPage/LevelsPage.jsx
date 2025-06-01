@@ -69,7 +69,7 @@ const LevelsPage = () => {
                     {Math.round(levelPercentage)}% Complete
                 </p>
             </div>
-            <LevelCircle currentLevel={playersLevel} numOfLevels={numOfLevels} />
+            <LevelCircle currentLevel={playersLevel} numOfLevels={numOfLevels} grade={user.grade} />
         </div>
     )
 }
