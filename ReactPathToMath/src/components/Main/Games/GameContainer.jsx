@@ -27,17 +27,14 @@ function GameContainer({ gameName, gameSubject, children }) {
     };
 
     return (
-        <div className="bg-blue-50 font-sans antialiased min-h-screen">
+        <div className="flex flex-col bg-blue-50 font-sans antialiased min-h-screen items-center gap-10">
             {/* Game Header */}
             <h1 className="text-5xl font-bold p-3">{title}</h1>
 
             {/* Game Container */}
-            <div className="text-center space-y-6 scale-110">
+            <div className="text-center scale-110">
                 {children}
             </div>
-            <h1>
-                {gameLevel}
-            </h1>
 
             {/* Return Button */}
             <div className="flex w-full items-left p-4">
