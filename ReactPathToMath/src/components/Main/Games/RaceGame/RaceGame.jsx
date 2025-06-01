@@ -12,7 +12,7 @@ import TrackSection from './TrackSection';
 
 const NUM_QUESTIONS = 10; // Number of questions in the race
 
-function MathRaceGame({ userEmail }) {
+function RaceGame({ userEmail }) {
   // Game state flags and data
   const { grade } = useGrade();
   const { subjectName: gameSubject } = useParams();
@@ -162,4 +162,4 @@ function MathRaceGame({ userEmail }) {
   );
 }
 
-export default MathRaceGame;
+export default RaceGame;
