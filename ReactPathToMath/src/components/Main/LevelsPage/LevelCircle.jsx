@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 const gameArray = [
     { 'name': 'OptionsGame' },
-    { 'name': 'GameCube' },
+    { 'name': 'RaceGame' },
 ]
 
 const LevelCircle = ({ currentLevel, numOfLevels }) => {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import background from '../../../assets/Images/Background/white_background.png';
+import background from '../../../assets/Images/nature2.png'
 import { useNavigate } from 'react-router-dom';
 import { useGrade } from '../../Utils/GradeComponent.jsx';
 import { useParams } from 'react-router-dom';
