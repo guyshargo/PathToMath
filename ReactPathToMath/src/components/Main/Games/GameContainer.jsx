@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ButtonComponent from '../../Utils/Button';
 import { useNavigate } from 'react-router-dom';
-
+import GameCube from './GameCube';
+import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 /**
  * Game Container Component
  * @param {Object} props - The component props
@@ -11,10 +13,12 @@ import { useNavigate } from 'react-router-dom';
  * @param {React.ReactNode} props.children - The children of the component
  * @returns {React.ReactNode} The rendered component
  */
-function GameContainer({ gameName, gameSubject, gameLevel, children }) {
+function GameContainer({ gameName, gameSubject, children }) {
     const navigate = useNavigate();
-    const title = gameName + " - " + gameSubject + " - " + gameLevel;
+    const location = useLocation();
+    const gameLevel = location.state?.levelNum
 
+    const title = gameName + " - " + gameSubject + " - " + gameLevel;
     /**
      * Handles the return button click event
      */
@@ -25,12 +29,15 @@ function GameContainer({ gameName, gameSubject, gameLevel, children }) {
     return (
         <div className="bg-blue-50 font-sans antialiased min-h-screen">
             {/* Game Header */}
-            <h1 className="text-5xl font-bold p-3">{title}</h1>
+            <h1 className="text-5xl font-bold p-3"></h1>
 
             {/* Game Container */}
             <div className="text-center space-y-6 scale-110">
-                {children}
+                <GameCube  gameSubject={gameSubject} gameLevel={gameLevel} />
             </div>
+            <h1>
+                {gameLevel}
+            </h1>
 
             {/* Return Button */}
             <div className="flex w-full items-left p-4">
@@ -44,6 +51,7 @@ function GameContainer({ gameName, gameSubject, gameLevel, children }) {
             </div>
         </div>
     );
+  
 }
 
 export default GameContainer;
