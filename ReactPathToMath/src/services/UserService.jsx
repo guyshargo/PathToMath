@@ -20,7 +20,6 @@ export const getUserByMail = async (email) => {
     const response = await axios.get(`${URL}/${encodeURIComponent(email)}`); // ✅ encode email
     return response.data;
   } catch (error) {
-    console.error('Error fetching user:', error);
     throw error;
   }
 };
@@ -39,7 +38,7 @@ export const addUser = async (user) => {
 // Update user by email
 export const updateUser = async (email, user) => {
   try {
-    const response = await axios.put(`${URL}/update/${encodeURIComponent(email)}`, user); // (optional) encode here too
+    const response = await axios.put(`${URL}/update/${encodeURIComponent(email)}`, user); 
     return response.data;
   } catch (error) {
     console.error('Error updating user:', error);

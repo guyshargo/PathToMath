@@ -18,6 +18,7 @@ usersRouter.get("/:email", async (req,res)=>{
 
 //POST request to add new user
 usersRouter.post("/register", async (req,res)=>{
+    console.log("Received user data:", req.body);
     let user = new User(req.body);
     await user.save();
     res.status(200).send(user);
@@ -25,9 +26,12 @@ usersRouter.post("/register", async (req,res)=>{
 
 //PUT request to update all user details by email
 usersRouter.put("/update/:email", async (req,res)=>{
-    let user = await User.updateOne({email: req.params.email},
-    {$set: req.body});
-    res.status(200).send(user);
+    const updatedUser = await User.findOneAndUpdate(
+      { email: req.params.email },
+      { $set: req.body },
+      { new: true } 
+    );
+    res.status(200).send(updatedUser);
 });
 
 module.exports = usersRouter;

@@ -13,8 +13,14 @@ const gradeLevelSchema = new mongoose.Schema(
   { _id: false }
 );
 
-// user schema
-// This schema defines the structure of the user data in the database
+const defaultGradeLevels = () => Array(6).fill({
+  Addition: 0,
+  Subtraction: 0,
+  Multiply: 0,
+  Division: 0,
+  Percentage: 0
+});
+
 const userSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
@@ -23,14 +29,13 @@ const userSchema = new mongoose.Schema(
     grade: { type: Number, required: true },
     avatar: {
       type: String,
-      default: "/src/Images/Avatars/avatar1.png"
+      default: "/src/assets/Images/Avatars/avatar1.png"
     },
     streak: { type: Number, default: 0 },
     pop_quiz_last_date: { type: Date, default: null },
-    // Array of grade levels, each containing scores for different operations
-    // The array must have exactly 6 entries, one for each grade level from 1 to 6
     gradeLevel: {
       type: [gradeLevelSchema],
+      default: defaultGradeLevels,
       validate: {
         validator: function (val) {
           return val.length === 6;
