@@ -29,8 +29,7 @@ function RaceGame() {
 
   // Fetch user data when component mounts or when userEmail or gameSubject changes
   useEffect(() => {
-    const level = grade || 1;
-    const generated = generateQuestions(subjectName, level, NUM_QUESTIONS, 1);
+    const generated = generateQuestions(subjectName, grade, NUM_QUESTIONS, 1);
     setQuestions(generated);
   }, [grade, subjectName]);
 
