@@ -1,10 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ButtonComponent from '../../Utils/Button';
 import { useNavigate } from 'react-router-dom';
-import GameCube from './GameCube';
-import { useLocation } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import TitleImg from '../../../assets/Images/CompetitionGame/RaceGameTitle.png'
 import BackgroundImg from '../../../assets/Images/nature2.png'
 
 /**
@@ -16,23 +13,20 @@ import BackgroundImg from '../../../assets/Images/nature2.png'
  * @param {React.ReactNode} props.children - The children of the component
  * @returns {React.ReactNode} The rendered component
  */
-function GameContainer({ gameName, gameSubject, children }) {
+function GameContainer({ gameName, gameSubject, children, icon }) {
     const navigate = useNavigate();
     const { level } = useParams();
     const gameLevel = Number(level);
-
-    const title = gameName + " - " + gameSubject + " - " + gameLevel;
 
     /**
      * Handles the return button click event
      */
     const handleReturn = () => {
-        navigate('/subjects');
+        navigate(-1);
     };
 
     return (
-        <div
-            className="h-full font-sans playful-font antialiased flex flex-col"
+        <div className="flex flex-col h-full font-sans playful-font antialiased"
             style={{
                 backgroundImage: `url(${BackgroundImg})`,
                 backgroundSize: 'cover',
@@ -41,11 +35,11 @@ function GameContainer({ gameName, gameSubject, children }) {
             }}
         >
             {/* Game Header */}
-            <div className="text-center p-14">
+            <div className="text-center p-10">
                 {/* Main game name with race flag */}
                 <h1 className="text-6xl font-extrabold text-black flex justify-center items-center space-x-3 select-none">
                     <span>{gameName}</span>
-                    <img src={TitleImg} alt="Race Game Title" className="w-30 h-auto" />
+                    {icon && <img src={icon} alt="Game Icon" className="w-30 h-auto" />}
                 </h1>
 
                 {/* Subject and Level badges */}
@@ -60,13 +54,13 @@ function GameContainer({ gameName, gameSubject, children }) {
             </div>
 
             {/* Game Container */}
-            <div className="text-center scale-110">
-            <div className="flex-grow text-center text-black space-y-6 scale-110 p-6 mx-auto max-w-6xl w-full bg-white rounded-lg shadow-lg mt-8">
-                {children}
+            <div className="text-center scale-110 mb-20">
+                <div className="flex-grow text-center text-black space-y-6 scale-110 p-6 mx-auto max-w-6xl w-full bg-transparent mt-8">
+                    {children}
+                </div>
             </div>
 
-            {/* Return Button */}
-            <div className="flex justify-start w-full p-6">
+            <div className="px-6 mb-10">
                 <ButtonComponent
                     label="Return"
                     onClick={handleReturn}
@@ -74,11 +68,9 @@ function GameContainer({ gameName, gameSubject, children }) {
                     textColor="text-white"
                     size="md"
                 />
-                </div>
             </div>
         </div>
     );
-  
 }
 
 export default GameContainer;

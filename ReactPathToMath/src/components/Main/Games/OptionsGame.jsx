@@ -6,14 +6,18 @@ import successImage from '../../../assets/images/success.png';
 import failureImage from '../../../assets/images/failure.png';
 import generateQuestions from './GameLogic';
 import { useParams } from 'react-router-dom';
+import { updateUser } from '../../../services/UserService';
+import { useUser } from '../../Utils/UserContext';
+import TitleIcon from '../../../assets/Images/OptionsIcon.webp'
 /**
- * Cube Game Component
+ * Options Game Component
  */
 export default function OptionsGame() {
-    const { subjectGame, level } = useParams();
+    const { subjectGame, grade, level } = useParams();
     const gameSubject = subjectGame;
     const gameLevel = parseInt(level);
     const navigate = useNavigate();
+    const { user } = useUser();
 
     // Correct answers user answered
     const [correctAnswers, setCorrectAnswers] = useState(0);
@@ -23,9 +27,6 @@ export default function OptionsGame() {
 
     // Current question
     const [currentQuestion, setCurrentQuestion] = useState(null);
-
-    // User clicked answer
-    const [clickedAnswer, setClickedAnswer] = useState({ text: '', color: '' });
 
     // Answer visible
     const [isAnswerVisible, setIsAnswerVisible] = useState(false);
@@ -50,7 +51,6 @@ export default function OptionsGame() {
         setCurrentQuestion(null);
         setDisableButtons(false);
         setIsAnswerVisible(false);
-        setClickedAnswer({ text: '', color: '' });
         setEndGame(false);
         setEndGameObject(null);
         setSelectedOption(null);
@@ -74,20 +74,20 @@ export default function OptionsGame() {
     /** Generate Options */
     const generateOptions = () => {
         return (
-        <div className="grid grid-cols-2 gap-10">
-            {currentQuestion?.options.map((option, index) => (
-                <ButtonComponent
-                    key={index}
-                    id={option.value}
-                    onClick={() => optionClicked(option)}
-                    label={gameSubject === "Percentage" ? `${option.textValue}%` : option.textValue}
-                    bgColor={optionBgColor(option)}
-                textColor="text-black"
-                size="lg"
-                    disabled={disableButtons}
-                />
-            ))}
-        </div>
+            <div className="grid grid-cols-2 gap-10 mb-10">
+                {currentQuestion?.options.map((option, index) => (
+                    <ButtonComponent
+                        key={index}
+                        id={option.value}
+                        onClick={() => optionClicked(option)}
+                        label={gameSubject === "Percentage" ? `${option.textValue}%` : option.textValue}
+                        bgColor={optionBgColor(option)}
+                        textColor="text-black"
+                        size="lg"
+                        disabled={disableButtons}
+                    />
+                ))}
+            </div>
         );
     };
 
@@ -97,7 +97,7 @@ export default function OptionsGame() {
         setCorrectAnswers(0);
 
         // Set the questions for the game and the current question as the first in the array
-        const questions = generateQuestions(gameSubject, gameLevel, numOfQuestions, numOfOptions);
+        const questions = generateQuestions(gameSubject, grade, gameLevel, numOfQuestions, numOfOptions);
         setQuestions(questions);
         setCurrentQuestion(questions[0]);
     };
@@ -105,11 +105,8 @@ export default function OptionsGame() {
     /** User Clicked Answer */
     const optionClicked = (option) => {
         // Check if the answer is correct and set the clicked answer to correct
-        if (option.isCorrect) {
-            setClickedAnswer({ text: "Correct!", color: "green" });
-            setCorrectAnswers(prev => prev + 1);
-        }
-        else setClickedAnswer({ text: "Wrong!", color: "red" });
+        if (option.isCorrect) setCorrectAnswers(prev => prev + 1);
+
 
         // Set the selected option and disable the buttons
         setSelectedOption(option);
@@ -145,9 +142,21 @@ export default function OptionsGame() {
             imgURL: isSuccess ? successImage : failureImage,
             headerText: isSuccess ? "Continue to the next level!" : "Try Again?",
             handleClick: () => {
-                isSuccess ? navigate('/') : (resetGame(), loadGameLevel());
+                if (isSuccess) {
+                    const currentFinished = user?.gradeLevel[user.grade - 1]?.[gameSubject];
+                    if (gameLevel > currentFinished) {
+                        let newUser = user;
+                        newUser.gradeLevel[user.grade - 1][gameSubject] = gameLevel;
+                        updateUser(user.email, newUser);
+                    }
+                    navigate(`/subjects/${gameSubject}`);
+                }
+                else {
+                    resetGame();
+                    loadGameLevel();
+                }
             },
-            buttonText: isSuccess ? "Back to Main" : "Try Again!",
+            buttonText: isSuccess ? "Next Level" : "Try Again!",
             containerColor: isSuccess ? "bg-green-100" : "bg-red-100"
         });
 
@@ -158,19 +167,19 @@ export default function OptionsGame() {
     /** End Game Component */
     const endGameComponent = () => {
         return (
-        <div className="flex flex-col items-center justify-center gap-4">
-            <img
-                className="h-60 w-auto max-w-full object-contain"
-                src={endGameObject?.imgURL}
-                alt={endGameObject?.color === "green" ? "Success" : "Failure"}
-            />
-            <ButtonComponent
-                label={endGameObject?.buttonText}
-                onClick={endGameObject?.handleClick}
-                textColor="text-black"
-                bgColor={endGameObject?.bgColor}
-            />
-        </div>
+            <div className="flex flex-col items-center justify-center gap-4">
+                <img
+                    className="h-60 w-auto max-w-full object-contain"
+                    src={endGameObject?.imgURL}
+                    alt={endGameObject?.color === "green" ? "Success" : "Failure"}
+                />
+                <ButtonComponent
+                    label={endGameObject?.buttonText}
+                    onClick={endGameObject?.handleClick}
+                    textColor="text-black"
+                    bgColor={endGameObject?.bgColor}
+                />
+            </div>
         )
     };
 
@@ -180,15 +189,10 @@ export default function OptionsGame() {
         loadGameLevel();
     }, [gameSubject, gameLevel]);
 
-    // Add effect to track currentQuestion changes
-    useEffect(() => {
-        console.log('Current Question:', currentQuestion);
-    }, [currentQuestion]);
-
     return (
-        <GameContainer gameName="Options Game" gameSubject={gameSubject} gameLevel={gameLevel}>
+        <GameContainer gameName="Options Game" gameSubject={gameSubject} gameLevel={gameLevel} icon={TitleIcon}>
             {/* Cube Game Container */}
-            <div className={`border-8 border-blue-200 rounded-lg p-9 inline-block shadow-lg ${endGame ? endGameObject?.containerColor : 'bg-blue-100'}`}>
+            <div className={`border-8 border-white rounded-lg p-9 inline-block shadow-lg ${endGame ? endGameObject?.containerColor : 'bg-blue-100'}`}>
                 {/* Question Text */}
                 <div className="text-5xl font-bold mb-6 p-6">
                     {!endGame ? currentQuestion?.question : endGameObject?.text}
@@ -196,27 +200,20 @@ export default function OptionsGame() {
 
                 {/* Options */}
                 {!endGame ? generateOptions() : endGameComponent()}
-            </div>
 
-            {/* Answer Visible */}
-            {isAnswerVisible && !endGame && (
-                <div className="flex flex-row items-center justify-center gap-4">
-                    <div className={`text-2xl mb-4 font-bold text-${clickedAnswer.color}`}>
-                        {clickedAnswer.text}
-                    </div>
-
-                    {/* Next Question Button */}
+                {/* Answer Visible */}
+                {isAnswerVisible && !endGame && (
                     <div className="flex justify-center gap-10">
-                    <ButtonComponent
-                        label={'Next Question'}
-                        onClick={nextQuestionClicked}
-                        bgColor="bg-gray-100"
-                        textColor="text-black"
-                        size="lg"
-                    />
+                        <ButtonComponent
+                            label={'Next Question'}
+                            onClick={nextQuestionClicked}
+                            bgColor="bg-yellow-400"
+                            textColor="text-black"
+                            size="lg"
+                        />
                     </div>
-                </div>
-            )}
+                )}
+            </div>
         </GameContainer>
     );
 }

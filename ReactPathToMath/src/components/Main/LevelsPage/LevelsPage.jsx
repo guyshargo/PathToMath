@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import background from '../../../assets/Images/nature2.png'
-import { useNavigate } from 'react-router-dom';
-import { useGrade } from '../../Utils/GradeComponent.jsx';
 import { useParams } from 'react-router-dom';
 import LevelCircle from "./LevelCircle.jsx";
 import { useUser } from '../../Utils/UserContext.jsx';
@@ -10,6 +8,7 @@ import subtraction from '../../../assets/Images/Math_icon/minus.png';
 import multiplication from '../../../assets/Images/Math_icon/multi.png';
 import division from '../../../assets/Images/Math_icon/division1.png';
 import percentage from '../../../assets/Images/Math_icon/percentage.png';
+import { useLoginStatus } from '../../Utils/LoginStatusComponent.jsx';
 
 const IconMap = {
     Addition: addition,
@@ -21,6 +20,8 @@ const IconMap = {
 const LevelsPage = () => {
     const { subjectGame } = useParams();
     const { user } = useUser();
+    const { isLoggedIn } = useLoginStatus();
+    const gradeLevel = isLoggedIn ? user.grade : 1;
 
     if (!subjectGame) {
         return (
@@ -69,7 +70,7 @@ const LevelsPage = () => {
                     {Math.round(levelPercentage)}% Complete
                 </p>
             </div>
-            <LevelCircle currentLevel={playersLevel} numOfLevels={numOfLevels} />
+            <LevelCircle currentLevel={playersLevel} numOfLevels={numOfLevels} grade={gradeLevel} />
         </div>
     )
 }

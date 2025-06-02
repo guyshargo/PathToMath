@@ -2,14 +2,10 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-const gameArray = [
-    { 'name': 'OptionsGame' },
-    { 'name': 'RaceGame' },
-]
-
-const LevelCircle = ({ currentLevel, numOfLevels }) => {
+const LevelCircle = ({ currentLevel, numOfLevels, grade }) => {
     const navigate = useNavigate();
     const { subjectGame } = useParams();
+
     const levels = [];
     for (let i = 1; i <= numOfLevels; i++) {
         if (i < currentLevel) {
@@ -21,10 +17,19 @@ const LevelCircle = ({ currentLevel, numOfLevels }) => {
         }
     }
 
-    const randomGame = () => {
+    const randomGame = (level) => {
+        const gameArray = [
+            { 'name': 'OptionsGame' },
+            { 'name': 'RaceGame' }
+        ]
+
+        // Add GameCube only in Addition
+        if (subjectGame == "Addition") gameArray.push({ name: "GameCube" });
+
         const randomIndex = Math.floor(Math.random() * gameArray.length);
         const randomGame = gameArray[randomIndex];
-        navigate(`/${randomGame.name}/${subjectGame}/${currentLevel}`);
+
+        navigate(`/${randomGame.name}/${subjectGame}/${grade}/${level}`);
     }
 
     return (
@@ -43,7 +48,7 @@ const LevelCircle = ({ currentLevel, numOfLevels }) => {
                     title={!canPlay ? "Level Locked" : ""}
                     disabled={!canPlay}
                     onClick={() => {
-                        randomGame();
+                        randomGame(levelNum);
                     }}
                 >
                     {levelNum}

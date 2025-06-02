@@ -1,46 +1,44 @@
-import { React} from 'react';
-import GameContainer from './GameContainer';   
+import { React } from 'react';
 import background from '../../../assets/Images/Background/white_background.png';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
-import { useGrade } from '../../Utils/GradeComponent.jsx';
 import Cubes from './cubes.jsx';
+import { useUser } from '../../Utils/UserContext';
+import { updateUser } from '../../../services/UserService';
 
 const GameCube = () => {
     const MAX_TRIES = 2;
     const MAX_QUESTIONS = 5;
-    const location = useLocation();
-    
-   const { subjectGame, level } = useParams();
+
+    const { subjectGame, grade, level } = useParams();
     const gameSubject = subjectGame;
     const gameLevel = parseInt(level);
-    
+
     const navigate = useNavigate();
-    const { grade } = useGrade();
     const generate_question = () => {
-        let sum = Math.floor(Math.random() * ((grade)*2 + gameLevel+5)) + 1;
-        let cubes= [];
+        let sum = Math.floor(Math.random() * ((grade) * 2 + gameLevel + 5)) + 1;
+        let cubes = [];
         cubes = generate_cubes(sum);
-        return{cubes, sum};
+        return { cubes, sum };
     }
+
     // Generate randome cubes values
     const generate_cubes = (sum) => {
         let validCubes = false;
         let cubes = [];
         while (!validCubes) {
             cubes = []
-            for (let i = 0; i < grade*2; i++) {
+            for (let i = 0; i < grade * 2; i++) {
                 // Generate a random cube value between 1 and 6
                 cubes.push(Math.floor(Math.random() * 6) + 1);
-                validCubes = isValidCubes(cubes,sum);
+                validCubes = isValidCubes(cubes, sum);
             }
         }
         return cubes;
     }
 
-    const isValidCubes = (cubesArr, target ,index = 0) => {
+    const isValidCubes = (cubesArr, target, index = 0) => {
         if (target == 0) {
             return true;
         }
@@ -53,7 +51,7 @@ const GameCube = () => {
     const check_answer = (selected) => {
         if (selected.length === 0) {
             setFeedbackMessage("❌ Please select at least one cube.");
-            return; 
+            return;
         }
         let check_sum = 0;
         selected.forEach(index => {
@@ -66,7 +64,7 @@ const GameCube = () => {
         }
         else {
             if (tries > 1) {
-                setFeedbackMessage(`❌ Incorrect! You have ${tries-1} tries left.`);
+                setFeedbackMessage(`❌ Incorrect! You have ${tries - 1} tries left.`);
                 setSelected([]);
                 setTries(prev => prev - 1);
                 setIsDisabled(false);
@@ -106,7 +104,7 @@ const GameCube = () => {
                 }
             }
         }
-    
+
         //find reversed sol
         const sol = [];
         let i = n, j = target;
@@ -119,8 +117,8 @@ const GameCube = () => {
         }
         return sol.reverse();
     }
-    
-    const renderGame= () => {
+
+    const renderGame = () => {
         if (question < 4) {
             setFeedbackMessage("");
             setSelected([]);
@@ -145,11 +143,12 @@ const GameCube = () => {
                 : [...prev, index]
         );
     };
+
     const [isDisabled, setIsDisabled] = useState(false);
     const [correct, setCorrect] = useState(0);
     const [next, setNext] = useState("");
     const [tries, setTries] = useState(MAX_TRIES);
-    const [question, setQuestion ] = useState(0);
+    const [question, setQuestion] = useState(0);
     const [solution, setSolution] = useState([]);
     const [feedbackMessage, setFeedbackMessage] = useState("");
     const [game, setGame] = useState(generate_question);
@@ -157,81 +156,91 @@ const GameCube = () => {
     const { cubes, sum } = game;
     const [gameFinished, setGameFinished] = useState(false);
 
+    // Handle finished game
+    const { user } = useUser();
+    const handleFinishedGame = () => {
+        const currentFinished = user?.gradeLevel[user.grade - 1]?.[gameSubject];
+        if (currentFinished && gameLevel > currentFinished) {
+            let newUser = user;
+            newUser.gradeLevel[user.grade - 1][gameSubject] = gameLevel;
+            updateUser(user.email, newUser);
+        }
+        navigate(`/subjects/${gameSubject}`);
+    }
+
     return (
         <div
             className="ml-4 mt-4 text-3xl font-sans"
             style={{
-            backgroundImage: `url(${background})`,
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center',
+                backgroundImage: `url(${background})`,
+                backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
             }}
         >
             {gameFinished ? (
-            <div className="flex flex-col items-center justify-center min-h-screen text-center">
-                <h2 className="text-3xl font-semibold text-green-600 mb-4">
-                {feedbackMessage}
-                </h2>
-                <button
-                className="bg-blue-500 text-white mt-10 px-6 py-3 rounded-lg text-xl hover:cursor-pointer"
-                onClick={() => navigate(`/Subjects/${gameSubject}`)}
-                >
-                back to {gameSubject} levels
-                </button>
-            </div>
+                <div className="flex flex-col items-center justify-center min-h-screen text-center">
+                    <h2 className="text-3xl font-semibold text-green-600 mb-4">
+                        {feedbackMessage}
+                    </h2>
+                    <button
+                        className="bg-blue-500 text-white mt-10 px-6 py-3 rounded-lg text-xl hover:cursor-pointer"
+                        onClick={handleFinishedGame}
+                    >
+                        back to {gameSubject} levels
+                    </button>
+                </div>
             ) : (
-            <div className="flex flex-col items-center min-h-screen">
-                <div className='text-base font-semibold text-gray-700'>
-                Tries: {'❤️'.repeat(tries)}{'🤍'.repeat(MAX_TRIES - tries)}
+                <div className="flex flex-col items-center min-h-screen">
+                    <div className='text-base font-semibold text-gray-700'>
+                        Tries: {'❤️'.repeat(tries)}{'🤍'.repeat(MAX_TRIES - tries)}
+                    </div>
+
+                    <h1 className="text-4xl font-bold text-center mb-5">
+                        Sum: {sum}
+                    </h1>
+
+                    <div className="grid grid-cols-4 grid-rows-2 gap-4 mt-0">
+                        {cubes.map((value, index) => (
+                            <Cubes
+                                key={index}
+                                value={value}
+                                onClick={() => toggleCube(index)}
+                                className={
+                                    selected.includes(index)
+                                        ? "outline-3 outline-green-400"
+                                        : solution.includes(index)
+                                            ? "outline-3 outline-red-400"
+                                            : "bg-gray-100"
+                                }
+                            />
+                        ))}
+                    </div>
+
+                    <div
+                        className={`mt-6 text-xl font-semibold text-center transition-opacity duration-300 ${feedbackMessage ? "opacity-100 text-purple-700" : "opacity-0"
+                            }`}
+                    >
+                        {feedbackMessage}
+                    </div>
+
+                    <div>
+                        <button
+                            className="bg-blue-400 hover:cursor-pointer text-white mt-4 px-4 py-2 rounded-lg"
+                            onClick={() => check_answer(selected)}
+                        >
+                            Check
+                        </button>
+
+                        <button
+                            className={`bg-gray-400 text-white hover:cursor-pointer px-4 py-2 rounded-lg mt-5 ml-3 ${next ? "opacity-100" : "opacity-0"
+                                }`}
+                            onClick={() => renderGame()}
+                        >
+                            {next}
+                        </button>
+                    </div>
                 </div>
-
-                <h1 className="text-4xl font-bold text-center mb-5">
-                Sum: {sum}
-                </h1>
-
-                <div className="grid grid-cols-4 grid-rows-2 gap-4 mt-0">
-                {cubes.map((value, index) => (
-                    <Cubes
-                    key={index}
-                    value={value}
-                    onClick={() => toggleCube(index)}
-                    className={
-                        selected.includes(index)
-                        ? "outline-3 outline-green-400"
-                        : solution.includes(index)
-                        ? "outline-3 outline-red-400"
-                        : "bg-gray-100"
-                    }
-                    />
-                ))}
-                </div>
-
-                <div
-                className={`mt-6 text-xl font-semibold text-center transition-opacity duration-300 ${
-                    feedbackMessage ? "opacity-100 text-purple-700" : "opacity-0"
-                }`}
-                >
-                {feedbackMessage}
-                </div>
-
-                <div>
-                <button
-                    className="bg-blue-400 hover:cursor-pointer text-white mt-4 px-4 py-2 rounded-lg"
-                    onClick={() => check_answer(selected)}
-                >
-                    Check
-                </button>
-
-                <button
-                    className={`bg-gray-400 text-white hover:cursor-pointer px-4 py-2 rounded-lg mt-5 ml-3 ${
-                    next ? "opacity-100" : "opacity-0"
-                    }`}
-                    onClick={() => renderGame()}
-                >
-                    {next}
-                </button>
-                </div>
-            </div>
             )}
         </div>
     );

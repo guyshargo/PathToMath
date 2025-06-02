@@ -4,7 +4,6 @@ import { useUser } from '../../Utils/UserContext';
 
 const ProfilePage = () => {
     const { user, update } = useUser();
-    const [userData, setUserData] = useState(user);
     const [isAlert, setIsAlert] = useState(false);
     const [message, setMessage] = useState({ message: "", isSuccess: false });
     const [showAvatarSection, setShowAvatarSection] = useState(false);
@@ -28,45 +27,45 @@ const ProfilePage = () => {
      * @param {Event} event - The form submission event.
      * @returns {void}
      */
-   const updateProfile = async (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    // Extract form data and check for changes
-    const updatedUser = {
-        ...user,
-        name: formData.get("name") || user.name,
-        email: formData.get("email") || user.email,
-        password: formData.get("password") || user.password,
-        grade: parseInt(formData.get("grade")) || user.grade,
-        avatar: avatar || user.avatar,
-    };
-    // Check if any fields have changed
-    const isSame =
-        updatedUser.name === user.name &&
-        updatedUser.email === user.email &&
-        updatedUser.password === user.password &&
-        updatedUser.grade === user.grade &&
-        updatedUser.avatar === user.avatar;
-    // Check if any required fields are empty
-    const isEmpty =
-        !formData.get("name") ||
-        !formData.get("email") ||
-        !formData.get("password");
-    // If no changes or empty fields, show alert and return
-    if (isEmpty || isSame) {
-        showAlert("No changes made", false);
-        return;
-    }
+    const updateProfile = async (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        // Extract form data and check for changes
+        const updatedUser = {
+            ...user,
+            name: formData.get("name") || user.name,
+            email: formData.get("email") || user.email,
+            password: formData.get("password") || user.password,
+            grade: parseInt(formData.get("grade")) || user.grade,
+            avatar: avatar || user.avatar,
+        };
+        // Check if any fields have changed
+        const isSame =
+            updatedUser.name === user.name &&
+            updatedUser.email === user.email &&
+            updatedUser.password === user.password &&
+            updatedUser.grade === user.grade &&
+            updatedUser.avatar === user.avatar;
+        // Check if any required fields are empty
+        const isEmpty =
+            !formData.get("name") ||
+            !formData.get("email") ||
+            !formData.get("password");
+        // If no changes or empty fields, show alert and return
+        if (isEmpty || isSame) {
+            showAlert("No changes made", false);
+            return;
+        }
 
-    try {
-        // Update user data in context
-        await update(user.email, updatedUser);
-        showAlert("Profile Updated Successfully!", true);
-    } catch (err) {
-        console.error("Failed to update user:", err);
-        showAlert("Failed to update profile", false);
-    }
-};
+        try {
+            // Update user data in context
+            await update(user.email, updatedUser);
+            showAlert("Profile Updated Successfully!", true);
+        } catch (err) {
+            console.error("Failed to update user:", err);
+            showAlert("Failed to update profile", false);
+        }
+    };
 
     /**
      * Renders an alert box based on the message and success flag.
@@ -207,7 +206,7 @@ const ProfilePage = () => {
          * @param {string} props.field - Field name (e.g., "name", "email").
          * @returns {JSX.Element}
          */
-        const InputBox = ({ type, field }) => {
+        const InputBox = ({ labelText, type, field }) => {
             const isPassword = type === "password";
 
             const handleTogglePasswordVisibility = () => {
@@ -217,6 +216,7 @@ const ProfilePage = () => {
 
             return (
                 <div className="w-full w-2/3">
+                    <label className="block text-gray-700 font-bold mb-1">{labelText}</label>
                     <input
                         id={field}
                         placeholder={user[field]}
@@ -243,9 +243,9 @@ const ProfilePage = () => {
                 <AvatarSection />
                 <div className="flex flex-col justify-center h-full w-full md:w-1/2 lg:w-1/3 md:gap-3 items-center">
                     <form className="gap-6 flex flex-col" onSubmit={(event) => updateProfile(event)}>
-                        <InputBox type="text" field="name" />
-                        <InputBox type="email" field="email" />
-                        <InputBox type="password" field="password" />
+                        <InputBox labelText="Name" type="text" field="name" />
+                        <InputBox labelText="Email" type="email" field="email" />
+                        <InputBox labelText="Password" type="password" field="password" />
                         <GradePicker />
                         <button type="submit"
                             className="bg-green-400 hover:bg-green-500 text-white font-bold py-2 px-4 rounded mt-2 my-5 md:my-0">
@@ -257,25 +257,25 @@ const ProfilePage = () => {
         );
     };
 
-return (
-    <div className="bg-cover bg-center flex-grow w-full h-full" style={{ backgroundImage: `url(${background})` }}>
-        <div className='font-sans antialiased flex-col align-middle justify-items-center justify-center items-center w-full h-full p-20'>
-            {!user ? (
-                <div className="text-center bg-white bg-opacity-90 p-10 rounded-xl shadow-md max-w-md mx-auto">
-                    <h2 className="text-2xl font-bold mb-4 text-blue-800">Please log in to edit your profile</h2>
-                    <p className="text-gray-700">You must be logged in to view and update your profile.</p>
-                </div>
-            ) : (
-                <>
-                    {isAlert && <Alert message={message.message} isSuccess={message.isSuccess} />}
-                    {showAvatarSection && <AvatarOptions />}
-                    <h2 className="text-white text-2xl font-extrabold mb-7 py-7 tracking-widest">Let's Edit Your Profile:</h2>
-                    {body()}
-                </>
-            )}
+    return (
+        <div className="bg-cover bg-center flex-grow w-full h-full" style={{ backgroundImage: `url(${background})` }}>
+            <div className='font-sans antialiased flex-col align-middle justify-items-center justify-center items-center w-full h-full p-20'>
+                {!user ? (
+                    <div className="text-center bg-white bg-opacity-90 p-10 rounded-xl shadow-md max-w-md mx-auto">
+                        <h2 className="text-2xl font-bold mb-4 text-blue-800">Please log in to edit your profile</h2>
+                        <p className="text-gray-700">You must be logged in to view and update your profile.</p>
+                    </div>
+                ) : (
+                    <>
+                        {isAlert && <Alert message={message.message} isSuccess={message.isSuccess} />}
+                        {showAvatarSection && <AvatarOptions />}
+                        <h2 className="text-white text-2xl font-extrabold mb-7 py-7 tracking-widest">Let's Edit Your Profile:</h2>
+                        {body()}
+                    </>
+                )}
+            </div>
         </div>
-    </div>
-);
+    );
 };
 
 export default ProfilePage;

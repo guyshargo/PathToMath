@@ -9,6 +9,7 @@ const LogoutPage = () => {
 
     const handleConfirmLogout = () => {
         logoutUser();
+        localStorage.removeItem("userType");
         navigate("/login");
     }
     const handleCancelLogout = () => {
