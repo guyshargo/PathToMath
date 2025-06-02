@@ -1,17 +1,15 @@
 import { React } from 'react';
-import GameContainer from './GameContainer';
 import background from '../../../assets/Images/Background/white_background.png';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
-import { useGrade } from '../../Utils/GradeComponent.jsx';
 import Cubes from './cubes.jsx';
+import { useUser } from '../../Utils/UserContext';
+import { updateUser } from '../../../services/UserService';
 
 const GameCube = () => {
     const MAX_TRIES = 2;
     const MAX_QUESTIONS = 5;
-    const location = useLocation();
 
     const { subjectGame, grade, level } = useParams();
     const gameSubject = subjectGame;
@@ -24,6 +22,7 @@ const GameCube = () => {
         cubes = generate_cubes(sum);
         return { cubes, sum };
     }
+
     // Generate randome cubes values
     const generate_cubes = (sum) => {
         let validCubes = false;
@@ -144,6 +143,7 @@ const GameCube = () => {
                 : [...prev, index]
         );
     };
+
     const [isDisabled, setIsDisabled] = useState(false);
     const [correct, setCorrect] = useState(0);
     const [next, setNext] = useState("");
@@ -155,6 +155,18 @@ const GameCube = () => {
     const [selected, setSelected] = useState([]);
     const { cubes, sum } = game;
     const [gameFinished, setGameFinished] = useState(false);
+
+    // Handle finished game
+    const { user } = useUser();
+    const handleFinishedGame = () => {
+        const currentFinished = user?.gradeLevel[user.grade - 1]?.[gameSubject];
+        if (currentFinished && gameLevel > currentFinished) {
+            let newUser = user;
+            newUser.gradeLevel[user.grade - 1][gameSubject] = gameLevel;
+            updateUser(user.email, newUser);
+        }
+        navigate(`/subjects/${gameSubject}`);
+    }
 
     return (
         <div
@@ -173,7 +185,7 @@ const GameCube = () => {
                     </h2>
                     <button
                         className="bg-blue-500 text-white mt-10 px-6 py-3 rounded-lg text-xl hover:cursor-pointer"
-                        onClick={() => navigate(`/Subjects/${gameSubject}`)}
+                        onClick={handleFinishedGame}
                     >
                         back to {gameSubject} levels
                     </button>

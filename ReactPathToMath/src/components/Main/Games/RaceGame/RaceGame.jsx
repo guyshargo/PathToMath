@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { useGrade } from '../../../Utils/GradeComponent';
 import GameContainer from '../GameContainer';
 import QuestionBox from './QuestionBox';
 import generateQuestions from '../GameLogic';
@@ -8,6 +7,10 @@ import FeedbackMessage from './FeedbackMessage';
 import CountdownDisplay from './CountdownDisplay';
 import StartButton from './StartButton';
 import TrackSection from './TrackSection';
+import { useUser } from '../../../Utils/UserContext';
+import { updateUser } from '../../../../services/UserService';
+import { useNavigate } from 'react-router-dom';
+import TitleIcon from '../../../../assets/Images/CompetitionGame/RaceGameTitle.png'
 
 const NUM_QUESTIONS = 10; // Number of questions in the race
 
@@ -15,6 +18,8 @@ function RaceGame() {
   // Game state flags and data
   const { subjectGame, grade, level } = useParams();
   const subjectName = subjectGame; // Subject name from URL params
+  const gameLevel = parseInt(level);
+  const navigate = useNavigate();
 
   const [started, setStarted] = useState(false); // Is the game currently running?
   const [userPos, setUserPos] = useState(0); // User's current position on the track
@@ -59,6 +64,17 @@ function RaceGame() {
     // Clear the interval when component unmounts or dependencies change
     return () => clearInterval(botTimer.current);
   }, [started, TRACK_LENGTH]);
+
+  const { user } = useUser();
+  const handleFinishedGame = () => {
+    const currentFinished = user?.gradeLevel[user.grade - 1]?.[subjectName];
+    if (gameLevel > currentFinished) {
+      let newUser = user;
+      newUser.gradeLevel[user.grade - 1][subjectName] = gameLevel;
+      updateUser(user.email, newUser);
+    }
+    navigate(`/subjects/${subjectName}`);
+  }
 
   // Starts the countdown before the game and resets positions and states
   const startCountdown = () => {
@@ -119,33 +135,36 @@ function RaceGame() {
   };
 
   return (
-    <GameContainer gameName="Math Race" gameSubject={subjectName} gameLevel={`Grade ${grade}`}>
-      {/* Show start race button (for first race) or try again message (for next races)
+    <GameContainer gameName="Math Race" gameSubject={subjectName} gameLevel={`Grade ${grade}`} icon={TitleIcon}>
+      <div className="bg-white rounded-lg p-4 shadow-lg">
+
+        {/* Show start race button (for first race) or try again message (for next races)
           when the game is not running (before clicking start race or after a race finished and try again needs to be clicked) */}
-      {!started && countdown === null && (
-        <div className="flex justify-center">
-          <StartButton onClick={startCountdown} message={message} />
-        </div>
-      )}
+        {!started && countdown === null && (
+          <div className="flex justify-center">
+            <StartButton onClick={message === 'You Win! Race Again?' ? handleFinishedGame : startCountdown} message={message} />
+          </div>
+        )}
 
-      {/* Use CountdownDisplay component for visuals before game starts */}
-      <CountdownDisplay countdown={countdown} />
+        {/* Use CountdownDisplay component for visuals before game starts */}
+        <CountdownDisplay countdown={countdown} />
 
-      {/* Show the question box only when the game has started */}
-      {started && (
-        <QuestionBox
-          question={currentQuestion?.question}
-          userAnswer={userAnswer}
-          setUserAnswer={setUserAnswer}
-          onSubmit={handleAnswerSubmit}
-          feedback={<FeedbackMessage message={message} />}
-        />
-      )}
+        {/* Show the question box only when the game has started */}
+        {started && (
+          <QuestionBox
+            question={currentQuestion?.question}
+            userAnswer={userAnswer}
+            setUserAnswer={setUserAnswer}
+            onSubmit={handleAnswerSubmit}
+            feedback={<FeedbackMessage message={message} />}
+          />
+        )}
 
-      {/* Show tracks immediately based on TRACK_LENGTH (even if questions haven't loaded yet) */}
-      {TRACK_LENGTH > 1 && (
-        <TrackSection userPos={userPos} botPos={botPos} trackLength={TRACK_LENGTH} />
-      )}
+        {/* Show tracks immediately based on TRACK_LENGTH (even if questions haven't loaded yet) */}
+        {TRACK_LENGTH > 1 && (
+          <TrackSection userPos={userPos} botPos={botPos} trackLength={TRACK_LENGTH} />
+        )}
+      </div>
     </GameContainer>
   );
 }

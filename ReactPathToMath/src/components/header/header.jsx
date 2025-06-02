@@ -13,13 +13,15 @@ import TutorialVideosIcon from '../../assets/Images/helpVideos.png'
 
 function Header() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const isParent = localStorage.getItem("userType") == "Parent";
+
   const toggleMobileMenu = () => {
     setIsMobileOpen(!isMobileOpen);
   };
   const { isLoggedIn } = useLoginStatus();
 
   // Main menu item
-  const menuData = [
+  let menuData = [
     {
       //Home page
       label: 'Home',
@@ -62,6 +64,21 @@ function Header() {
     },
   ];
 
+  //  User is a parent, remove the math problems and tutorial videos
+  if (isParent) {
+    menuData = [];
+    
+    menuData.push({
+      //Home page
+      label: 'Parent Overview',
+      link: '/ParentPage',
+      icon: starIcon,
+      colorClass: "bg-blue-700 hover:bg-blue-600",
+      submenuColor: "hover:bg-blue-500",
+      className: "Home"
+    });
+  }
+
   // Add Login or Logout dynamically
   if (isLoggedIn) {
     menuData.push(
@@ -99,9 +116,18 @@ function Header() {
   return (
     <header className="flex flex-col xl:flex-row items-start xl:items-center z-30 justify-between w-full py-6 px-6 md:px-20 bg-blue-400 drop-shadow-md playful-font relative">
       <div className="flex justify-between items-center w-full xl:w-auto">
-        <Link to="/" className="hover:scale-105 transition-all">
-          <img src={logo} alt="Logo" className="  w-60" />
-        </Link>
+        {/* Logo */}
+        {!isParent && (
+          <Link to="/" className="hover:scale-105 transition-all">
+            <img src={logo} alt="Logo" className="  w-60" />
+          </Link>
+        )}
+        {isParent && (
+          <Link to="/ParentPage" className="hover:scale-105 transition-all">
+            <img src={logo} alt="Logo" className="  w-60" />
+          </Link>
+        )}
+
         <button className="xl:hidden text-3xl text-white cursor-pointer" onClick={toggleMobileMenu}>
           {/* simple hamburger menu for mobile view */}
           {isMobileOpen ? '✖' : '☰'}

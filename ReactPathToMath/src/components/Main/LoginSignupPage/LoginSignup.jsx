@@ -3,7 +3,7 @@ import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
 import { useNavigate } from 'react-router-dom';
 import {useUser} from '../../Utils/UserContext';
-import { useLoginStatus } from '../../Utils/LoginStatusComponent';
+
 const LoginSignup = ({ action }) => {
   const navigate = useNavigate();
   const { setUser,register , checkIfUserExists,getUserByMailNoSet} = useUser();
@@ -61,6 +61,10 @@ const LoginSignup = ({ action }) => {
         // Save user in context and localStorage
         setUser(user);
         localStorage.setItem("userEmail", user.email);
+
+        // make sure the user type is saved in localStorage
+        localStorage.setItem("userType", role);
+
         if( role === "Parent") {
           navigate("/ParentPage");
         } else {
