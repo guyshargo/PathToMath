@@ -2,42 +2,43 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useUser } from "../../Utils/UserContext";
 import { useGrade } from "../../Utils/GradeComponent";
-import generateQuestions from "../generateQuestions"
+import generateQuestions from "../generateQuestions"; 
 import WordProblemsCreator from "./WordProblemsCreator";
-import QuestionBox from "../RaceGame//QuestionBox"; 
+import QuestionBox from "../RaceGame/QuestionBox"; 
 import GameContainer from "../GameContainer";
-import TitleIcon from "../../../../assets/Images/WordGameTitle.png";
+import TitleIcon from "../../../../assets/Images/quiz.png";
 import successImage from "../../../../assets/Images/success.png";
 import failureImage from "../../../../assets/Images/failure.png";
-import { useGrade } from "../../../Utils/GradeComponent";
-const WordProblem = () => {
 
-  // Get the subject and level from the URL parameters
+const WordProblem = () => {
+    // Get the subject and level from the URL parameters
   const { subjectGame, level } = useParams();
+  // Define the game subject and level
   const gameSubject = subjectGame;
   const gameLevel = parseInt(level);
   const navigate = useNavigate();
-  const { grade } = useGrade();
-  // Get the user
+  // Get the user from the UserContext
   const { user } = useUser();
-  //saves correct answers user answered
+  // Get the current grade from the GradeContext
+  const { grade } = useGrade();
+  // State to track correct answers
   const [correctAnswers, setCorrectAnswers] = useState(0);
-  // Current question
+  // State for the current question
   const [currentQuestion, setCurrentQuestion] = useState(null);
-  //sets the questions for the game
+  // State to hold the questions for the game
   const [questions, setQuestions] = useState([]);
-  //user answer
+    // State for the user's answer
   const [userAnswer, setUserAnswer] = useState("");
-  //feedback for the user
+  // State for feedback to the user
   const [feedback, setFeedback] = useState(null);
   // Flag for ending the game
   const [endGame, setEndGame] = useState(false);
-  // End game object
+  // Object to hold end game details
   const [endGameObject, setEndGameObject] = useState(null);
-  // Number of questions and options
+
   const numOfQuestions = 5;
   const numOfOptions = 1;
-  //reset game function
+    // Function to reset the game state
   const resetGame = () => {
     setCurrentQuestion(null);
     setFeedback(null);
@@ -45,71 +46,70 @@ const WordProblem = () => {
     setEndGame(false);
     setEndGameObject(null);
   };
-  // Load new game level function
+// Function to load a new game level
   const loadGameLevel = () => {
-    //generate new questions based on the subject, grade, level, number of questions and options
+    // Generate new questions based on the subject, grade, level, number of questions and options
     const newQuestions = generateQuestions(gameSubject, parseInt(grade), gameLevel, numOfQuestions, numOfOptions);
-    // Set the questions for the game 
+    // Set the questions for the game
     setQuestions(newQuestions);
-    // Set the current question as the first in the array
+    //  Set the current question as the first in the array
     setCurrentQuestion(newQuestions[0]);
     // Reset the correct answers and user answer
     setCorrectAnswers(0);
+    // Reset user answer
     setUserAnswer("");
     // Reset feedback
     setFeedback(null);
   };
-  //load the game level when the component mounts
+    // Load the game level when the component mounts
   useEffect(() => {
     loadGameLevel();
   }, []);
-
-  // Handle the submit action when the user answers a question
+ // Function to handle the submission of the user's answer
   const handleSubmit = () => {
     // Check if the user has entered an answer
     if (!userAnswer) {
-      setFeedback(<p className="text-red-600">Please enter an answer!</p>);
-      return;
+        setFeedback(<p className="text-red-600">Please enter an answer!</p>);
+        return;
     }
+    
     const userNumericAnswer = parseInt(userAnswer);
     // Check if the answer is correct
     const correct = currentQuestion?.answer?.value;
+    // If the answer is correct, provide positive feedback
     if (userNumericAnswer === correct) {
-      // If the answer is correct, set feedback and increment correct answers
       setFeedback(<p className="text-green-600">Correct!</p>);
       setCorrectAnswers((prev) => prev + 1);
     } else {
-      // If the answer is incorrect, set feedback with the correct answer
       setFeedback(<p className="text-red-600">Wrong! The correct answer was {correct}</p>);
     }
-    // Clear the user answer input
+    // Clear the user's answer
     setUserAnswer("");
-    // Set a timeout to show feedback before moving to the next question
+    // Delay before moving to the next question to show feedback
     setTimeout(() => {
       nextQuestionClicked();
     }, 1500); // delay for feedback
   };
-
-  // Function to handle the next question click
+    // Function to handle the next question click
   const nextQuestionClicked = () => {
     // Remove the first question from the array
     questions.shift();
-    // If there are no more questions, generate the end game
+    //reset game
     resetGame();
-    // If there are remaining questions, set the current question as the first in the array
+// If there are no more questions, generate the end game
     if (questions.length >= 1) {
       setQuestions(questions);
       setCurrentQuestion(questions[0]);
     } else {
-      // If no more questions, generate end game
+        // If no more questions, generate the end game
       generateEnd();
     }
   };
-// Function to generate the end game object
+//generate end game function
   const generateEnd = () => {
     // Check if the user answered 3 or more questions correctly
     const isSuccess = correctAnswers >= 3;
-    // Set the end game object with the appropriate properties
+    // Set the end game object with details
     setEndGameObject({
       bgColor: isSuccess ? "bg-green-200" : "bg-red-200",
       text: `${isSuccess ? 'Great!' : 'Oh no!'} You answered ${correctAnswers} / ${numOfQuestions} Correct Answers.`,
@@ -118,19 +118,14 @@ const WordProblem = () => {
       headerText: isSuccess ? "Continue to the next level!" : "Try Again?",
       handleClick: () => {
         if (isSuccess) {
-          // If the user succeeded, update their grade level and navigate to the next subject
           const currentFinished = user?.gradeLevel[user.grade - 1]?.[gameSubject];
           if (gameLevel > currentFinished) {
-            // Update the user's grade level for the subject if the new level is higher
             let newUser = { ...user };
             newUser.gradeLevel[user.grade - 1][gameSubject] = gameLevel;
-            // Call the updateUser function to save the changes
             updateUser(user.email, newUser);
           }
-          // Navigate to the subject page
           navigate(`/subjects/${gameSubject}`);
         } else {
-          // If the user failed, reset the game and load the game level again
           resetGame();
           loadGameLevel();
         }
@@ -138,7 +133,7 @@ const WordProblem = () => {
       buttonText: isSuccess ? "Next Level" : "Try Again!",
       containerColor: isSuccess ? "bg-green-100" : "bg-red-100",
     });
-    // Set the end game flag to true
+
     setEndGame(true);
   };
 
