@@ -40,7 +40,7 @@ const LevelsPage = () => {
     // Fetch players level in specific subject and grade
 
     return (
-        <div className="relative min-h-[100vh] w-full flex flex-col items-center justify-start pt-12 pb-24 px-4 overflow-hidden"
+        <div className="relative playful-font min-h-[100vh] w-full flex flex-col items-center justify-start pt-12 pb-24 px-4 overflow-hidden"
             style={{
                 backgroundImage: `url(${background})`,
                 backgroundSize: 'cover',
@@ -62,7 +62,7 @@ const LevelsPage = () => {
             <div className="w-full max-w-screen-lg px-4 mb-6">
                 <div className="w-full bg-gray-300 rounded-full h-4">
                     <div
-                        className="bg-green-500 h-4 rounded-full transition-all duration-500"
+                        className="bg-green-400 h-4 rounded-full transition-all duration-500"
                         style={{ width: `${levelPercentage}%` }}
                     ></div>
                 </div>

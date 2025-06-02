@@ -10,6 +10,7 @@ import ProfileIcon from '../../assets/Images/profile.png'
 import LoginIcon from '../../assets/Images/login.png'
 import LogoutIcon from '../../assets/Images/logout.png'
 import TutorialVideosIcon from '../../assets/Images/helpVideos.png'
+import SignupIcon from '../../assets/Images/SignupIcon.png'
 
 function Header() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -103,7 +104,7 @@ function Header() {
       label: 'Signup',
       link: '/signup',
       colorClass: "bg-green-500 hover:bg-green-600",
-      icon: null
+      icon: SignupIcon
     });
 
     menuData.push({

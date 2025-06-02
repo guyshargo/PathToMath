@@ -37,7 +37,7 @@ function GameContainer({ gameName, gameSubject, children, icon }) {
             {/* Game Header */}
             <div className="text-center p-10">
                 {/* Main game name with race flag */}
-                <h1 className="text-6xl font-extrabold text-black flex justify-center items-center space-x-3 select-none">
+                <h1 className="text-6xl font-bold text-black flex justify-center items-center space-x-3 select-none">
                     <span>{gameName}</span>
                     {icon && <img src={icon} alt="Game Icon" className="w-30 h-auto" />}
                 </h1>
@@ -48,7 +48,7 @@ function GameContainer({ gameName, gameSubject, children, icon }) {
                         {gameSubject}
                     </span>
                     <span className="bg-green-300 text-green-900 font-semibold px-4 py-1 rounded-full shadow-md select-none">
-                        {gameLevel}
+                        {`Grade ${gameLevel}`}
                     </span>
                 </div>
             </div>

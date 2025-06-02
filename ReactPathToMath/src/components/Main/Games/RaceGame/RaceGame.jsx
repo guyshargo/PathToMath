@@ -31,9 +31,8 @@ function RaceGame() {
   const botTimer = useRef(null); // Opponent bot's interval timer
   const [countdown, setCountdown] = useState(null); // Countdown before game starts
 
-  // Fetch user data when component mounts or when userEmail or gameSubject changes
   useEffect(() => {
-    const generated = generateQuestions(subjectName, grade, NUM_QUESTIONS, 1);
+    const generated = generateQuestions(subjectName, grade, gameLevel, NUM_QUESTIONS, 1);
     setQuestions(generated);
   }, [grade, subjectName]);
 
@@ -135,7 +134,7 @@ function RaceGame() {
   };
 
   return (
-    <GameContainer gameName="Math Race" gameSubject={subjectName} gameLevel={`Grade ${grade}`} icon={TitleIcon}>
+    <GameContainer gameName="Math Race" gameSubject={subjectName} gameLevel={{grade}} icon={TitleIcon}>
       <div className="bg-white rounded-lg p-4 shadow-lg">
 
         {/* Show start race button (for first race) or try again message (for next races)

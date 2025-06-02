@@ -3,7 +3,7 @@ import background from '../../../assets/Images/Background/white_background.png';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Cubes from './cubes.jsx';
+import Cubes from './Cubes.jsx';
 import { useUser } from '../../Utils/UserContext';
 import { updateUser } from '../../../services/UserService';
 

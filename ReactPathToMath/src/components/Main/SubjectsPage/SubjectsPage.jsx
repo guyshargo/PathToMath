@@ -33,7 +33,7 @@ const SubjectsPage = () => {
     }
     return (
         <div
-            className="relative min-h-[100vh] w-full flex flex-col items-center justify-start pt-12 pb-24 px-4 overflow-hidden"
+            className="relative playful-font min-h-[100vh] w-full flex flex-col items-center justify-start pt-12 pb-24 px-4 overflow-hidden"
             style={{
                 backgroundImage: `url(${background})`,
                 backgroundSize: 'cover',
@@ -41,7 +41,7 @@ const SubjectsPage = () => {
                 backgroundPosition: 'center',
             }}
         >
-            <h1 className="text-4xl md:text-5xl font-bold text-[#3B2F2F] mb-10 drop-shadow-sm">
+            <h1 className="text-4xl md:text-5xl font-semibold text-[#3B2F2F] mb-10 drop-shadow-sm">
                 Choose subject to learn!
             </h1>
 

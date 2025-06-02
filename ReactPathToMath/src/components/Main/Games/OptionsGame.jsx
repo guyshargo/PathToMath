@@ -8,7 +8,7 @@ import generateQuestions from './GameLogic';
 import { useParams } from 'react-router-dom';
 import { updateUser } from '../../../services/UserService';
 import { useUser } from '../../Utils/UserContext';
-import TitleIcon from '../../../assets/Images/OptionsIcon.webp'
+import TitleIcon from '../../../assets/Images/OptionsIcon.png'
 /**
  * Options Game Component
  */
