@@ -26,7 +26,7 @@ function RotatingSlogan() {
 
   return (
     <p className={`text-xl px-6 flex items-center justify-center gap-4 transition-opacity duration-500 ease-in-out ${fade ? 'opacity-100' : 'opacity-0'}`}>
-      <span className="w-8 h-8 flex items-center justify-center rounded-full bg-white/50 text-yellow-500 shadow-md text-lg">
+      <span className="w-8 h-8 flex items-center justify-center rounded-full bg-white/70 text-yellow-500 shadow-md text-lg">
         💡
       </span>
       {slogans[currentIndex]}
