@@ -16,11 +16,12 @@ const NUM_QUESTIONS = 10; // Number of questions in the race
 
 function RaceGame() {
   // Game state flags and data
-  const { subjectGame, grade, level } = useParams();
-  const subjectName = subjectGame; // Subject name from URL params
+  const { subjectGame, grade, level } = useParams(); //subject, grade and level from URL Params
+  const subjectName = subjectGame;
   const gameLevel = parseInt(level);
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
+  const { user } = useUser();
   const [started, setStarted] = useState(false); // Is the game currently running?
   const [userPos, setUserPos] = useState(0); // User's current position on the track
   const [botPos, setBotPos] = useState(0); // Opponent bot position on the track
@@ -64,7 +65,7 @@ function RaceGame() {
     return () => clearInterval(botTimer.current);
   }, [started, TRACK_LENGTH]);
 
-  const { user } = useUser();
+  // Updating levels progress on levels page after finishing a level successfully
   const handleFinishedGame = () => {
     const currentFinished = user?.gradeLevel[user.grade - 1]?.[subjectName];
     if (gameLevel > currentFinished) {
@@ -118,7 +119,7 @@ function RaceGame() {
       if (newPos === TRACK_LENGTH - 1) {
         setUserPos(newPos);
         clearInterval(botTimer.current);
-        setMessage('You Win! Race Again?');
+        setMessage('You Win! Continue To The Next Race?');
         setStarted(false);
       } else {
         // Otherwise, update user position and move to next question
@@ -141,7 +142,7 @@ function RaceGame() {
           when the game is not running (before clicking start race or after a race finished and try again needs to be clicked) */}
         {!started && countdown === null && (
           <div className="flex justify-center">
-            <StartButton onClick={message === 'You Win! Race Again?' ? handleFinishedGame : startCountdown} message={message} />
+            <StartButton onClick={message === 'You Win! Continue To The Next Race?' ? handleFinishedGame : startCountdown} message={message} />
           </div>
         )}
 

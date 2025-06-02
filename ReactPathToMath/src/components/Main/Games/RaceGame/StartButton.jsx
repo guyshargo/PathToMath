@@ -13,7 +13,7 @@ import ButtonComponent from '../../../Utils/Button';
  */
 function StartButton({ onClick, message }) {
   
-  // Determine if button is for retry based on message presence
+  // Determine if button is for retry or for winning based on message presence
   const isRetry = Boolean(message);
 
   return (
