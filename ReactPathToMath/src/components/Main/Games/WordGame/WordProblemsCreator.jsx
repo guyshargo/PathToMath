@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { GoogleGenAI } from '@google/genai';
 import { useGrade } from '../../../Utils/GradeComponent';
 
-const GEMINI_API_KEY = env.GEMINI_API_KEY|| process.env.GEMINI_API_KEY;
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 
 const WordProblemsCreator = ({ subject, var1, var2, answer }) => {
@@ -33,7 +33,7 @@ Do NOT include the answer. Just return the question sentence.`;
       while (attempt < MAX_RETRIES && !cancelled) {
         try {
           const response = await ai.models.generateContent({
-            model: 'gemini-2.0-flash-001',
+            model: 'gemini-1.5-flash',
             contents: prompt
           });
 
