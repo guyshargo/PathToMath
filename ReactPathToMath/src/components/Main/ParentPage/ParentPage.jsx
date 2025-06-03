@@ -7,7 +7,7 @@ function ParentPage() {
   const { user } = useUser();
   return (
     <div style={{ backgroundImage: `url(${Background})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
-    className="w-full h-full playful-font">
+    className="w-full min-h-screen h-full playful-font">
       {/* Main content container */}
       <div className="flex flex-col items-center justify-start w-full py-5 px-4">
         {/* Title Section inside the rectangle */}

@@ -32,7 +32,7 @@ function ChildProgressCard({ child }) {
           const isCompleted = completed >= total;
 
           return (
-            <div key={index} className="w-[28%] min-w-[140px] text-left">
+            <div key={index} className="w-[45%] min-w-[140px] text-left">
               <div className="flex justify-between items-center mb-1">
                 <span className="text-sm font-medium text-gray-800">{subject}</span>
                 <span className="text-sm text-gray-800">{completed}/{total}</span>
@@ -45,7 +45,7 @@ function ChildProgressCard({ child }) {
                 ></div>
               </div>
               <div className="mt-1 flex justify-end text-lg">
-                <span className={isCompleted ? '' : 'opacity-45'}>🏅</span>
+                <span className={isCompleted ? '' : 'opacity-40'}>🏅</span>
               </div>
             </div>
           );
