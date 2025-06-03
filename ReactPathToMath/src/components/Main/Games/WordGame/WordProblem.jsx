@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useUser } from "../../Utils/UserContext";
-import { useGrade } from "../../Utils/GradeComponent";
+import { useUser } from "../../../Utils/UserContext";
+import { useGrade } from "../../../Utils/GradeComponent";
 import generateQuestions from "../generateQuestions"; 
 import WordProblemsCreator from "./WordProblemsCreator";
 import QuestionBox from "../RaceGame/QuestionBox"; 
