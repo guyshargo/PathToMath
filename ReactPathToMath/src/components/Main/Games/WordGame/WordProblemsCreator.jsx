@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { GoogleGenAI } from '@google/genai';
 import { useGrade } from '../../../Utils/GradeComponent';
 
-const GEMINI_API_KEY = "AIzaSyDHStM2VXxEakUGCuA2E9IgHDZ9XqvxM74";
+const GEMINI_API_KEY = env.GEMINI_API_KEY|| process.env.GEMINI_API_KEY;
 const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 
 const WordProblemsCreator = ({ subject, var1, var2, answer }) => {
