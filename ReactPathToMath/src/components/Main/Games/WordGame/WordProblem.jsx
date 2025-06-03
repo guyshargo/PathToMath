@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useUser } from "../../../Utils/UserContext";
 import { useGrade } from "../../../Utils/GradeComponent";
-import generateQuestions from "../generateQuestions"; 
+import generateQuestions from "../GameLogic"; 
 import WordProblemsCreator from "./WordProblemsCreator";
 import QuestionBox from "../RaceGame/QuestionBox"; 
 import GameContainer from "../GameContainer";
@@ -35,8 +35,9 @@ const WordProblem = () => {
   const [endGame, setEndGame] = useState(false);
   // Object to hold end game details
   const [endGameObject, setEndGameObject] = useState(null);
-
-  const numOfQuestions = 5;
+  // State to track loading state
+  const [isLoading, setIsLoading] = useState(true);
+  const numOfQuestions = 3;
   const numOfOptions = 1;
     // Function to reset the game state
   const resetGame = () => {
@@ -60,6 +61,7 @@ const WordProblem = () => {
     setUserAnswer("");
     // Reset feedback
     setFeedback(null);
+    setIsLoading(false);
   };
     // Load the game level when the component mounts
   useEffect(() => {
@@ -88,7 +90,7 @@ const WordProblem = () => {
     // Delay before moving to the next question to show feedback
     setTimeout(() => {
       nextQuestionClicked();
-    }, 1500); // delay for feedback
+    }, 2000); // delay for feedback
   };
     // Function to handle the next question click
   const nextQuestionClicked = () => {
@@ -97,7 +99,7 @@ const WordProblem = () => {
     //reset game
     resetGame();
 // If there are no more questions, generate the end game
-    if (questions.length >= 1) {
+    if (questions.length > 1) {
       setQuestions(questions);
       setCurrentQuestion(questions[0]);
     } else {
@@ -108,7 +110,7 @@ const WordProblem = () => {
 //generate end game function
   const generateEnd = () => {
     // Check if the user answered 3 or more questions correctly
-    const isSuccess = correctAnswers >= 3;
+    const isSuccess = correctAnswers >= 2;
     // Set the end game object with details
     setEndGameObject({
       bgColor: isSuccess ? "bg-green-200" : "bg-red-200",
@@ -138,35 +140,56 @@ const WordProblem = () => {
   };
 
   return (
-    <GameContainer
-      title="Word Problems"
-      subject={gameSubject}
-      grade={grade}
-      level={gameLevel}
-      icon={TitleIcon}
-      resetGame={resetGame}
-      loadGameLevel={loadGameLevel}
-      endGame={endGame}
-      endGameObject={endGameObject}
-    >
-      {currentQuestion && (
-        <div className="flex flex-col items-center justify-center">
-          <WordProblemsCreator
-            var1={currentQuestion.var1.value}
-            var2={currentQuestion.var2.value}
-            answer={currentQuestion.answer.value}
-            subject={gameSubject}
-          />
-          <QuestionBox
-            question={"What is the answer?"}
-            userAnswer={userAnswer}
-            setUserAnswer={setUserAnswer}
-            onSubmit={handleSubmit}
-            feedback={feedback}
-          />
-        </div>
+<GameContainer
+  gameName="Word Problems"
+  gameSubject={gameSubject}
+  grade={grade}
+  level={gameLevel}
+  icon={TitleIcon}
+  resetGame={resetGame}
+  loadGameLevel={loadGameLevel}
+  endGame={endGame}
+  endGameObject={endGameObject}
+>
+      {isLoading ? (
+        <div className="text-center text-xl font-semibold mt-8">Loading your question...</div>
+      ) : (
+        currentQuestion && (
+          <div className="w-full max-w-2xl bg-white rounded-3xl shadow-lg border border-blue-300 align-middle mx-auto p-6">
+            <WordProblemsCreator
+              var1={currentQuestion.var1.value}
+              var2={currentQuestion.var2.value}
+              answer={currentQuestion.answer.value}
+              subject={gameSubject}
+            />
+            <QuestionBox
+              question={"What is the answer?"}
+              userAnswer={userAnswer}
+              setUserAnswer={setUserAnswer}
+              onSubmit={handleSubmit}
+              feedback={feedback}
+            />
+          </div>
+        )
       )}
-    </GameContainer>
+      {endGame && endGameObject && (
+  <div className={`w-full max-w-2xl mx-auto mt-8 p-6 rounded-3xl shadow-lg text-center ${endGameObject.containerColor}`}>
+    <img src={endGameObject.imgURL} alt="Result" className="w-32 mx-auto mb-4" />
+    <h2 className={`text-2xl font-bold text-${endGameObject.color}-700 mb-2`}>
+      {endGameObject.headerText}
+    </h2>
+    <p className="text-lg text-gray-700 mb-4">{endGameObject.text}</p>
+    <button
+      onClick={endGameObject.handleClick}
+      className={`px-6 py-3 bg-${endGameObject.color}-500 text-white rounded-xl hover:bg-${endGameObject.color}-600 transition`}
+    >
+      {endGameObject.buttonText}
+    </button>
+  </div>
+)}
+
+</GameContainer>
+
   );
 };
 
