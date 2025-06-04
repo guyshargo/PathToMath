@@ -2,16 +2,17 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useUser } from "../../../Utils/UserContext";
 import { useGrade } from "../../../Utils/GradeComponent";
-import generateQuestions from "../GameLogic"; 
+import generateQuestions from "../GameLogic";
 import WordProblemsCreator from "./WordProblemsCreator";
-import QuestionBox from "../RaceGame/QuestionBox"; 
+import QuestionBox from "../RaceGame/QuestionBox";
 import GameContainer from "../GameContainer";
 import TitleIcon from "../../../../assets/Images/quiz.png";
 import successImage from "../../../../assets/Images/success.png";
 import failureImage from "../../../../assets/Images/failure.png";
-
+import ButtonComponent from "../../../Utils/Button";
+import background from '../../../../assets/Images/wordGame/background.jpg';
 const WordProblem = () => {
-    // Get the subject and level from the URL parameters
+  // Get the subject and level from the URL parameters
   const { subjectGame, level } = useParams();
   // Define the game subject and level
   const gameSubject = subjectGame;
@@ -27,8 +28,10 @@ const WordProblem = () => {
   const [currentQuestion, setCurrentQuestion] = useState(null);
   // State to hold the questions for the game
   const [questions, setQuestions] = useState([]);
-    // State for the user's answer
+  // State for the user's answer
   const [userAnswer, setUserAnswer] = useState("");
+  //answer is visible
+  const [isAnswerVisible, setIsAnswerVisible] = useState(false);
   // State for feedback to the user
   const [feedback, setFeedback] = useState(null);
   // Flag for ending the game
@@ -39,15 +42,16 @@ const WordProblem = () => {
   const [isLoading, setIsLoading] = useState(true);
   const numOfQuestions = 3;
   const numOfOptions = 1;
-    // Function to reset the game state
+  // Function to reset the game state
   const resetGame = () => {
     setCurrentQuestion(null);
     setFeedback(null);
     setUserAnswer("");
+    setIsAnswerVisible(false)
     setEndGame(false);
     setEndGameObject(null);
   };
-// Function to load a new game level
+  // Function to load a new game level
   const loadGameLevel = () => {
     // Generate new questions based on the subject, grade, level, number of questions and options
     const newQuestions = generateQuestions(gameSubject, parseInt(grade), gameLevel, numOfQuestions, numOfOptions);
@@ -55,6 +59,7 @@ const WordProblem = () => {
     setQuestions(newQuestions);
     //  Set the current question as the first in the array
     setCurrentQuestion(newQuestions[0]);
+
     // Reset the correct answers and user answer
     setCorrectAnswers(0);
     // Reset user answer
@@ -63,18 +68,18 @@ const WordProblem = () => {
     setFeedback(null);
     setIsLoading(false);
   };
-    // Load the game level when the component mounts
+  // Load the game level when the component mounts
   useEffect(() => {
     loadGameLevel();
   }, []);
- // Function to handle the submission of the user's answer
+  // Function to handle the submission of the user's answer
   const handleSubmit = () => {
     // Check if the user has entered an answer
     if (!userAnswer) {
-        setFeedback(<p className="text-red-600">Please enter an answer!</p>);
-        return;
+      setFeedback(<p className="text-red-600">Please enter an answer!</p>);
+      return;
     }
-    
+    setIsAnswerVisible(true)
     const userNumericAnswer = parseInt(userAnswer);
     // Check if the answer is correct
     const correct = currentQuestion?.answer?.value;
@@ -85,32 +90,29 @@ const WordProblem = () => {
     } else {
       setFeedback(<p className="text-red-600">Wrong! The correct answer was {correct}</p>);
     }
-    // Clear the user's answer
-    setUserAnswer("");
-    // Delay before moving to the next question to show feedback
-    setTimeout(() => {
-      nextQuestionClicked();
-    }, 2000); // delay for feedback
   };
-    // Function to handle the next question click
+  // Function to handle the next question click
   const nextQuestionClicked = () => {
-    // Remove the first question from the array
-    questions.shift();
-    //reset game
-    resetGame();
-// If there are no more questions, generate the end game
-    if (questions.length > 1) {
-      setQuestions(questions);
-      setCurrentQuestion(questions[0]);
+    setUserAnswer("");
+    const updatedQuestions = [...questions];
+    updatedQuestions.shift();
+    //check if there
+    if (updatedQuestions.length >= 1) {
+      setQuestions(updatedQuestions);
+      setCurrentQuestion(updatedQuestions[0]);
+      setIsAnswerVisible(false);
+      setFeedback(null);
     } else {
-        // If no more questions, generate the end game
       generateEnd();
     }
+
   };
-//generate end game function
+
+  //generate end game function
   const generateEnd = () => {
     // Check if the user answered 3 or more questions correctly
     const isSuccess = correctAnswers >= 2;
+    console.log(correctAnswers);
     // Set the end game object with details
     setEndGameObject({
       bgColor: isSuccess ? "bg-green-200" : "bg-red-200",
@@ -139,56 +141,81 @@ const WordProblem = () => {
     setEndGame(true);
   };
 
+  /** End Game Component */
+  const endGameComponent = () => {
+    return (
+      <div className="flex flex-col items-center justify-center gap-4">
+        <img
+          className="h-60 w-auto max-w-full object-contain"
+          src={endGameObject?.imgURL}
+          alt={endGameObject?.color === "green" ? "Success" : "Failure"}
+        />
+        <ButtonComponent
+          label={endGameObject?.buttonText}
+          onClick={endGameObject?.handleClick}
+          textColor="text-black"
+          bgColor={endGameObject?.bgColor}
+        />
+      </div>
+    )
+  };
+
   return (
-<GameContainer
-  gameName="Word Problems"
-  gameSubject={gameSubject}
-  grade={grade}
-  level={gameLevel}
-  icon={TitleIcon}
-  resetGame={resetGame}
-  loadGameLevel={loadGameLevel}
-  endGame={endGame}
-  endGameObject={endGameObject}
->
-      {isLoading ? (
-        <div className="text-center text-xl font-semibold mt-8">Loading your question...</div>
-      ) : (
-        currentQuestion && (
-          <div className="w-full max-w-2xl bg-white rounded-3xl shadow-lg border border-blue-300 align-middle mx-auto p-6">
-            <WordProblemsCreator
-              var1={currentQuestion.var1.value}
-              var2={currentQuestion.var2.value}
-              answer={currentQuestion.answer.value}
-              subject={gameSubject}
-            />
-            <QuestionBox
-              question={"What is the answer?"}
-              userAnswer={userAnswer}
-              setUserAnswer={setUserAnswer}
-              onSubmit={handleSubmit}
-              feedback={feedback}
+    <GameContainer
+      gameName="Word Problems"
+      gameSubject={gameSubject}
+      grade={grade}
+      level={gameLevel}
+      icon={TitleIcon}
+    >
+    <div className={`inline-block w-3/4 align-middle justify-center border-8 border-blue-300 rounded-3xl shadow-lg ${endGame ? endGameObject?.containerColor : 'bg-white'}`}>
+      <div >
+
+        {isLoading ? (
+          <div className="text-center max-w-3xl text-xl font-semibold mt-8">Loading your question...</div>
+        ) : (
+          currentQuestion && !endGame && (
+            <div className="w-full max-w-sm md:max-w-2xl align-middle mx-auto p-6 ">
+              <WordProblemsCreator
+                var1={currentQuestion.var1.value}
+                var2={currentQuestion.var2.value}
+                answer={currentQuestion.answer.value}
+                subject={gameSubject}
+              />
+              <QuestionBox
+                question={"What is the answer?"}
+                userAnswer={userAnswer}
+                setUserAnswer={setUserAnswer}
+                onSubmit={handleSubmit}
+                feedback={feedback}
+              />
+            </div>
+          )
+        )}
+        {endGame && (
+          <>
+            <div className="m-5">{endGameObject?.text}
+
+            {endGameComponent()}
+            </div>
+          </>
+        )}
+
+
+        {!endGame && isAnswerVisible && (
+          <div className="flex justify-center gap-10 mb-4">
+            <ButtonComponent
+              label="Next Question"
+              onClick={nextQuestionClicked}
+              bgColor="bg-yellow-400"
+              textColor="text-black"
+              size="lg"
             />
           </div>
-        )
-      )}
-      {endGame && endGameObject && (
-  <div className={`w-full max-w-2xl mx-auto mt-8 p-6 rounded-3xl shadow-lg text-center ${endGameObject.containerColor}`}>
-    <img src={endGameObject.imgURL} alt="Result" className="w-32 mx-auto mb-4" />
-    <h2 className={`text-2xl font-bold text-${endGameObject.color}-700 mb-2`}>
-      {endGameObject.headerText}
-    </h2>
-    <p className="text-lg text-gray-700 mb-4">{endGameObject.text}</p>
-    <button
-      onClick={endGameObject.handleClick}
-      className={`px-6 py-3 bg-${endGameObject.color}-500 text-white rounded-xl hover:bg-${endGameObject.color}-600 transition`}
-    >
-      {endGameObject.buttonText}
-    </button>
-  </div>
-)}
-
-</GameContainer>
+        )}
+      </div>
+      </div>
+    </GameContainer>
 
   );
 };
