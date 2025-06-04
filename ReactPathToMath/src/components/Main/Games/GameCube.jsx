@@ -1,12 +1,12 @@
 import { React } from 'react';
-import background from '../../../assets/Images/Background/white_background.png';
+import help_icon from '../../../assets/Images/cube_game/how_to_play.png';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cubes from './Cubes.jsx';
 import { useUser } from '../../Utils/UserContext';
 import { updateUser } from '../../../services/UserService';
-
+import GameContainer from './GameContainer.jsx';
 const GameCube = () => {
     const MAX_TRIES = 2;
     const MAX_QUESTIONS = 5;
@@ -17,7 +17,7 @@ const GameCube = () => {
 
     const navigate = useNavigate();
     const generate_question = () => {
-        let sum = Math.floor(Math.random() * ((grade) * 2 + gameLevel + 5)) + 1;
+        let sum = Math.floor(Math.random() * ((grade) * 2 + gameLevel + 5)) + 6;
         let cubes = [];
         cubes = generate_cubes(sum);
         return { cubes, sum };
@@ -29,7 +29,7 @@ const GameCube = () => {
         let cubes = [];
         while (!validCubes) {
             cubes = []
-            for (let i = 0; i < grade * 2; i++) {
+            for (let i = 0; i <3+ grade * 2; i++) {
                 // Generate a random cube value between 1 and 6
                 cubes.push(Math.floor(Math.random() * 6) + 1);
                 validCubes = isValidCubes(cubes, sum);
@@ -169,80 +169,85 @@ const GameCube = () => {
     }
 
     return (
-        <div
-            className="ml-4 mt-4 text-3xl font-sans"
-            style={{
-                backgroundImage: `url(${background})`,
-                backgroundSize: 'cover',
-                backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'center',
-            }}
-        >
-            {gameFinished ? (
-                <div className="flex flex-col items-center justify-center min-h-screen text-center">
-                    <h2 className="text-3xl font-semibold text-green-600 mb-4">
-                        {feedbackMessage}
-                    </h2>
-                    <button
-                        className="bg-blue-500 text-white mt-10 px-6 py-3 rounded-lg text-xl hover:cursor-pointer"
-                        onClick={handleFinishedGame}
-                    >
-                        back to {gameSubject} levels
+        <GameContainer gameName="Cubes Game" gameSubject={gameSubject} gameLevel={{grade}}>
+            <div className="border-8 border-white bg-blue-100 rounded-lg p-4 shadow-lg relative">
+                <div className='text-sm group inline-block absolute top-4 left-4'>
+                    {/* How to play button */}
+                    <button className="group items-center flex gap-2 bg-purple-200 px-4 py-2 rounded-lg hover:bg-purple-300 transition-colors cursor-pointer">
+                        <img src={help_icon} alt="How to play" className="h-5 w-5"/>
+                        How to play
                     </button>
+                    {/* Dropdown text */}
+                    <div className="p-2 mt-2 rounded shadow-md bg-white absolute left-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300 ">
+                        Choose cubes that sum up to the given number. You have {MAX_TRIES} tries per question.
+                    </div>
                 </div>
-            ) : (
-                <div className="flex flex-col items-center min-h-screen">
-                    <div className='text-base font-semibold text-gray-700'>
-                        Tries: {'❤️'.repeat(tries)}{'🤍'.repeat(MAX_TRIES - tries)}
-                    </div>
-
-                    <h1 className="text-4xl font-bold text-center mb-5">
-                        Sum: {sum}
-                    </h1>
-
-                    <div className="grid grid-cols-4 grid-rows-2 gap-4 mt-0">
-                        {cubes.map((value, index) => (
-                            <Cubes
-                                key={index}
-                                value={value}
-                                onClick={() => toggleCube(index)}
-                                className={
-                                    selected.includes(index)
-                                        ? "outline-3 outline-green-400"
-                                        : solution.includes(index)
-                                            ? "outline-3 outline-red-400"
-                                            : "bg-gray-100"
-                                }
-                            />
-                        ))}
-                    </div>
-
-                    <div
-                        className={`mt-6 text-xl font-semibold text-center transition-opacity duration-300 ${feedbackMessage ? "opacity-100 text-purple-700" : "opacity-0"
-                            }`}
-                    >
-                        {feedbackMessage}
-                    </div>
-
-                    <div>
+                {gameFinished ? (
+                    <div className="flex flex-col items-center justify-center min-h-screen text-center">
+                        <h2 className="text-3xl font-semibold text-green-600 mb-4">
+                            {feedbackMessage}
+                        </h2>
                         <button
-                            className="bg-blue-400 hover:cursor-pointer text-white mt-4 px-4 py-2 rounded-lg"
-                            onClick={() => check_answer(selected)}
+                            className="bg-blue-500 text-white mt-10 px-6 py-3 rounded-lg text-xl hover:cursor-pointer"
+                            onClick={handleFinishedGame}
                         >
-                            Check
+                            back to {gameSubject} levels
                         </button>
+                    </div>
+                ) : (
+                    <div className="flex flex-col items-center">
+                        <div className='text-gray-700 text-lg mb-4'>
+                            Tries: {'❤️'.repeat(tries)}{'🤍'.repeat(MAX_TRIES - tries)}
+                        </div>
 
-                        <button
-                            className={`bg-gray-400 text-white hover:cursor-pointer px-4 py-2 rounded-lg mt-5 ml-3 ${next ? "opacity-100" : "opacity-0"
+                        <h1 className="text-4xl font-bold text-center mb-5">
+                            Sum: {sum}
+                        </h1>
+
+                        <div className="grid grid-cols-4 grid-rows-2 gap-4 mt-0">
+                            {cubes.map((value, index) => (
+                                <Cubes
+                                    key={index}
+                                    value={value}
+                                    onClick={() => toggleCube(index)}
+                                    className={
+                                        selected.includes(index)
+                                            ? "outline-3 outline-green-400"
+                                            : solution.includes(index)
+                                                ? "outline-3 outline-red-400"
+                                                : "bg-gray-100"
+                                    }
+                                />
+                            ))}
+                        </div>
+
+                        <div
+                            className={`mt-6 text-xl text-center transition-opacity duration-300 ${feedbackMessage ? "opacity-100 text-purple-700" : "opacity-0"
                                 }`}
-                            onClick={() => renderGame()}
                         >
-                            {next}
-                        </button>
+                            {feedbackMessage}
+                        </div>
+
+                        <div>
+                            <button
+                                className="bg-blue-400 hover:cursor-pointer text-white mt-4 px-4 py-2 rounded-lg"
+                                onClick={() => check_answer(selected)}
+                            >
+                                Check
+                            </button>
+
+                            <button
+                                className={`bg-gray-400 text-white hover:cursor-pointer px-4 py-2 rounded-lg mt-5 ml-3 ${next ? "opacity-100" : "opacity-0"
+                                    }`}
+                                onClick={() => renderGame()}
+                            >
+                                {next}
+                            </button>
+                        </div>
                     </div>
-                </div>
-            )}
-        </div>
+                )}
+            </div>
+        </GameContainer>
     );
 }
 

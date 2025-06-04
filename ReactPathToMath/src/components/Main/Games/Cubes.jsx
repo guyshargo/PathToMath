@@ -21,13 +21,10 @@ const Cubes = ({value,onClick,className}) => {
         5: {image: dice_5},
         6: {image: dice_6},
     };    
-    const { subjectGame } = useParams();
-    const navigate = useNavigate();
-    const { grade } = useGrade();
     
     return (
         <div>
-            <button onClick={onClick} className={`rounded-2xl ${className}`}>
+            <button onClick={onClick} className={`rounded-2xl bg-white ${className}`}>
                 <img 
                     src={dice_images[value].image}
                     alt={`Cube ${value}`}
