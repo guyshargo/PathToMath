@@ -11,21 +11,29 @@ import percentage from '../../../assets/Images/Math_icon/percentage.png';
 import { useLoginStatus } from '../../Utils/LoginStatusComponent.jsx';
 import SubjectCircle from "../HomePage/SubjectCircle.jsx";
 
-const IconMap = {
-    Addition: addition,
-    Subtraction: subtraction,
-    Multiplication: multiplication,
-    Division: division,
-    Percentage: percentage,
+const subjectsData = {
+    Addition: {
+        icon: addition,
+        color: '#E0BBE4',
+    },
+    Subtraction: {
+        icon: subtraction,
+        color: '#FFABAB',
+    },
+    Multiplication: {
+        icon: multiplication,
+        color: '#B5EAD7',
+    },
+    Division: {
+        icon: division,
+        color: '#C7CEEA',
+    },
+    Percentage: {
+        icon: percentage,
+        color: '#FFDAC1',
+    },
 };
 
-const subjectsColors = {
-    Addition: '#E0BBE4',
-    Subtraction: '#FFABAB',
-    Multiplication: '#B5EAD7',
-    Division: '#C7CEEA',
-    Percentage: '#FFDAC1',
-};
 
 const LevelsPage = () => {
     const { subjectGame } = useParams();
@@ -57,10 +65,10 @@ const LevelsPage = () => {
             <div className="flex items-center gap-4 mb-8">
                 <div className="flex items-center gap-6 ">
                     <SubjectCircle
-                        imageSrc={IconMap[subjectGame]}
+                        imageSrc={subjectsData[subjectGame]?.icon}
                         title={subjectGame}
                         variant="circle"
-                        circleColor={subjectsColors[subjectGame] || "#D3D3D3"}
+                        circleColor={subjectsData[subjectGame]?.color || "#D3D3D3"}
                         size={150}
                     />
                     <h1 className="text-3xl md:text-4xl font-bold text-gray-800 drop-shadow-sm">
