@@ -8,6 +8,7 @@ const WordProblemsCreator = ({ subject, var1, var2, answer }) => {
   const { grade } = useGrade();
   const [wordProblem, setWordProblem] = useState("");
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     //flag to cancel the questiion generating if it was already set
     let cancelled = false;
@@ -23,7 +24,7 @@ Positive answer example: "${questions[subject.toLowerCase()]?.positive}"
 Negative answer example: "${questions[subject.toLowerCase()]?.negative}"
 Now, write a new short, fun, and clear math word problem for a child in grade ${grade}.
 It should be about ${subject}, using the numbers ${var1} and ${var2}.
-Make sure the correct answer is ${answer}, which may be a negative number.
+Make sure the correct answer is ${Math.abs(answer)}, which may be a negative number.
 Do NOT include the answer — just the question sentence.
 Match the tone and structure of the examples above but use different examples and names.`;
       try {

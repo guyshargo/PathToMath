@@ -81,7 +81,9 @@ const WordProblem = () => {
     setIsAnswerVisible(true)
     const userNumericAnswer = parseInt(userAnswer);
     // Check if the answer is correct
-    const correct = currentQuestion?.answer?.value;
+    let correct = currentQuestion?.answer?.value;
+    correct = Math.abs(correct);
+
     // If the answer is correct, provide positive feedback
     if (userNumericAnswer === correct) {
       setFeedback(<p className="text-green-600">Correct!</p>);
@@ -187,6 +189,7 @@ const WordProblem = () => {
                 setUserAnswer={setUserAnswer}
                 onSubmit={handleSubmit}
                 feedback={feedback}
+                disabled={isAnswerVisible}
               />
             </div>
           )

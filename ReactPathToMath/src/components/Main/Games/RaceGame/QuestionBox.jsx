@@ -12,7 +12,7 @@ import React from 'react';
  * @param {React.ReactNode} [props.feedback] - Feedback message to display below the input
  * @returns {React.ReactNode} The rendered QuestionBox component
  */
-function QuestionBox({ question, userAnswer, setUserAnswer, onSubmit, feedback }) {
+function QuestionBox({ question, userAnswer, setUserAnswer, onSubmit, feedback, disabled = false }) {
 
   // Handle form submission: prevent default and call onSubmit callback
   const handleSubmit = (event) => {
@@ -31,12 +31,13 @@ function QuestionBox({ question, userAnswer, setUserAnswer, onSubmit, feedback }
           type="text"
           value={userAnswer}
           onChange={(event) => setUserAnswer(event.target.value)}
-          className="border p-2 rounded mr-2 w-24 text-center"
+          className={`border p-2 rounded mr-2 w-24 text-center ${disabled ? "cursor-not-allowed" : "cursor-pointer"}`}
           autoFocus
+          disabled={disabled}
         />
 
         {/* Submit button */}
-        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded cursor-pointer">
+        <button type="submit" className={`bg-blue-600 text-white px-4 py-2 rounded ${disabled ? "cursor-not-allowed" : "cursor-pointer"}`} disabled={disabled}>
           Submit
         </button>
       </form>

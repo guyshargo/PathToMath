@@ -48,7 +48,7 @@ function GameContainer({ gameName, gameSubject, children, icon }) {
                         {gameSubject}
                     </span>
                     <span className="bg-green-300 text-green-900 font-semibold px-4 py-1 rounded-full shadow-md select-none">
-                        {`Grade ${gameLevel}`}
+                        {`Level ${gameLevel}`}
                     </span>
                 </div>
             </div>

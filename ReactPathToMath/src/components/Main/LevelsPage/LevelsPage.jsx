@@ -2,14 +2,14 @@ import React from "react";
 import background from '../../../assets/Images/nature2.png'
 import { useParams } from 'react-router-dom';
 import LevelCircle from "./LevelCircle.jsx";
-import { useUser } from '../../Utils/UserContext.jsx';
 import addition from '../../../assets/Images/Math_icon/addition_purple.png';
 import subtraction from '../../../assets/Images/Math_icon/minus.png';
 import multiplication from '../../../assets/Images/Math_icon/multi.png';
 import division from '../../../assets/Images/Math_icon/division1.png';
 import percentage from '../../../assets/Images/Math_icon/percentage.png';
-import { useLoginStatus } from '../../Utils/LoginStatusComponent.jsx';
 import SubjectCircle from "../HomePage/SubjectCircle.jsx";
+import { useGrade } from '../../Utils/GradeComponent';
+import { useUser } from "../../Utils/UserContext";
 
 const subjectsData = {
     Addition: {
@@ -34,12 +34,10 @@ const subjectsData = {
     },
 };
 
-
 const LevelsPage = () => {
     const { subjectGame } = useParams();
+    const { grade } = useGrade();
     const { user } = useUser();
-    const { isLoggedIn } = useLoginStatus();
-    const gradeLevel = isLoggedIn ? user.grade : 1;
 
     if (!subjectGame) {
         return (
@@ -50,7 +48,7 @@ const LevelsPage = () => {
         )
     }
     // Check if the subjectGame exists in the user's gradeLevel
-    const playersLevel = user?.gradeLevel[user.grade - 1]?.[subjectGame] + 1 || 1;
+    const playersLevel = user?.grade[grade - 1]?.[subjectGame] + 1 || 1;
     const numOfLevels = 30
     const levelPercentage = ((playersLevel - 1) / numOfLevels) * 100;
 
@@ -89,7 +87,7 @@ const LevelsPage = () => {
                     {Math.round(levelPercentage)}% Complete
                 </p>
             </div>
-            <LevelCircle currentLevel={playersLevel} numOfLevels={numOfLevels} grade={gradeLevel} />
+            <LevelCircle currentLevel={playersLevel} numOfLevels={numOfLevels} grade={grade} />
         </div>
     )
 }
