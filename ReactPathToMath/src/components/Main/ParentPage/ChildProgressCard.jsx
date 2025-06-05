@@ -3,8 +3,8 @@ import CardBckgr from '../../../assets/Images/clouds.jpg'
 
 function ChildProgressCard({ child }) {
   const subjects = ['Addition', 'Subtraction', 'Multiply', 'Division', 'Percentage'];
-  const gradeIndex = parseInt(child.grade) - 1;
-  const levelData = child.gradeLevel[gradeIndex];
+  const gradeIndex = parseInt(child?.grade) - 1;
+  const levelData = child?.gradeLevel[gradeIndex];
 
   return (
     <div style={{ backgroundImage: `url(${CardBckgr})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
@@ -13,13 +13,13 @@ function ChildProgressCard({ child }) {
       <div className="flex justify-center w-full mb-4">
         <div className="flex items-center gap-4">
           <img
-            src={child.avatar}
-            alt={`${child.name}'s avatar`}
+            src={child?.avatar}
+            alt={`${child?.name}'s avatar`}
             className="w-24 h-24 rounded-full object-cover outline-3 outline-purple-500"
           />
           <div className="flex flex-col justify-start text-left">
-            <h2 className="text-3xl font-semibold text-purple-700 leading-snug">{child.name}</h2>
-            <p className="text-lg text-purple-600 mt-1">Grade {child.grade}</p>
+            <h2 className="text-3xl font-semibold text-purple-700 leading-snug">{child?.name}</h2>
+            <p className="text-lg text-purple-600 mt-1">Grade {child?.grade}</p>
           </div>
         </div>
       </div>

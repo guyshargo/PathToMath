@@ -66,7 +66,7 @@ const LoginSignup = ({ action }) => {
         localStorage.setItem("userType", role);
 
         if( role === "Parent") {
-          navigate("/ParentPage");
+          navigate("/");
         } else {
           navigate("/");
         }

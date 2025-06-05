@@ -25,7 +25,7 @@ function ParentPage() {
         <div className="w-full max-w-2xl bg-white p-3 rounded-3xl shadow-xl">
           {/* Flex container for child cards */}
           <div className="flex flex-wrap justify-center">
-              <ChildProgressCard key={user.id} child={user} />
+              <ChildProgressCard key={user?.name} child={user} />
           </div>
         </div>
       </div>
