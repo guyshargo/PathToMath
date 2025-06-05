@@ -9,6 +9,7 @@ import multiplication from '../../../assets/Images/Math_icon/multi.png';
 import division from '../../../assets/Images/Math_icon/division1.png';
 import percentage from '../../../assets/Images/Math_icon/percentage.png';
 import { useLoginStatus } from '../../Utils/LoginStatusComponent.jsx';
+import SubjectCircle from "../HomePage/SubjectCircle.jsx";
 
 const IconMap = {
     Addition: addition,
@@ -17,6 +18,15 @@ const IconMap = {
     Division: division,
     Percentage: percentage,
 };
+
+const subjectsColors = {
+    Addition: '#E0BBE4',
+    Subtraction: '#FFABAB',
+    Multiplication: '#B5EAD7',
+    Division: '#C7CEEA',
+    Percentage: '#FFDAC1',
+};
+
 const LevelsPage = () => {
     const { subjectGame } = useParams();
     const { user } = useUser();
@@ -31,16 +41,13 @@ const LevelsPage = () => {
             </div>
         )
     }
-
     // Check if the subjectGame exists in the user's gradeLevel
     const playersLevel = user?.gradeLevel[user.grade - 1]?.[subjectGame] + 1 || 1;
     const numOfLevels = 30
     const levelPercentage = ((playersLevel - 1) / numOfLevels) * 100;
 
-    // Fetch players level in specific subject and grade
-
     return (
-        <div className="relative playful-font min-h-[100vh] w-full flex flex-col items-center justify-start pt-12 pb-24 px-4 overflow-hidden"
+        <div className="relative playful-font min-h-[100vh] w-full flex flex-col items-center justify-start pt-7 px-4 overflow-hidden"
             style={{
                 backgroundImage: `url(${background})`,
                 backgroundSize: 'cover',
@@ -48,14 +55,18 @@ const LevelsPage = () => {
                 backgroundPosition: 'center',
             }}>
             <div className="flex items-center gap-4 mb-8">
-                <img
-                    src={IconMap[subjectGame]}
-                    alt={`${subjectGame} icon`}
-                    className="w-16 h-16 object-contain drop-shadow-md"
-                />
-                <h1 className="text-3xl md:text-4xl font-bold text-[#3B2F2F] drop-shadow-sm">
-                    {subjectGame} - Choose your level!
-                </h1>
+                <div className="flex items-center gap-6 ">
+                    <SubjectCircle
+                        imageSrc={IconMap[subjectGame]}
+                        title={subjectGame}
+                        variant="circle"
+                        circleColor={subjectsColors[subjectGame] || "#D3D3D3"}
+                        size={150}
+                    />
+                    <h1 className="text-3xl md:text-4xl font-bold text-gray-800 drop-shadow-sm">
+                        Select a Level – Random Games Await!
+                    </h1>
+                </div>
             </div>
 
             {/* Progress Bar */}
@@ -66,7 +77,7 @@ const LevelsPage = () => {
                         style={{ width: `${levelPercentage}%` }}
                     ></div>
                 </div>
-                <p className="text-center text-sm mt-2">
+                <p className="text-center text-sm mt-2 text-gray-800 mb-4">
                     {Math.round(levelPercentage)}% Complete
                 </p>
             </div>
