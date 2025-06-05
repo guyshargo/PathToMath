@@ -26,7 +26,7 @@ function GameContainer({ gameName, gameSubject, children, icon }) {
     };
 
     return (
-        <div className="flex flex-col h-full font-sans playful-font antialiased flex-grow"
+        <div className="flex flex-col h-full font-sans playful-font antialiased flex-grow "
             style={{
                 backgroundImage: `url(${BackgroundImg})`,
                 backgroundSize: 'cover',
@@ -54,13 +54,13 @@ function GameContainer({ gameName, gameSubject, children, icon }) {
             </div>
 
             {/* Game Container */}
-            <div className="text-center mb-20">
+            <div className="text-center">
                 <div className="flex-grow text-center text-black p-6 mx-auto max-w-6xl w-full bg-transparent">
                     {children}
                 </div>
             </div>
 
-            <div className="px-6 mb-10">
+            <div className=" flex justify-center mb-10">
                 <ButtonComponent
                     label="Return"
                     onClick={handleReturn}
