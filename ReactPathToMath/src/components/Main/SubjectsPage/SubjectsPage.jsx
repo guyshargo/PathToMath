@@ -42,7 +42,7 @@ const SubjectsPage = () => {
             }}
         >
             <h1 className="text-4xl md:text-5xl font-semibold text-[#3B2F2F] mb-10 drop-shadow-sm">
-                Choose subject to learn!
+                Choose A Subject To Learn!
             </h1>
 
             <div className="flex flex-wrap justify-center gap-10 z-10">
@@ -58,7 +58,7 @@ const SubjectsPage = () => {
                                 className="w-50 h-50 mb-4 object-contain aspect-square drop-shadow-md"
                             />
                         </Link>
-                        <span className="text-center text-lg font-semibold text-gray-800">
+                        <span className="text-center text-xl font-semibold text-gray-800">
                             {subject.name}
                         </span>
                     </div>
