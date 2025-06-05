@@ -10,6 +10,7 @@ import percentage from '../../../assets/Images/Math_icon/percentage.png';
 import SubjectCircle from "../HomePage/SubjectCircle.jsx";
 import { useGrade } from '../../Utils/GradeComponent';
 import { useUser } from "../../Utils/UserContext";
+import ShadowedTitle from "../../Utils/ShadowedTitle.jsx";
 
 const subjectsData = {
     Addition: {
@@ -61,17 +62,19 @@ const LevelsPage = () => {
                 backgroundPosition: 'center',
             }}>
             <div className="flex items-center gap-4 mb-8">
-                <div className="flex items-center gap-6 ">
+                <div className="flex items-center gap-6">
                     <SubjectCircle
                         imageSrc={subjectsData[subjectGame]?.icon}
                         title={subjectGame}
                         variant="circle"
                         circleColor={subjectsData[subjectGame]?.color || "#D3D3D3"}
                         size={150}
+                        clickable={false}
                     />
-                    <h1 className="text-3xl md:text-4xl font-bold text-gray-800 drop-shadow-sm">
-                        Select a Level – Random Games Await!
-                    </h1>
+                    <ShadowedTitle
+                        text="In Each Level a Random Game Awaits You!"
+                        shadowColor={subjectsData[subjectGame]?.color}
+                    />
                 </div>
             </div>
 

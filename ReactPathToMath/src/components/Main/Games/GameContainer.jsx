@@ -3,6 +3,7 @@ import ButtonComponent from '../../Utils/Button';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import BackgroundImg from '../../../assets/Images/nature2.png'
+import ShadowedTitle from '../../Utils/ShadowedTitle';
 
 /**
  * Game Container Component
@@ -38,7 +39,7 @@ function GameContainer({ gameName, gameSubject, children, icon }) {
             <div className="text-center p-10">
                 {/* Main game name with race flag */}
                 <h1 className="text-6xl font-bold text-black flex justify-center items-center space-x-3 select-none">
-                    <span>{gameName}</span>
+                    <ShadowedTitle text={gameName}/>
                     {icon && <img src={icon} alt="Game Icon" className="w-30 h-auto" />}
                 </h1>
 
@@ -59,7 +60,6 @@ function GameContainer({ gameName, gameSubject, children, icon }) {
                     {children}
                 </div>
             </div>
-
             <div className=" flex justify-center mb-10">
                 <ButtonComponent
                     label="Return"

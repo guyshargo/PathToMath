@@ -6,6 +6,7 @@ import subtractionIcon from '../../../assets/Images/Math_icon/minus.png';
 import multiplicationIcon from '../../../assets/Images/Math_icon/multi.png';
 import divisionIcon from '../../../assets/Images/Math_icon/division1.png';
 import percentageIcon from '../../../assets/Images/Math_icon/percentage.png';
+import ShadowedTitle from "../../Utils/ShadowedTitle.jsx";
 import { Link, useNavigate } from 'react-router-dom';
 import { useGrade } from '../../Utils/GradeComponent.jsx'; // Custom hook that provides the current grade
 
@@ -42,10 +43,8 @@ const SubjectsPage = () => {
         zIndex: 0,
       }}
     >
-      <h1 className="text-4xl md:text-5xl font-medium text-gray-800 mb-10 drop-shadow-sm">
-        Choose Your Math Topic and Begin Practicing!
-      </h1>
-      <div className="flex flex-col items-center gap-10 z-10">
+      <ShadowedTitle text="Choose Your Math Topic and Begin Practicing!" />
+      <div className="flex flex-col items-center mt-5 gap-10 z-10">
         {rows.map((_, rowIndex) => (
           <div key={rowIndex} className="flex justify-center gap-10">
             {buttons.slice(rowIndex * 3, rowIndex * 3 + 3).map((subject, index) => (

@@ -1,11 +1,21 @@
 import React from 'react';
 
-function SubjectCircle({ imageSrc, title, description, variant = "flip", circleColor = "#D3D3D3", size = 240 }) {
+function SubjectCircle({
+  imageSrc,
+  title,
+  description,
+  variant = "flip",
+  circleColor = "#D3D3D3",
+  size = 240,
+  clickable = true
+}) {
+  const cursorClass = clickable ? "cursor-pointer" : "cursor-default";
+
   if (variant === "circle") {
     const circleSize = `${size}px`;
 
     return (
-      <div className="flex flex-col items-center cursor-pointer playful-font">
+      <div className={`flex flex-col items-center ${cursorClass} playful-font`}>
         <div
           className="mb-2 rounded-full flex items-center justify-center shadow-md border-4 border-white"
           style={{
