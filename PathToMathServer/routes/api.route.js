@@ -3,7 +3,7 @@ const apiRoute = express.Router();
 //use googlegen ai
 const { GoogleGenAI } = require('@google/genai');
 //get api key from process
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+const ai = new GoogleGenAI({ apiKey: "AIzaSyDHStM2VXxEakUGCuA2E9IgHDZ9XqvxM74"});
 //post request to gemini to generate question using prompt
 apiRoute.post('/generate-question', async (req, res) => {
   const { prompt } = req.body;
