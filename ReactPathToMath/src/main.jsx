@@ -19,7 +19,7 @@ import Profile from './components/Main/ProfilePage/ProfilePage.jsx'
 import RelevantVideo from './components/Main/VideoPage/RelevantVideo.jsx'
 import ParentPage from './components/Main/ParentPage/ParentPage.jsx';
 import LogoutPage from './components/Main/LoginSignupPage/Logout.jsx';
-
+import WordGame from './components/Main/Games/WordGame/WordProblem.jsx';
 /**
  * Router for the app
  */
@@ -36,6 +36,7 @@ const router = createBrowserRouter([
       { path: '/OptionsGame/:subjectGame/:grade/:level', element: <OptionsGame />, },
       { path: '/GameCube/:subjectGame/:grade/:level', element: <GameCube />, },
       { path: '/RaceGame/:subjectGame/:grade/:level', element: <RaceGame />, },
+      { path: '/WordGame/:subjectGame/:grade/:level', element: <WordGame />, },
       { path: '/videos', element: <VideoPage />, },
       { path: '/videos/:subject', element: <RelevantVideo />, },
       { path: '/profile', element: <Profile />, },

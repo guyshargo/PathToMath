@@ -20,7 +20,9 @@ const LevelCircle = ({ currentLevel, numOfLevels, grade }) => {
     const randomGame = (level) => {
         const gameArray = [
             { 'name': 'OptionsGame' },
-            { 'name': 'RaceGame' }
+            { 'name': 'RaceGame' },
+            { 'name': 'WordGame' }
+
         ]
 
         // Add GameCube only in Addition
