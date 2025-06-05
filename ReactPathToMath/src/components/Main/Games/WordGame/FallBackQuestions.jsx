@@ -1,6 +1,6 @@
 import React from 'react';
 // json of questions 
-const questions = {
+export const questions = {
     // Define templates for different subjects
     // Each subject has positive and negative templates
   addition: {
@@ -26,24 +26,16 @@ const questions = {
 };
 
 const getFallbackQuestion = (subject, var1, var2, answer) => {
-    //get the template based on subject
   const templates = questions[subject];
   if (!templates) return "No template found for subject.";
-// Determine if the answer is positive or negative
   const type = answer >= 0 ? "positive" : "negative";
-  // Get the appropriate template based on the type
   const template = templates[type];
-// return the question with variables replaced
-  return template
-    .replace("${var1}", var1)
-    .replace("${var2}", var2);
+  return template.replace("${var1}", var1).replace("${var2}", var2);
 };
 
-const FallbackWordProblem = ({ subject, var1, var2, answer }) => {
-    //get the fallback question based on subject and variables
+export const FallbackWordProblem = ({ subject, var1, var2, answer }) => {
   const question = getFallbackQuestion(subject, var1, var2, answer);
-    //return the question 
   return <div>{question}</div>;
 };
 
-export default{ FallbackWordProblem,questions};
+export default { FallbackWordProblem };

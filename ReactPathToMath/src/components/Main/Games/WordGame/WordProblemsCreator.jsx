@@ -1,62 +1,56 @@
 import React, { useEffect, useState } from 'react';
 import { GoogleGenAI } from '@google/genai';
 import { useGrade } from '../../../Utils/GradeComponent';
-import FallbackWordProblem from './FallBackQuestions';
-import questions from './FallBackQuestions';
-const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
-const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
+import { FallbackWordProblem, questions } from './FallBackQuestions';
+import ApiService from '../../../../services/ApiService';
+
 
 const WordProblemsCreator = ({ subject, var1, var2, answer }) => {
   const { grade } = useGrade();
   const [wordProblem, setWordProblem] = useState("");
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    //flag for generating question
+    //flag to cancel the questiion generating if it was already set
     let cancelled = false;
-    //generate question function
+    //generate question func
     const generate = async () => {
-      //vars validation
       if (!subject || var1 == null || var2 == null || answer == null) return;
-      //set loading to true
+      //set loading and current question
       setLoading(true);
-      //set the word to be empty
       setWordProblem("");
-      //prompt for giving question
+      //prompt for gemini
       const prompt = `Here are two example word problems:
-      Positive answer exmple: "${questions[subject]?.positive}"
-      Negative answer exmple: "${questions[subject]?.negative}"
-      Now, write a new short, fun, and clear math word problem for a child in grade ${grade}.
-      It should be about ${subject}, using the numbers ${var1} and ${var2}.
-      Make sure the correct answer is ${answer}, which may be a negative number.
-      Do NOT include the answer — just the question sentence.
-      Match the tone and structure of the examples above.`
-
+Positive answer example: "${questions[subject.toLowerCase()]?.positive}"
+Negative answer example: "${questions[subject.toLowerCase()]?.negative}"
+Now, write a new short, fun, and clear math word problem for a child in grade ${grade}.
+It should be about ${subject}, using the numbers ${var1} and ${var2}.
+Make sure the correct answer is ${answer}, which may be a negative number.
+Do NOT include the answer — just the question sentence.
+Match the tone and structure of the examples above but use different examples and names.`;
       try {
-        //getting response from gemini api
-        const response = await ai.models.generateContent({
-          model: 'gemini-1.5-flash',
-          contents: prompt,
-        });
-        //if question wasnt already generated
+        //using apiService to generate the Question from the prompt
+        const result = await ApiService.generateQuestionsAI(prompt);
+        //if question wasnt already generated set it
         if (!cancelled) {
-          const text = response?.text?.trim();
-          setWordProblem(text || "error");
+          //if generating was successful put it other wise put error
+          setWordProblem(result?.question || "error");
         }
-
+        //if an error was thrown put error
       } catch (error) {
-        //gemini couldnt generate question
-        console.warn("Gemini error", error.message);
-        //set the question as error to give default question from json
-        if (!cancelled) setWordProblem("error");
+        console.error("Gemini Error:", error);
+        if (!cancelled) {
+          setWordProblem("error");
+        }
       }
-      //if not canceleed set to false
-      if (!cancelled) setLoading(false);
+      //if not already generated set loading to false
+      if (!cancelled) {
+        setLoading(false);
+      }
     };
-    //generate questiom
+    //generate question
     generate();
-
+    //put true in cancelled if done generating
     return () => {
-      //return cancelled for stopping to generate question
       cancelled = true;
     };
   }, [subject, var1, var2, answer, grade]);
@@ -76,9 +70,9 @@ const WordProblemsCreator = ({ subject, var1, var2, answer }) => {
           ) : (
             <div className="space-y-4  w-full">
               <div className="  w-full rounded-xl ">
-                <p className="w-full text-gray-700 text-lg lg:text-xl leading-relaxed font-medium">
-                  {wordProblem != "error" ? wordProblem : <FallbackWordProblem subject={subject} var1={var1} var2={var2} answer={answer} />}
-                </p>
+                <div className="w-full text-gray-700 text-lg lg:text-xl leading-relaxed font-medium">
+                  {wordProblem != "error" ? wordProblem : <FallbackWordProblem subject={subject.toLowerCase()} var1={var1} var2={var2} answer={answer} />}
+                </div>
               </div>
 
               {subject && (
