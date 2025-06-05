@@ -10,14 +10,14 @@ function SubjectCircle({
   clickable = true
 }) {
   const cursorClass = clickable ? "cursor-pointer" : "cursor-default";
-
+  // Subjects in subjectspage and videospage
   if (variant === "circle") {
     const circleSize = `${size}px`;
 
     return (
       <div className={`flex flex-col items-center ${cursorClass} playful-font`}>
         <div
-          className="mb-2 rounded-full flex items-center justify-center shadow-md border-4 border-white"
+          className="rounded-full flex items-center justify-center shadow-md border-4 border-white"
           style={{
             width: circleSize,
             height: circleSize,
@@ -38,7 +38,7 @@ function SubjectCircle({
     );
   }
 
-  // Default: flip card style
+  // Homepage flipping subject cards
   return (
     <div className="relative w-56 h-64 perspective group cursor-pointer playful-font">
       <div className="w-full h-56 relative transition-transform duration-700 transform-style-preserve-3d group-hover:rotate-y-180 will-change-transform">

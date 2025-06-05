@@ -39,7 +39,7 @@ function CirclesContainer() {
   const { user } = useUser();
 
   return (
-    <div className="flex flex-wrap justify-center gap-6 mt-8 mb-8 w-full h-1/2">
+    <div className="flex flex-wrap justify-center gap-6 mb-8 w-full h-1/2">
       {circleData.map(({ imageSrc, title, description, link }, index) => {
         const isPopQuiz = title === "Pop Quiz";
 
@@ -53,7 +53,6 @@ function CirclesContainer() {
                 </span>
               </div>
             )}
-
             <Link to={link} key={index}>
               <SubjectCircle
                 imageSrc={imageSrc}
