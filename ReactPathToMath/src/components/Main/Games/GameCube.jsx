@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cubes from './Cubes.jsx';
 import { useUser } from '../../Utils/UserContext';
-import { updateUser } from '../../../services/UserService';
 import GameContainer from './GameContainer.jsx';
 const GameCube = () => {
     const MAX_TRIES = 2;
@@ -157,13 +156,13 @@ const GameCube = () => {
     const [gameFinished, setGameFinished] = useState(false);
 
     // Handle finished game
-    const { user } = useUser();
+    const { user,update } = useUser();
     const handleFinishedGame = () => {
         const currentFinished = user?.gradeLevel[user.grade - 1]?.[gameSubject];
         if (currentFinished && gameLevel > currentFinished) {
             let newUser = user;
             newUser.gradeLevel[user.grade - 1][gameSubject] = gameLevel;
-            updateUser(user.email, newUser);
+            update(user.email, newUser);
         }
         navigate(`/subjects/${gameSubject}`);
     }

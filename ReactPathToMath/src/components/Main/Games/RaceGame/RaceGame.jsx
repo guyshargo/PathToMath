@@ -8,7 +8,6 @@ import CountdownDisplay from './CountdownDisplay';
 import StartButton from './StartButton';
 import TrackSection from './TrackSection';
 import { useUser } from '../../../Utils/UserContext';
-import { updateUser } from '../../../../services/UserService';
 import { useNavigate } from 'react-router-dom';
 import TitleIcon from '../../../../assets/Images/CompetitionGame/RaceGameTitle.png'
 
@@ -21,7 +20,7 @@ function RaceGame() {
   const gameLevel = parseInt(level);
 
   const navigate = useNavigate();
-  const { user } = useUser();
+  const { user,update } = useUser();
   const [started, setStarted] = useState(false); // Is the game currently running?
   const [userPos, setUserPos] = useState(0); // User's current position on the track
   const [botPos, setBotPos] = useState(0); // Opponent bot position on the track
@@ -71,7 +70,7 @@ function RaceGame() {
     if (gameLevel > currentFinished) {
       let newUser = user;
       newUser.gradeLevel[user.grade - 1][subjectName] = gameLevel;
-      updateUser(user.email, newUser);
+      update(user.email, newUser);
     }
     navigate(`/subjects/${subjectName}`);
   }

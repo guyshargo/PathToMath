@@ -6,7 +6,6 @@ import successImage from '../../../assets/images/success.png';
 import failureImage from '../../../assets/images/failure.png';
 import generateQuestions from './GameLogic';
 import { useParams } from 'react-router-dom';
-import { updateUser } from '../../../services/UserService';
 import { useUser } from '../../Utils/UserContext';
 import TitleIcon from '../../../assets/Images/OptionsIcon.png'
 /**
@@ -17,7 +16,7 @@ export default function OptionsGame() {
     const gameSubject = subjectGame;
     const gameLevel = parseInt(level);
     const navigate = useNavigate();
-    const { user } = useUser();
+    const { user,update } = useUser();
 
     // Correct answers user answered
     const [correctAnswers, setCorrectAnswers] = useState(0);
@@ -147,7 +146,7 @@ export default function OptionsGame() {
                     if (gameLevel > currentFinished) {
                         let newUser = user;
                         newUser.gradeLevel[user.grade - 1][gameSubject] = gameLevel;
-                        updateUser(user.email, newUser);
+                        update(user.email, newUser);
                     }
                     navigate(`/subjects/${gameSubject}`);
                 }

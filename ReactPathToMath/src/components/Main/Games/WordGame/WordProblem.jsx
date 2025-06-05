@@ -18,7 +18,7 @@ const WordProblem = () => {
   const gameLevel = parseInt(level);
   const navigate = useNavigate();
   // Get the user from the UserContext
-  const { user } = useUser();
+  const { user ,update} = useUser();
   // Get the current grade from the GradeContext
   const { grade } = useGrade();
   // State to track correct answers
@@ -125,7 +125,7 @@ const WordProblem = () => {
           if (gameLevel > currentFinished) {
             let newUser = { ...user };
             newUser.gradeLevel[user.grade - 1][gameSubject] = gameLevel;
-            updateUser(user.email, newUser);
+            update(user.email, newUser);
           }
           navigate(`/subjects/${gameSubject}`);
         } else {
