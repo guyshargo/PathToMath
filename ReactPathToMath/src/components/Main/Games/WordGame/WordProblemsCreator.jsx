@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { GoogleGenAI } from '@google/genai';
 import { useGrade } from '../../../Utils/GradeComponent';
 import { FallbackWordProblem, questions } from './FallBackQuestions';
 import ApiService from '../../../../services/ApiService';
