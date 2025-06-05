@@ -10,7 +10,7 @@ import ProfileIcon from '../../assets/Images/profile.png'
 import LoginIcon from '../../assets/Images/login.png'
 import LogoutIcon from '../../assets/Images/logout.png'
 import TutorialVideosIcon from '../../assets/Images/helpVideos.png'
-import ParentOverviewIcon from '../../assets/Images/OptionsIcon.png'
+import ParentOverviewIcon from '../../assets/Images/ParentOverview.png'
 import SignupIcon from '../../assets/Images/SignupIcon.png'
 
 function Header() {
@@ -80,11 +80,10 @@ function Header() {
     });
     
     menuData.push({
-      //Home page
       label: 'Parent Overview',
       link: '/ParentPage',
       icon: ParentOverviewIcon,
-      colorClass: "bg-orange-700 hover:bg-orange-600",
+      colorClass: "bg-orange-500 hover:bg-orange-400",
       submenuColor: "hover:bg-orange-500",
       className: "ParentView"
     });
