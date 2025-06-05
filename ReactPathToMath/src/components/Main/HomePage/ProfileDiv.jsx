@@ -12,7 +12,7 @@ function ProfileDiv() {
     const navigate = useNavigate();
 
     return (
-             <div className="flex flex-col md:flex-row gap-6 justify-center items-center w-full max-w-4xl">
+        <div className="flex flex-col md:flex-row gap-6 justify-center items-center w-full max-w-4xl">
             
             {/* Avatar Card */}
             <ProfileCard 

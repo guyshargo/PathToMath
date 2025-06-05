@@ -10,7 +10,7 @@ function HomePage() {
     const { user } = useUser();
 
     return (
-        <div className="background-image pt-5 pb-4 flex-grow w-full h-full flex flex-row justify-center items-center ">
+        <div className="background-image playful-font pt-5 pb-4 flex-grow w-full h-full flex flex-row justify-center items-center ">
 
             {/* Avatar section */}
             <div className="mt-5 pt-5 mb-4 hidden lg:flex w-1/3 h-full justify-end items-center relative">
@@ -28,7 +28,10 @@ function HomePage() {
             </div>
 
             {/* Main content */}
-            <div className="flex flex-col items-center justify-start gap-4 w-full lg:w-2/3 h-full">
+            <div className="flex flex-col items-center justify-start gap-4 w-full lg:w-2/3 h-full text-gray-800">
+                <h1 className="text-4xl font-extrabold drop-shadow-md mt-2">
+                    Welcome to Path2Math!
+                </h1>
                 <ProfileDiv />
                 <CirclesContainer />
             </div>
