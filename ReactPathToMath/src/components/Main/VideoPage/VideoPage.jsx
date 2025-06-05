@@ -41,7 +41,7 @@ const VideoPage = () => {
                 zIndex: 0,
             }}
         >
-            <h1 className="text-4xl md:text-5xl font-semibold text-gray-800 mb-10 drop-shadow-sm">
+            <h1 className="text-4xl md:text-5xl font-medium text-gray-800 mb-10 drop-shadow-sm">
                 Choose a Math Topic to Watch Video Tutorials!
             </h1>
             <div className="flex flex-col items-center gap-10 z-10">
