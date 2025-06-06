@@ -22,6 +22,8 @@ import LogoutPage from './components/Main/LoginSignupPage/Logout.jsx';
 import WordGame from './components/Main/Games/WordGame/WordProblem.jsx';
 import RocketGame from './components/Main/Games/RocketGame/RocketGame.jsx';
 
+import BalloonsGame  from './components/Main/Games/BalloonsGame/BalloonsGame.jsx'
+import RewardsPage from './components/Main/BadgesPage/RewardsPage';
 /**
  * Router for the app
  */
@@ -40,11 +42,13 @@ const router = createBrowserRouter([
       { path: '/RaceGame/:subjectGame/:grade/:level', element: <RaceGame />, },
       { path: '/RocketGame/:subjectGame/:grade/:level', element: <RocketGame />, },
       { path: '/WordGame/:subjectGame/:grade/:level', element: <WordGame />, },
+      { path: '/BalloonsGame/:subjectGame/:grade/:level', element: <BalloonsGame />, },
       { path: '/videos', element: <VideoPage />, },
       { path: '/videos/:subject', element: <RelevantVideo />, },
       { path: '/profile', element: <Profile />, },
       { path: '/ParentPage', element: <ParentPage />, },
-      { path: '/logout', element: <LogoutPage /> }
+      { path: '/logout', element: <LogoutPage /> } ,
+      { path: '/badges', element: <RewardsPage />} 
     ],
   },
 ])

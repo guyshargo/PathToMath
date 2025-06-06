@@ -26,7 +26,7 @@ function GameContainer({ gameName, gameSubject, children, icon, backgroundImage 
     };
 
     return (
-        <div className="flex flex-col h-full font-sans playful-font antialiased flex-grow "
+        <div className="flex flex-col h-full font-sans playful-font antialiased"
             style={{
                 backgroundImage: `url(${backgroundImage})`,
                 backgroundSize: 'cover',
@@ -43,12 +43,12 @@ function GameContainer({ gameName, gameSubject, children, icon, backgroundImage 
                 </h1>
 
                 {/* Subject and Level badges */}
-                <div className="flex justify-center mt-2 space-x-4">
+                <div className="flex justify-center space-x-4">
                     <span className="bg-yellow-300 text-yellow-900 font-semibold px-4 py-1 rounded-full shadow-md select-none">
                         {gameSubject}
                     </span>
                     <span className="bg-green-300 text-green-900 font-semibold px-4 py-1 rounded-full shadow-md select-none">
-                        {`Level ${gameLevel}`}
+                        {`Grade ${gameLevel}`}
                     </span>
                 </div>
             </div>
