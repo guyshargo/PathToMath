@@ -1,18 +1,8 @@
 import React from 'react';
 import Track from './Track';
 
-/**
- * TrackSection component displays two tracks:
- * one for the user and one for the opponent (bot).
- * Each track shows progress based on current positions.
- * 
- * @param {Object} props
- * @param {number} props.userPos - Current position of the user on the track
- * @param {number} props.botPos - Current position of the bot on the track
- * @param {number} props.trackLength - Total length of the track
- * @returns {React.ReactNode} The rendered TrackSection component
- */
-function TrackSection({ userPos, botPos, trackLength }) {
+
+function TrackSection({ userPos, botPos, trackLength, startIcon, finishIcon }) {
   return (
     <div className="my-6">
       {/* User track label */}
@@ -25,6 +15,8 @@ function TrackSection({ userPos, botPos, trackLength }) {
         color="bg-green-600"
         startLabel="Start"
         endLabel="Finish"
+        startIcon={startIcon}
+        finishIcon={finishIcon}
       />
 
       {/* Opponent track label */}
@@ -37,6 +29,8 @@ function TrackSection({ userPos, botPos, trackLength }) {
         color="bg-red-600"
         startLabel="Start"
         endLabel="Finish"
+        startIcon={startIcon}
+        finishIcon={finishIcon}
       />
     </div>
   );

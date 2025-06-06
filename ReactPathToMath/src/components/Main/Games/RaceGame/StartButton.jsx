@@ -11,7 +11,7 @@ import ButtonComponent from '../../../Utils/Button';
  * @param {string} [props.message] - Optional message to display on the button (e.g., "Retry")
  * @returns {React.ReactNode} The rendered StartButton component
  */
-function StartButton({ onClick, message }) {
+function StartButton({ onClick, message, startMessage, startGameColor }) {
   
   // Determine if button is for retry or for winning based on message presence
   const isRetry = Boolean(message);
@@ -19,8 +19,8 @@ function StartButton({ onClick, message }) {
   return (
     <ButtonComponent
       onClick={onClick}
-      label={message || '🏁 Start Race'}
-      bgColor={isRetry ? 'bg-yellow-300' : 'bg-orange-400'}
+      label={message || startMessage}
+      bgColor={isRetry ? 'bg-yellow-300' : startGameColor}
       textColor={isRetry ? 'text-black' : 'text-white'}
       size="lg"
     />

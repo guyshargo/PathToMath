@@ -31,6 +31,13 @@ function RaceGame() {
   const botTimer = useRef(null); // Opponent bot's interval timer
   const [countdown, setCountdown] = useState(null); // Countdown before game starts
 
+  const colorMap = [
+    'text-red-600',
+    'text-yellow-500',
+    'text-green-600',
+    'text-black'
+  ]
+
   useEffect(() => {
     const generated = generateQuestions(subjectName, grade, gameLevel, NUM_QUESTIONS, 1);
     setQuestions(generated);
@@ -89,12 +96,12 @@ function RaceGame() {
       setCountdown((prev) => {
         if (prev === 1) {
           clearInterval(interval);
-          setCountdown('Race!');
+          setCountdown('🏁 Race!');
           setTimeout(() => {
             setCountdown(null);
             setStarted(true); // Game actually starts
           }, 1000);
-          return 'Race!';
+          return '🏁 Race!';
         }
         return typeof prev === 'number' ? prev - 1 : prev;
       });
@@ -134,19 +141,20 @@ function RaceGame() {
   };
 
   return (
-    <GameContainer gameName="Math Race" gameSubject={subjectName} gameLevel={{grade}} icon={TitleIcon}>
+    <GameContainer gameName="Math Race" gameSubject={subjectName} gameLevel={gameLevel} icon={TitleIcon}>
       <div className="bg-white rounded-lg p-4 shadow-lg">
 
         {/* Show start race button (for first race) or try again message (for next races)
           when the game is not running (before clicking start race or after a race finished and try again needs to be clicked) */}
         {!started && countdown === null && (
           <div className="flex justify-center">
-            <StartButton onClick={message === 'You Win! Continue To The Next Race?' ? handleFinishedGame : startCountdown} message={message} />
+            <StartButton onClick={message === 'You Win! Continue To The Next Race?' ? handleFinishedGame : startCountdown}
+            message={message} startMessage={'🏁 Start Race'} startGameColor={'bg-orange-400'} />
           </div>
         )}
 
         {/* Use CountdownDisplay component for visuals before game starts */}
-        <CountdownDisplay countdown={countdown} />
+        <CountdownDisplay countdown={countdown} colorMap={colorMap} startWord={'🏁 Race!'} />
 
         {/* Show the question box only when the game has started */}
         {started && (
@@ -158,10 +166,15 @@ function RaceGame() {
             feedback={<FeedbackMessage message={message} />}
           />
         )}
-
         {/* Show tracks immediately based on TRACK_LENGTH (even if questions haven't loaded yet) */}
         {TRACK_LENGTH > 1 && (
-          <TrackSection userPos={userPos} botPos={botPos} trackLength={TRACK_LENGTH} />
+          <TrackSection
+            userPos={userPos}
+            botPos={botPos}
+            trackLength={TRACK_LENGTH}
+            startIcon="🚦"
+            finishIcon="🏁"
+          />
         )}
       </div>
     </GameContainer>
