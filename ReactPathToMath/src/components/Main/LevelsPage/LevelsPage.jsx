@@ -49,10 +49,10 @@ const LevelsPage = () => {
         )
     }
     // Check if the subjectGame exists in the user's gradeLevel
-    const playersLevel = user?.grade[grade - 1]?.[subjectGame] + 1 || 1;
+    const playersLevel = user?.gradeLevel[grade - 1]?.[subjectGame] + 1 || 1;
     const numOfLevels = 30
     const levelPercentage = ((playersLevel - 1) / numOfLevels) * 100;
-
+    
     return (
         <div className="relative playful-font min-h-[100vh] w-full flex flex-col items-center justify-start pt-7 px-4 overflow-hidden"
             style={{
