@@ -86,7 +86,7 @@ const SignUpPrompt = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-sky-200 via-gray-200 to-sky-300 relative overflow-hidden">
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4">
+      <div className="relative z-10 mt-10 mb-10 flex flex-col items-center justify-center min-h-screen px-4">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
           <div className="text-5xl animate-spin">🌟</div>
