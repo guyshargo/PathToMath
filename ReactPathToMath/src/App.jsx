@@ -14,7 +14,7 @@ function App() {
         <GradeProvider>
           <div className="flex min-h-screen flex-col relative">
             {/* Header - Fixed position at top */}
-            <header className="sticky top-0 z-10 w-full bg-white">
+            <header className="sticky top-0 z-100 w-full bg-white">
               <Header />
             </header>
 
