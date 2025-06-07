@@ -31,7 +31,7 @@ function QuestionBox({ question, userAnswer, setUserAnswer, onSubmit, feedback, 
           type="text"
           value={userAnswer}
           onChange={(event) => setUserAnswer(event.target.value)}
-          className={`border p-2 rounded mr-2 w-24 text-center ${disabled ? "cursor-not-allowed" : "cursor-pointer"}`}
+          className={`border p-2 rounded mr-2 w-24 text-center ${disabled ? "cursor-not-allowed" : "cursor-normal"}`}
           autoFocus
           disabled={disabled}
         />

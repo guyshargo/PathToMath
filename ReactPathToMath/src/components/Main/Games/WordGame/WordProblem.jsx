@@ -6,10 +6,12 @@ import generateQuestions from "../GameLogic";
 import WordProblemsCreator from "./WordProblemsCreator";
 import QuestionBox from "../RaceGame/QuestionBox";
 import GameContainer from "../GameContainer";
-import TitleIcon from "../../../../assets/Images/quiz.png";
+import TitleIcon from "../../../../assets/Images/wordGame/StoriesIcon.png";
 import successImage from "../../../../assets/Images/success.png";
 import failureImage from "../../../../assets/Images/failure.png";
 import ButtonComponent from "../../../Utils/Button";
+import StoriesBg from '../../../../assets/Images/wordGame/StoriesBg.jpg'
+
 const WordProblem = () => {
   // Get the subject and level from the URL parameters
   const { subjectGame, level } = useParams();
@@ -163,13 +165,14 @@ const WordProblem = () => {
 
   return (
     <GameContainer
-      gameName="Math Stories"
+      gameName="Math Tales"
       gameSubject={gameSubject}
       grade={grade}
       level={gameLevel}
       icon={TitleIcon}
+      backgroundImage={StoriesBg}
     >
-    <div className={`inline-block w-3/4 align-middle justify-center border-5 border-blue-400 rounded-3xl shadow-lg ${endGame ? endGameObject?.containerColor : 'bg-white'}`}>
+    <div className={`inline-block max-w-[800px] mb-5 align-middle justify-center border-5 border-red-300 rounded-3xl shadow-lg ${endGame ? endGameObject?.containerColor : 'bg-white'}`}>
       <div >
 
         {isLoading ? (

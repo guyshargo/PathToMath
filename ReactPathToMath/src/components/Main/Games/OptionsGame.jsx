@@ -63,12 +63,25 @@ export default function OptionsGame() {
             let selectedValue = option.value;
 
             // Correct answer clicked or displayed when clicked on wrong answer
-            if (selectedValue === answerValue) return "bg-green-400";
+            if (selectedValue === answerValue) return "bg-green-400 shadow-md";
 
             // Wrong answer selected
-            if (selectedValue === selectedOption.value && selectedValue !== answerValue) return "bg-red-400";
+            if (selectedValue === selectedOption.value && selectedValue !== answerValue) return "bg-red-400 shadow-md";
         }
-        return "bg-gray-100";
+        return "bg-orange-900 border-4 border-amber-700 shadow-inner shadow-black hover:brightness-110";
+    };
+
+    const getOptionTextColor = (option) => {
+        if (!selectedOption) return "text-amber-400";
+
+        const isCorrect = option.value === currentQuestion.answer.value;
+        const isSelected = option.value === selectedOption.value;
+
+        if (isCorrect || isSelected) {
+            return "text-black";
+        }
+
+        return "text-amber-400";
     };
 
     /** Generate Options */
@@ -82,7 +95,7 @@ export default function OptionsGame() {
                         onClick={() => optionClicked(option)}
                         label={gameSubject === "Percentage" ? `${option.textValue}%` : option.textValue}
                         bgColor={optionBgColor(option)}
-                        textColor="text-black"
+                        textColor={getOptionTextColor(option)}
                         size="lg"
                         disabled={disableButtons}
                     />
@@ -190,11 +203,11 @@ export default function OptionsGame() {
     }, [gameSubject, gameLevel]);
 
     return (
-        <GameContainer gameName="Options Game" gameSubject={gameSubject} gameLevel={gameLevel} icon={TitleIcon} backgroundImage={OptionsBg}>
+        <GameContainer gameName="Math Treausre Hunt" gameSubject={gameSubject} gameLevel={gameLevel} icon={TitleIcon} backgroundImage={OptionsBg}>
             {/* Cube Game Container */}
-            <div className={`border-8 border-white rounded-lg p-9 inline-block shadow-lg ${endGame ? endGameObject?.containerColor : 'bg-blue-100'}`}>
+            <div className={`mb-5 border-8 border-amber-400 rounded-lg p-9 inline-block shadow-lg ${endGame ? endGameObject?.containerColor : 'bg-gray-700'}`}>
                 {/* Question Text */}
-                <div className="text-5xl font-bold mb-6 p-6">
+                <div className="text-5xl text-white font-semibold mb-6 p-6">
                     {!endGame ? currentQuestion?.question : endGameObject?.text}
                 </div>
 

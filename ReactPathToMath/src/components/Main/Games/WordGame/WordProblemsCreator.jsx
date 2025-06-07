@@ -20,13 +20,18 @@ const WordProblemsCreator = ({ subject, var1, var2, answer }) => {
       setWordProblem("");
       //prompt for gemini
       const prompt = `Here are two example word problems:
-Positive answer example: "${questions[subject.toLowerCase()]?.positive}"
-Negative answer example: "${questions[subject.toLowerCase()]?.negative}"
-Now, write a new short, fun, and clear math word problem for a child in grade ${grade}.
-It should be about ${subject}, using the numbers ${var1} and ${var2}.
-Make sure the correct answer is ${Math.abs(answer)}, which may be a negative number.
-Do NOT include the answer — just the question sentence.
-Match the tone and structure of the examples above but use different examples and names.`;
+        Positive answer example: "${questions[subject.toLowerCase()]?.positive}"
+        Negative answer example: "${questions[subject.toLowerCase()]?.negative}"
+        
+        Now, write a new short, fun, and clear math word problem for a child in grade ${grade}.
+        The problem should feel like it takes place in a magical fairy tale world — include things like enchanted forests, potions, dragons, elves, castles, witches, or magical creatures.
+        Keep the fairy tale terms simple and easy to understand.
+        Make different and original names for the characters in the story for the math problem.
+        It should still be about ${subject}, using the numbers ${var1} and ${var2}.
+        Make sure the correct answer is ${Math.abs(answer)}.
+        Do NOT include the answer — just the question sentence.
+        Match the tone and structure of the examples above, but use original content, magical settings, and whimsical names.`;
+
       try {
         //using apiService to generate the Question from the prompt
         const result = await ApiService.generateQuestionsAI(prompt);

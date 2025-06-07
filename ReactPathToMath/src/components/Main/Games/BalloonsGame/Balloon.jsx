@@ -33,7 +33,7 @@ function Balloon({ option, onClick }) {
                 onClick={handleClick}   
                 className={`
                     relative flex justify-center items-center rounded-full shadow-2xl
-                    text-white font-black text-2xl cursor-pointer w-28 h-36
+                    text-white font-black text-2xl cursor-pointer w-28 h-32
                     ${randomGradient}
                     ${isPopping ? 'animate-pop' : 'animate-gentle-bounce'}
                     balloon-glow

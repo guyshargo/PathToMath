@@ -22,8 +22,6 @@ const LevelCircle = ({ currentLevel, numOfLevels, grade }) => {
             { 'name': 'OptionsGame' },
             { 'name': 'RaceGame' },
             { 'name': 'RocketGame'},
-            { 'name:': 'GameCube'},
-
             { 'name': 'WordGame' },
             { 'name': 'BalloonsGame' }
         ]

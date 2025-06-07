@@ -187,8 +187,8 @@ const GameCube = () => {
     }
 
     return (
-        <GameContainer gameName="Cubes Game" gameSubject={gameSubject} gameLevel={{grade}} backgroundImage={CubesBg}>
-            <div className="border-8 border-white bg-blue-100 rounded-lg p-4 shadow-lg relative max-w-2xl mx-auto mb-5">
+        <GameContainer gameName="Roll & Solve" gameSubject={gameSubject} gameLevel={{grade}} backgroundImage={CubesBg}>
+            <div className="border-8 border-white bg-yellow-100 rounded-lg p-4 shadow-lg relative max-w-2xl mx-auto mb-5">
                 <div className='text-sm group inline-block absolute top-4 left-4'>
                     {/* How to play button */}
                     <button className="group items-center flex gap-2 bg-purple-200 px-4 py-2 rounded-lg hover:bg-purple-300 transition-colors cursor-pointer">
@@ -266,7 +266,7 @@ const GameCube = () => {
 
                         <div>
                             <button
-                                className="bg-blue-400 hover:cursor-pointer text-white mt-4 px-4 py-2 rounded-lg"
+                                className="bg-blue-600 hover:cursor-pointer text-white mt-4 px-4 py-2 rounded-lg"
                                 onClick={() => check_answer(selected)}
                             >
                                 Check
