@@ -35,7 +35,7 @@ const generateQuestions = (gameSubject, grade, gameLevel, numOfQuestions = 1, nu
     /** Convert grade and gameLevel to number if it's a string */
     if (typeof grade === 'string') grade = Number(grade);
     if (typeof gameLevel === 'string') gameLevel = Number(gameLevel);
-    
+
     /** Generate Variable */
     const generateVariable = (grade) => {
         let variable;
@@ -137,7 +137,20 @@ const generateQuestions = (gameSubject, grade, gameLevel, numOfQuestions = 1, nu
 
         switch (gameSubject) {
             case "Addition":
+                var1 = generateVariable(grade);
+                var2 = generateVariable(grade);
+                answer = mathFunction(var1.value, var2.value);
+                break;
             case "Subtraction":
+                var1 = generateVariable(grade);
+                var2 = generateVariable(grade);
+                if (var1.value < var2.value) {
+                    const temp = var1;
+                    var1 = var2;
+                    var2 = temp;
+                }
+                answer = mathFunction(var1.value, var2.value);
+                break;
             case "Multiplication":
                 var1 = generateVariable(grade);
                 var2 = generateVariable(grade);
@@ -146,7 +159,7 @@ const generateQuestions = (gameSubject, grade, gameLevel, numOfQuestions = 1, nu
             case "Division":
                 var1 = generateVariable(grade);
                 var1.value = var1.value == 1 ? 2 : var1.value;
-                
+
                 var2 = generateVariable(4);
                 var1.value = var1.value * var2.value;
                 var1.textValue = numberToString(var1.value);
@@ -155,11 +168,11 @@ const generateQuestions = (gameSubject, grade, gameLevel, numOfQuestions = 1, nu
                 break;
             case "Percentage":
                 let divisior = divisior_array[Math.floor(Math.random() * divisior_array.length)];
-                let offsetMultiplier = [2,4,6,8,10];
+                let offsetMultiplier = [2, 4, 6, 8, 10];
                 let offset = offsetMultiplier[Math.floor(Math.random() * offsetMultiplier.length)];
 
                 var1 = generateVariable(grade);
-                
+
                 var2 = {
                     value: var1.value,
                     textValue: numberToString(var1.value)
@@ -223,7 +236,7 @@ const generateQuestions = (gameSubject, grade, gameLevel, numOfQuestions = 1, nu
         }
 
         /** Validate Level */
-        if(gameLevel < 1 || gameLevel > 30) {
+        if (gameLevel < 1 || gameLevel > 30) {
             console.log("Invalid level");
             return false;
         }
