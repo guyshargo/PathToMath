@@ -8,6 +8,7 @@ import divisionIcon from '../../../assets/Images/Math_icon/division1.png';
 import percentageIcon from '../../../assets/Images/Math_icon/percentage.png';
 import { useGrade } from "../../Utils/GradeComponent";
 import { Link, useNavigate } from 'react-router-dom';
+import ShadowedTitle from "../../Utils/ShadowedTitle";
 
 const VideoPage = () => {
     const navigate = useNavigate();
@@ -31,8 +32,7 @@ const VideoPage = () => {
     const rows = Array.from({ length: Math.ceil(buttons.length / 3) });
 
     return (
-        <div
-            className="relative playful-font min-h-[100vh] w-full flex flex-col items-center justify-start pt-12 pb-24 px-4 overflow-hidden"
+        <div className="relative playful-font min-h-[100vh] w-full flex flex-col items-center justify-start pt-12 pb-24 px-4 overflow-hidden"
             style={{
                 backgroundImage: `url(${background})`,
                 backgroundSize: 'cover',
@@ -41,10 +41,8 @@ const VideoPage = () => {
                 zIndex: 0,
             }}
         >
-            <h1 className="text-4xl md:text-5xl font-semibold text-gray-800 mb-10 drop-shadow-sm">
-                Choose a Math Topic to Watch Video Tutorials!
-            </h1>
-            <div className="flex flex-col items-center gap-10 z-10">
+            <ShadowedTitle text="Choose a Math Topic to Watch Video Tutorials!"/>
+            <div className="flex flex-col items-center mt-5 gap-10 z-10">
                 {rows.map((_, rowIndex) => (
                     <div key={rowIndex} className="flex justify-center gap-10">
                         {buttons.slice(rowIndex * 3, rowIndex * 3 + 3).map((subject, index) => (

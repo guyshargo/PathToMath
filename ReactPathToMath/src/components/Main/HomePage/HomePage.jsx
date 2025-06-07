@@ -4,11 +4,10 @@ import ProfileDiv from './ProfileDiv';
 import placeHolderAvatar from '../../../assets/Images/Avatars/avatar8.png';
 import CirclesContainer from './CircleContainer';
 import { useUser } from '../../Utils/UserContext';
-import ButtonComponent from '../../Utils/Button';
+import ShadowedTitle from '../../Utils/ShadowedTitle';
 
 function HomePage() {
     const { user } = useUser();
-
     return (
         <div className="background-image playful-font pt-5 pb-4 flex-grow w-full h-full flex flex-row justify-center items-center ">
 
@@ -28,10 +27,8 @@ function HomePage() {
             </div>
 
             {/* Main content */}
-            <div className="flex flex-col items-center justify-start gap-4 w-full lg:w-2/3 h-full text-gray-800">
-                <h1 className="text-4xl font-extrabold drop-shadow-md mt-2">
-                    Welcome to Path2Math!
-                </h1>
+            <div className="flex flex-col items-center justify-start gap-4 w-full lg:w-2/3 h-full">
+                <ShadowedTitle text="Welcome To Path2Math!"/>
                 <ProfileDiv />
                 <CirclesContainer />
             </div>

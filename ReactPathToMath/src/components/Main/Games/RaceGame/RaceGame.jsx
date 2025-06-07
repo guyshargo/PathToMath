@@ -57,7 +57,7 @@ function RaceGame() {
           }
           return next;
         });
-      }, 5000);
+      }, 8000);
     }
 
     // Clear the interval when component unmounts or dependencies change
