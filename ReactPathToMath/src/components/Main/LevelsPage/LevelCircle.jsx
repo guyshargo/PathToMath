@@ -29,7 +29,7 @@ const LevelCircle = ({ currentLevel, numOfLevels, grade }) => {
         ]
 
         // Add GameCube only in Addition
-        if (subjectGame == "Addition") gameArray.push({ name: "GameCube" });
+       if (subjectGame == "Addition") gameArray.push({ name: "GameCube" });
 
         const randomIndex = Math.floor(Math.random() * gameArray.length);
         const randomGame = gameArray[randomIndex];
