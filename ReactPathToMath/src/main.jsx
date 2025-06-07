@@ -46,7 +46,7 @@ const router = createBrowserRouter([
       { path: '/profile', element: <Profile />, },
       { path: '/ParentPage', element: <ParentPage />, },
       { path: '/badges', element: <RewardsPage />} ,
-      { path: '/pop-quiz', element: <PopQuiz />, }
+      { path: '/pop-quiz', element: <PopQuiz />, },
       { path: '/logout', element: <LogoutPage /> }
     ],
   },

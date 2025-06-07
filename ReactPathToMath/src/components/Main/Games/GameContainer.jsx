@@ -44,17 +44,20 @@ function GameContainer({ gameName, gameSubject, children, icon }) {
                 backgroundRepeat: 'no-repeat',
             }}
         >
-            {popQuiz ? (
-                <div className='text-center text-4xl'>
-                    Random Pop Quiz!
+            {popQuiz && (
+                <div className="text-center text-6xl font-bold text-white drop-shadow-lg ">
+                    <span className="inline-block bg-gradient-to-l from-yellow-300 via-pink-300 to-orange-300 bg-clip-text text-transparent px-6 py-2 rounded-lg  animate-pulse"
+                    style={{ animationDuration: '5s' }}>
+                        Random Pop Quiz!
+                    </span>
                 </div>
-            ) : null}
+            )}
             {/* Game Header */}
             <div className="text-center p-2">
                 {/* Main game name with race flag */}
                 <h1 className="text-6xl font-bold text-black flex justify-center items-center space-x-3 select-none">
                     <ShadowedTitle text={gameName}/>
-                    {icon && <img src={icon} alt="Game Icon" className="w-30 h-auto" />}
+                    {icon && <img src={icon} alt="Game Icon" className="w-25 h-auto" />}
                 </h1>
 
                 {/* Subject and Level badges */}

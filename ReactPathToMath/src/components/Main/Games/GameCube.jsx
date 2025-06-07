@@ -1,5 +1,6 @@
 import { React } from 'react';
 import help_icon from '../../../assets/Images/cube_game/how_to_play.png';
+import gameIcon from '../../../assets/Images/cube_gmae/diceIcon.png'
 import Cubes from './Cubes.jsx';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';

@@ -7,6 +7,8 @@ import QuestionBox from './QuestionBox';
 import EndGameScreen from './EndGameScreen';
 import { useUser } from '../../../Utils/UserContext';
 import { updateUser } from '../../../../services/UserService';
+import { useLocation } from 'react-router-dom';
+import { useUpdateQuiz } from '../../PopQuizPage/UpdateQuiz.jsx';
 import TitleIcon from '../../../../assets/Images/BalloonGame/balloon_icon.png';
 // Constants
 const NUM_QUESTIONS = 5;
@@ -17,6 +19,9 @@ function BalloonsGame() {
     const subjectName = subjectGame;
     const gameLevel = parseInt(level);
     const navigate = useNavigate();
+    const location = useLocation();
+    const updateQuiz = useUpdateQuiz();
+
     const { user } = useUser();
     // State variables
     const [questions, setQuestions] = useState([]);
@@ -71,7 +76,13 @@ function BalloonsGame() {
             newUser.gradeLevel[user.grade - 1][subjectName] = gameLevel;
             updateUser(user.email, newUser);
         }
-        navigate(`/subjects/${subjectName}`);
+        if (location.state?.fromQuiz && score >= 4){
+            updateQuiz();
+        }
+        if (location.state?.fromQuiz)
+            navigate("/");
+        else
+            navigate(`/subjects/${gameSubject}`);
     };
 
     return (

@@ -2,7 +2,8 @@ export const generateRandomGame = (subjectGame) => {
     const gameArray = [
         "OptionsGame",
         "RaceGame", 
-        "WordGame"
+        "WordGame",
+        'BalloonsGame' 
     ];
 
     if (subjectGame === "Addition") {
