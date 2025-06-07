@@ -8,6 +8,9 @@ import generateQuestions from './GameLogic';
 import { useParams } from 'react-router-dom';
 import { useUser } from '../../Utils/UserContext';
 import TitleIcon from '../../../assets/Images/OptionsIcon.png'
+import { useLocation } from 'react-router-dom';
+import { useUpdateQuiz } from '../PopQuizPage/UpdateQuiz.jsx';
+
 /**
  * Options Game Component
  */
@@ -17,6 +20,8 @@ export default function OptionsGame() {
     const gameLevel = parseInt(level);
     const navigate = useNavigate();
     const { user,update } = useUser();
+    const updateQuiz = useUpdateQuiz();
+    const location = useLocation();
 
     // Correct answers user answered
     const [correctAnswers, setCorrectAnswers] = useState(0);
@@ -148,7 +153,13 @@ export default function OptionsGame() {
                         newUser.gradeLevel[user.grade - 1][gameSubject] = gameLevel;
                         update(user.email, newUser);
                     }
-                    navigate(`/subjects/${gameSubject}`);
+                    if (location.state?.fromQuiz){
+                        updateQuiz();
+                        navigate("/");
+                    }
+                    else {
+                        navigate(`/subjects/${gameSubject}`);
+                    }
                 }
                 else {
                     resetGame();
