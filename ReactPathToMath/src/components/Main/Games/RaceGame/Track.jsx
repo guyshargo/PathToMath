@@ -1,4 +1,5 @@
 import React from 'react';
+import Rocket from '../../../../assets/Images/SpaceGame/rocket.gif'
 
 function Track({ position, length, color = '#0000000000', startLabel = '', endLabel = '', startIcon, finishIcon, direction = 'horizontal', type = 'cubes' }) {
   switch (type) {
@@ -69,12 +70,15 @@ function Track({ position, length, color = '#0000000000', startLabel = '', endLa
                 style={{ bottom: `${percent}%` }}
               >
                 <div className="flex justify-center items-center h-12">
-                  <span role="img" aria-label="rocket" className="text-3xl">
-                    🚀
-                  </span>
+                  <img
+                    src={Rocket}
+                    alt="rocket"
+                    className="h-12 w-auto -rotate-[45deg]
+                              filter contrast-150 brightness-85
+                              drop-shadow-[0_0_3px_rgba(255,255,255,0.8)]"
+                  />
                 </div>
               </div>
-
               <div className="absolute bottom-0 w-full h-1 bg-gray-700"></div>
             </div>
 
@@ -87,8 +91,6 @@ function Track({ position, length, color = '#0000000000', startLabel = '', endLa
     default:
       return null;
   }
-  
-
-
 }
+
 export default Track;

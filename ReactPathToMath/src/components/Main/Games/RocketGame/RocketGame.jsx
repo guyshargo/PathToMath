@@ -163,22 +163,24 @@ function RocketGame() {
             />
 
             {/* Question Box container */}
-            <div className="flex items-center justify-center bg-purple-400 rounded-lg shadow-md w-150 min-h-[200px]"
-              style={{
-                animation: 'glowPulse 2s infinite',
-                boxShadow: '0 0 15px 5px rgba(139, 92, 246, 0.8)', // bright purple glow base
-              }}
-            >
-                {started && (
-                    <QuestionBox
-                    question={currentQuestion?.question}
-                    userAnswer={userAnswer}
-                    setUserAnswer={setUserAnswer}
-                    onSubmit={handleAnswerSubmit}
-                    feedback={<FeedbackMessage message={message} />}
-                    />
-                )}
-            </div>
+          <div
+            className="flex items-center justify-center bg-purple-400 rounded-lg shadow-md w-150 min-h-[200px]"
+            style={{
+              animation: 'glowPulse 2s infinite',
+              boxShadow: '0 0 15px 5px rgba(139, 92, 246, 0.8)',
+              color: 'white'  // <- Force all text inside to be white
+            }}
+          >
+            {started && (
+              <QuestionBox
+                question={currentQuestion?.question}
+                userAnswer={userAnswer}
+                setUserAnswer={setUserAnswer}
+                onSubmit={handleAnswerSubmit}
+                feedback={<FeedbackMessage message={message} />}
+              />
+            )}
+          </div>
 
             <Track
                 position={botProgress}

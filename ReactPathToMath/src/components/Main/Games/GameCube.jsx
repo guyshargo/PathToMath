@@ -7,7 +7,9 @@ import Cubes from './Cubes.jsx';
 import { useUser } from '../../Utils/UserContext';
 import { updateUser } from '../../../services/UserService';
 import GameContainer from './GameContainer.jsx';
-import CubesBg from '../../../assets/Images/cube_game/cubesBg.jpg'
+import CubesBg from '../../../assets/Images/cube_game/cubesBg.jpg';
+import TitleIcon from '../../../assets/Images/cube_game/CubesIcon.png';
+
 const GameCube = () => {
     const MAX_TRIES = 2;
     const MAX_QUESTIONS = 5;
@@ -187,7 +189,7 @@ const GameCube = () => {
     }
 
     return (
-        <GameContainer gameName="Roll & Solve" gameSubject={gameSubject} gameLevel={{grade}} backgroundImage={CubesBg}>
+        <GameContainer gameName="Roll & Solve" gameSubject={gameSubject} gameLevel={{grade}} icon={TitleIcon} backgroundImage={CubesBg}>
             <div className="border-8 border-white bg-yellow-100 rounded-lg p-4 shadow-lg relative max-w-2xl mx-auto mb-5">
                 <div className='text-sm group inline-block absolute top-4 left-4'>
                     {/* How to play button */}

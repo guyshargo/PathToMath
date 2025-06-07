@@ -203,7 +203,7 @@ export default function OptionsGame() {
     }, [gameSubject, gameLevel]);
 
     return (
-        <GameContainer gameName="Math Treausre Hunt" gameSubject={gameSubject} gameLevel={gameLevel} icon={TitleIcon} backgroundImage={OptionsBg}>
+        <GameContainer gameName="Quest for the Golden Answer" gameSubject={gameSubject} gameLevel={gameLevel} icon={TitleIcon} backgroundImage={OptionsBg}>
             {/* Cube Game Container */}
             <div className={`mb-5 border-8 border-amber-400 rounded-lg p-9 inline-block shadow-lg ${endGame ? endGameObject?.containerColor : 'bg-gray-700'}`}>
                 {/* Question Text */}
