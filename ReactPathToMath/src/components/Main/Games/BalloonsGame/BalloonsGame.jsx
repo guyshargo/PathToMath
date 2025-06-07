@@ -75,23 +75,7 @@ function BalloonsGame() {
     };
 
     return (
-        <div className="relative min-h-screen">
-            {/* Background */}
-            <div className="fixed inset-0 bg-gradient-to-b from-sky-300 via-sky-200 to-blue-100 -z-10">
-                {/* Floating elements */}
-                <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                    {/* Sun */}
-                    <div className="absolute top-8 right-8 text-6xl animate-pulse">☀️</div>
-
-                    {/* Rainbow */}
-                    <div className="absolute top-16 left-1/4 text-4xl opacity-70 animate-bounce">🌈</div>
-
-                    {/* Floating Balloons */}
-                    <div className="absolute top-1/5 left-10 text-4xl opacity-30 animate-bounce">🎈</div>
-                    <div className="absolute top-2/5 right-16 text-4xl opacity-30 animate-bounce delay-1000">🎈</div>
-                    <div className="absolute bottom-1/3 left-20 text-4xl opacity-30 animate-bounce delay-2000">🎈</div>
-                </div>
-            </div>
+        <div className="relative">
             {/* Game Container */}
             <GameContainer
                 gameName="Balloons Game"
