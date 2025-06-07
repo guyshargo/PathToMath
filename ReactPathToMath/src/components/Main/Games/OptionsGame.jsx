@@ -8,6 +8,7 @@ import generateQuestions from './GameLogic';
 import { useParams } from 'react-router-dom';
 import { useUser } from '../../Utils/UserContext';
 import TitleIcon from '../../../assets/Images/OptionsIcon.png'
+import OptionsBg from '../../../assets/Images/Background/optionsBg.jpg'
 /**
  * Options Game Component
  */
@@ -189,7 +190,7 @@ export default function OptionsGame() {
     }, [gameSubject, gameLevel]);
 
     return (
-        <GameContainer gameName="Options Game" gameSubject={gameSubject} gameLevel={gameLevel} icon={TitleIcon}>
+        <GameContainer gameName="Options Game" gameSubject={gameSubject} gameLevel={gameLevel} icon={TitleIcon} backgroundImage={OptionsBg}>
             {/* Cube Game Container */}
             <div className={`border-8 border-white rounded-lg p-9 inline-block shadow-lg ${endGame ? endGameObject?.containerColor : 'bg-blue-100'}`}>
                 {/* Question Text */}

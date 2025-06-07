@@ -123,14 +123,20 @@ function RocketGame() {
   };
 
   return (
-    <GameContainer gameName="Math Planets" gameSubject={subjectName} gameLevel={gameLevel} icon={TitleIcom}>
-      <div className="rounded-lg p-4 shadow-lg bg-cover" style={{ backgroundImage: `url(${spaceBg})` }}>
+    <GameContainer gameName="Math Planets" gameSubject={subjectName} gameLevel={gameLevel} icon={TitleIcom} backgroundImage={spaceBg}>
+      <div className="rounded-lg p-4">
               {/* Start button or try again */}
         {!started && countdown === null && (
           <div className="flex justify-center">
-            <StartButton
+            <StartButton 
               onClick={message === 'You Did It! Continue To The Next Planet?' ? handleFinishedGame : startCountdown}
-              message={message} startMessage={'🚀 Ready To Launch?'} startGameColor={'bg-purple-400'}
+              message={message} startMessage={'🚀 Ready To Launch?'} 
+              // Glow effect on StartButton
+              startGameColor="bg-purple-600 relative shadow-lg
+                before:absolute before:inset-0 before:rounded-xl
+                before:animate-pulse
+                before:shadow-[0_0_15px_5px_rgba(138,43,226,0.8)]
+                before:pointer-events-none"
             />
           </div>
         )}
@@ -157,7 +163,12 @@ function RocketGame() {
             />
 
             {/* Question Box container */}
-            <div className="flex items-center justify-center bg-purple-300 p-6 rounded-lg shadow-md w-120 min-h-[300px]">
+            <div className="flex items-center justify-center bg-purple-400 rounded-lg shadow-md w-150 min-h-[200px]"
+              style={{
+                animation: 'glowPulse 2s infinite',
+                boxShadow: '0 0 15px 5px rgba(139, 92, 246, 0.8)', // bright purple glow base
+              }}
+            >
                 {started && (
                     <QuestionBox
                     question={currentQuestion?.question}

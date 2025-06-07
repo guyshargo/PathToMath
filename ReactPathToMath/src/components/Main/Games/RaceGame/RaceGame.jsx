@@ -9,7 +9,9 @@ import StartButton from './StartButton';
 import TrackSection from './TrackSection';
 import { useUser } from '../../../Utils/UserContext';
 import { useNavigate } from 'react-router-dom';
-import TitleIcon from '../../../../assets/Images/CompetitionGame/RaceGameTitle.png'
+import TitleIcon from '../../../../assets/Images/RaceGame/RaceGameTitle.png'
+import RaceBg from '../../../../assets/Images/RaceGame/RaceBg.jpg'
+
 
 const NUM_QUESTIONS = 10; // Number of questions in the race
 
@@ -141,8 +143,8 @@ function RaceGame() {
   };
 
   return (
-    <GameContainer gameName="Math Race" gameSubject={subjectName} gameLevel={gameLevel} icon={TitleIcon}>
-      <div className="bg-white rounded-lg p-4 shadow-lg">
+    <GameContainer gameName="Math Race" gameSubject={subjectName} gameLevel={gameLevel} icon={TitleIcon} backgroundImage={RaceBg}>
+      <div className="bg-gray-100 rounded-lg p-4 shadow-lg mb-5 max-w-4xl mx-auto">
 
         {/* Show start race button (for first race) or try again message (for next races)
           when the game is not running (before clicking start race or after a race finished and try again needs to be clicked) */}
