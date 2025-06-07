@@ -85,7 +85,7 @@ const SignUpPrompt = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-sky-200 via-gray-200 to-sky-300 relative overflow-hidden">
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
@@ -277,7 +277,7 @@ const RewardsPage = () => {
                     <div className="text-2xl mb-2">
                       {subject === 'Addition' && '➕'}
                       {subject === 'Subtraction' && '➖'}
-                      {subject === 'Multiply' && '✖️'}
+                      {subject === 'Multiplication' && '✖️'}
                       {subject === 'Division' && '➗'}
                       {subject === 'Percentage' && '💯'}
                     </div>
