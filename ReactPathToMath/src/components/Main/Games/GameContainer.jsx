@@ -27,7 +27,7 @@ function GameContainer({ gameName, gameSubject, children, icon }) {
     };
 
     return (
-        <div className="flex flex-col h-full font-sans playful-font antialiased"
+        <div className="flex flex-col h-full font-sans playful-font antialiased flex-grow"
             style={{
                 backgroundImage: `url(${BackgroundImg})`,
                 backgroundSize: 'cover',
