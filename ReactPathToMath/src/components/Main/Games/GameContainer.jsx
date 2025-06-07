@@ -27,7 +27,7 @@ function GameContainer({ gameName, gameSubject, children, icon }) {
     };
 
     return (
-        <div className="flex flex-col h-full font-sans playful-font antialiased flex-grow "
+        <div className="flex flex-col h-full font-sans playful-font antialiased"
             style={{
                 backgroundImage: `url(${BackgroundImg})`,
                 backgroundSize: 'cover',
@@ -44,23 +44,25 @@ function GameContainer({ gameName, gameSubject, children, icon }) {
                 </h1>
 
                 {/* Subject and Level badges */}
-                <div className="flex justify-center mt-2 space-x-4">
+                <div className="flex justify-center space-x-4">
                     <span className="bg-yellow-300 text-yellow-900 font-semibold px-4 py-1 rounded-full shadow-md select-none">
                         {gameSubject}
                     </span>
                     <span className="bg-green-300 text-green-900 font-semibold px-4 py-1 rounded-full shadow-md select-none">
-                        {`Level ${gameLevel}`}
+                        {`Grade ${gameLevel}`}
                     </span>
                 </div>
             </div>
 
             {/* Game Container */}
-            <div className="text-center">
-                <div className="flex-grow text-center text-black p-6 mx-auto max-w-6xl w-full bg-transparent">
+            <div className="text-center scale-110 mb-20">
+                <div className="flex-grow text-center text-black space-y-6 scale-110 p-6 mx-auto max-w-6xl w-full bg-transparent mt-8">
                     {children}
                 </div>
             </div>
+
             <div className=" flex justify-center mb-10">
+
                 <ButtonComponent
                     label="Return"
                     onClick={handleReturn}
