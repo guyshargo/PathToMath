@@ -10,6 +10,7 @@ import Track from '../RaceGame/Track';
 import Planet from '../../../../assets/Images/SpaceGame/uranus.gif';
 import Moon from '../../../../assets/Images/SpaceGame/moon.gif';
 import TitleIcom from '../../../../assets/Images/SpaceGame/astronaut.png';
+import spaceBg from '../../../../assets/Images/SpaceGame/spaceBg.jpg'
 import { useUser } from '../../../Utils/UserContext';
 
 const NUM_QUESTIONS = 10;
@@ -123,7 +124,7 @@ function RocketGame() {
 
   return (
     <GameContainer gameName="Math Planets" gameSubject={subjectName} gameLevel={gameLevel} icon={TitleIcom}>
-      <div className="bg-black rounded-lg p-4 shadow-lg">
+      <div className="rounded-lg p-4 shadow-lg bg-cover" style={{ backgroundImage: `url(${spaceBg})` }}>
               {/* Start button or try again */}
         {!started && countdown === null && (
           <div className="flex justify-center">
@@ -156,7 +157,7 @@ function RocketGame() {
             />
 
             {/* Question Box container */}
-            <div className="flex items-center justify-center bg-purple-100 p-6 rounded-lg shadow-md w-120 min-h-[300px]">
+            <div className="flex items-center justify-center bg-purple-300 p-6 rounded-lg shadow-md w-120 min-h-[300px]">
                 {started && (
                     <QuestionBox
                     question={currentQuestion?.question}
