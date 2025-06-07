@@ -1,12 +1,16 @@
 import { React } from 'react';
 import help_icon from '../../../assets/Images/cube_game/how_to_play.png';
+import Cubes from './Cubes.jsx';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Cubes from './Cubes.jsx';
 import { useUser } from '../../Utils/UserContext';
 import { updateUser } from '../../../services/UserService';
 import GameContainer from './GameContainer.jsx';
+import { useLocation } from 'react-router-dom';
+import { useUpdateQuiz } from '../PopQuizPage/UpdateQuiz.jsx';
+
+
 const GameCube = () => {
     const MAX_TRIES = 2;
     const MAX_QUESTIONS = 5;
@@ -14,8 +18,10 @@ const GameCube = () => {
     const { subjectGame, grade, level } = useParams();
     const gameSubject = subjectGame;
     const gameLevel = parseInt(level);
-
+    const location = useLocation();
     const navigate = useNavigate();
+    const updateQuiz = useUpdateQuiz();
+
     const generate_question = () => {
         let sum = Math.floor(Math.random() * ((grade) * 2 + gameLevel + 5)) + 6;
         let cubes = [];
@@ -170,23 +176,26 @@ const GameCube = () => {
     const success = correct >= 3;
     // Handle finished game
     const { user } = useUser();
-    
-    const updateLevel = () => {
 
-    }
     const handleFinishedGame = () => {
         const currentFinished = user?.gradeLevel[user.grade - 1]?.[gameSubject];
-        if (currentFinished && gameLevel > currentFinished && success) {
+        if (gameLevel > currentFinished) {
             // Update user's grade level for the subject if they passed the game
             let newUser = user;
             newUser.gradeLevel[user.grade - 1][gameSubject] = gameLevel;
             updateUser(user.email, newUser);
         }
-        navigate(`/subjects/${gameSubject}`);
+        if (location.state?.fromQuiz && success){
+            updateQuiz();
+        }
+        if (location.state?.fromQuiz)
+            navigate("/");
+        else
+            navigate(`/subjects/${gameSubject}`);
     }
-
-    return (
-        <GameContainer gameName="Cubes Game" gameSubject={gameSubject} gameLevel={{grade}}>
+    
+    return (        
+        <GameContainer gameName="Cubes Game" gameSubject={gameSubject} gameLevel={grade}>
             <div className="border-8 border-white bg-blue-100 rounded-lg p-4 shadow-lg relative">
                 <div className='text-sm group inline-block absolute top-4 left-4'>
                     {/* How to play button */}
@@ -208,22 +217,14 @@ const GameCube = () => {
                         <button className="bg-yellow-400 text-white mt-6 px-6 py-3 rounded-lg text-xl hover:cursor-pointer mb-4"
                           onClick={() => {
                              if (success) {
-                                updateLevel();// updates user level
-                                restartGame();         // navigates to next level
+                                    handleFinishedGame();         // navigates to next level
                                 } else {
-                                restartGame();         // replay same level
+                                    restartGame();         // replay same level
                                 }
                             }}
                         >  
                             {success ? "Next level": "Try again"}
                         </button>
-                        <button
-                            className="bg-blue-500 text-white mt-4 px-6 py-3 rounded-lg text-xl hover:cursor-pointer mb-4"
-                            onClick={handleFinishedGame}
-                        >
-                            back to {gameSubject} levels
-                        </button>
-
 
                     </div>
                 ) : (

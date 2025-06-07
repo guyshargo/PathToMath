@@ -6,8 +6,9 @@ import badgeCircle from '../../../assets/Images/badge_circle.png';
 import popquiz_circle from '../../../assets/Images/popquiz_circle.png';
 import streak_icon from '../../../assets/Images/star.png';
 import { useUser } from '../../Utils/UserContext';
-
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { updateUser } from '../../../services/UserService';
 
 const circleData = [
   {
@@ -36,8 +37,30 @@ const circleData = [
   },
 ];
 function CirclesContainer() {
-  const { user } = useUser();
+  const { user,update } = useUser();
+  useEffect(() => {
+      if (!user?.pop_quiz_last_date) return;
 
+      const lastDate = new Date(user.pop_quiz_last_date);
+      const today = new Date();
+      lastDate.setHours(0, 0, 0, 0);
+      today.setHours(0, 0, 0, 0);
+
+      const yesterday = new Date(today);
+      yesterday.setDate(today.getDate() - 1);
+
+      const lastTime = lastDate.getTime();
+
+      const isSameDay = lastTime === today.getTime();
+      const isYesterday = lastTime === yesterday.getTime();
+
+      if (!isSameDay && !isYesterday && user.streak !== 0) {
+        const newUser = { ...user, streak: 0 };
+        updateUser(user.email, newUser);
+        update(user.email, newUser); // update context too
+
+      }
+    }, [user]);
   return (
     <div className="flex flex-wrap justify-center gap-6 mb-8 w-full h-1/2">
       {circleData.map(({ imageSrc, title, description, link }, index) => {

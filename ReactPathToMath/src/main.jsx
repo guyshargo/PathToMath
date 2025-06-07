@@ -20,6 +20,8 @@ import RelevantVideo from './components/Main/VideoPage/RelevantVideo.jsx'
 import ParentPage from './components/Main/ParentPage/ParentPage.jsx';
 import LogoutPage from './components/Main/LoginSignupPage/Logout.jsx';
 import WordGame from './components/Main/Games/WordGame/WordProblem.jsx';
+import PopQuiz from './components/Main/PopQuizPage/PopQuiz.jsx';
+
 /**
  * Router for the app
  */
@@ -41,7 +43,9 @@ const router = createBrowserRouter([
       { path: '/videos/:subject', element: <RelevantVideo />, },
       { path: '/profile', element: <Profile />, },
       { path: '/ParentPage', element: <ParentPage />, },
-      { path: '/logout', element: <LogoutPage /> }
+      { path: '/logout', element: <LogoutPage /> },
+      { path: '/pop-quiz', element: <PopQuiz />, }
+      
     ],
   },
 ])

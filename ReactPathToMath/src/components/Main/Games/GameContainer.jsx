@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import BackgroundImg from '../../../assets/Images/nature2.png'
 import ShadowedTitle from '../../Utils/ShadowedTitle';
-
+import { useLocation } from 'react-router-dom';
 /**
  * Game Container Component
  * @param {Object} props - The component props
@@ -16,14 +16,23 @@ import ShadowedTitle from '../../Utils/ShadowedTitle';
  */
 function GameContainer({ gameName, gameSubject, children, icon }) {
     const navigate = useNavigate();
+    const location = useLocation();
+
     const { level } = useParams();
     const gameLevel = Number(level);
-
+    let popQuiz = false;
+    if (location.state?.fromQuiz) {
+        popQuiz = true;
+    }
     /**
      * Handles the return button click event
      */
     const handleReturn = () => {
-        navigate(-1);
+    if (location.state?.fromQuiz) {
+        navigate("/"); // go to homepage
+    } else {
+        navigate(-1); // go back to previous page
+    }
     };
 
     return (
@@ -35,8 +44,13 @@ function GameContainer({ gameName, gameSubject, children, icon }) {
                 backgroundRepeat: 'no-repeat',
             }}
         >
+            {popQuiz ? (
+                <div className='text-center text-4xl'>
+                    Random Pop Quiz!
+                </div>
+            ) : null}
             {/* Game Header */}
-            <div className="text-center p-10">
+            <div className="text-center p-2">
                 {/* Main game name with race flag */}
                 <h1 className="text-6xl font-bold text-black flex justify-center items-center space-x-3 select-none">
                     <ShadowedTitle text={gameName}/>

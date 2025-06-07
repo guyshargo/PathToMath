@@ -10,7 +10,8 @@ import TrackSection from './TrackSection';
 import { useUser } from '../../../Utils/UserContext';
 import { useNavigate } from 'react-router-dom';
 import TitleIcon from '../../../../assets/Images/CompetitionGame/RaceGameTitle.png'
-
+import { useLocation } from 'react-router-dom';
+import { useUpdateQuiz } from '../../PopQuizPage/UpdateQuiz.jsx';
 const NUM_QUESTIONS = 10; // Number of questions in the race
 
 function RaceGame() {
@@ -18,8 +19,11 @@ function RaceGame() {
   const { subjectGame, grade, level } = useParams(); //subject, grade and level from URL Params
   const subjectName = subjectGame;
   const gameLevel = parseInt(level);
+  const updateQuiz = useUpdateQuiz();
+  const location = useLocation();
 
   const navigate = useNavigate();
+
   const { user,update } = useUser();
   const [started, setStarted] = useState(false); // Is the game currently running?
   const [userPos, setUserPos] = useState(0); // User's current position on the track
@@ -30,7 +34,7 @@ function RaceGame() {
   const [questions, setQuestions] = useState([]); // Array of generated math questions for the race
   const botTimer = useRef(null); // Opponent bot's interval timer
   const [countdown, setCountdown] = useState(null); // Countdown before game starts
-
+  const [success, setSuccess] = useState(false);
   useEffect(() => {
     const generated = generateQuestions(subjectName, grade, gameLevel, NUM_QUESTIONS, 1);
     setQuestions(generated);
@@ -72,7 +76,13 @@ function RaceGame() {
       newUser.gradeLevel[user.grade - 1][subjectName] = gameLevel;
       update(user.email, newUser);
     }
-    navigate(`/subjects/${subjectName}`);
+    if (location.state?.fromQuiz && success){
+      updateQuiz();
+    }
+    if (location.state?.fromQuiz)
+      navigate("/");
+    else
+      navigate(`/subjects/${gameSubject}`);
   }
 
   // Starts the countdown before the game and resets positions and states
@@ -119,6 +129,7 @@ function RaceGame() {
         setUserPos(newPos);
         clearInterval(botTimer.current);
         setMessage('You Win! Continue To The Next Race?');
+        setSuccess(true)
         setStarted(false);
       } else {
         // Otherwise, update user position and move to next question
