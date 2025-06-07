@@ -1,6 +1,6 @@
 import { React } from 'react';
 import help_icon from '../../../assets/Images/cube_game/how_to_play.png';
-import gameIcon from '../../../assets/Images/cube_gmae/diceIcon.png'
+import gameIcon from '../../../assets/Images/cube_game/diceIcon.png'
 import Cubes from './Cubes.jsx';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
@@ -24,19 +24,25 @@ const GameCube = () => {
     const updateQuiz = useUpdateQuiz();
 
     const generate_question = () => {
-        let sum = Math.floor(Math.random() * ((grade) * 2 + gameLevel + 5)) + 6;
-        let cubes = [];
-        cubes = generate_cubes(sum);
+        const numericGrade = parseInt(grade); // ensure number
+        const baseSum = 6 + gameLevel + numericGrade * 2; // scale with grade and level
+        const sum = Math.floor(Math.random() * baseSum) + 6;
+
+        const cubes = generate_cubes(sum, numericGrade, gameLevel);
         return { cubes, sum };
-    }
+    };
 
     // Generate randome cubes values
     const generate_cubes = (sum) => {
+        const minCubes = 4;
+        const maxCubes = 6 + Math.floor(level / 3) + Math.floor(grade / 2); // scale cubes count
+        const cubeCount = Math.min(maxCubes, 12); // limit to 12 max
+
         let validCubes = false;
         let cubes = [];
         while (!validCubes) {
             cubes = []
-            for (let i = 0; i <3+ grade * 2; i++) {
+            for (let i = 0; i < cubeCount ; i++) {
                 // Generate a random cube value between 1 and 6
                 cubes.push(Math.floor(Math.random() * 6) + 1);
                 validCubes = isValidCubes(cubes, sum);
@@ -196,11 +202,12 @@ const GameCube = () => {
     }
     
     return (        
-        <GameContainer gameName="Cubes Game" gameSubject={gameSubject} gameLevel={grade}>
-            <div className="border-8 border-white bg-blue-100 rounded-lg p-4 shadow-lg relative">
+        <GameContainer gameName="Cubes Game" gameSubject={gameSubject} gameLevel={level} icon ={gameIcon}  >
+            <div className="mt-5 border-8 border-white bg-gradient-to-br from-blue-100 via-white to-blue-200
+            rounded-3xl p-6 shadow-2xl relative transition-all duration-300 w-full max-w-xl mx-auto">
                 <div className='text-sm group inline-block absolute top-4 left-4'>
                     {/* How to play button */}
-                    <button className="group items-center flex gap-2 bg-purple-200 px-4 py-2 rounded-lg hover:bg-purple-300 transition-colors cursor-pointer">
+                    <button className="group items-center flex gap-2 bg-purple-200 shadow-2xl px-4 py-2 rounded-lg hover:bg-purple-300 transition-colors cursor-pointer">
                         <img src={help_icon} alt="How to play" className="h-5 w-5"/>
                         How to play
                     </button>
@@ -210,8 +217,8 @@ const GameCube = () => {
                     </div>
                 </div>
                 {gameFinished ? (
-                    <div className="text-2xl flex flex-col items-center justify-center min-h-screen text-center">
-                        <h2 className="text-3xl font-semibold text-green-600 mb-4">
+                    <div className="text-2xl flex flex-col items-center justify-center h-80 text-center ">
+                        <h2 className="text-3xl font-semibold text-green-600 mb-4 mt-10">
                             {feedbackMessage}
                         </h2>
                         {success ? "Level up!":" Try again next time!"}
@@ -249,9 +256,9 @@ const GameCube = () => {
                                     onClick={() => toggleCube(index)}
                                     className={
                                         selected.includes(index)
-                                            ? "outline-3 outline-green-400"
+                                            ? "outline-4 outline-green-400"
                                             : solution.includes(index)
-                                                ? "outline-3 outline-red-400"
+                                                ? "outline-4 outline-red-400"
                                                 : "bg-gray-100"
                                     }
                                 />
@@ -265,17 +272,16 @@ const GameCube = () => {
                             {feedbackMessage}
                         </div>
 
-                        <div>
+                        <div className="flex justify-center gap-4 mt-6">
                             <button
-                                className="bg-blue-400 hover:cursor-pointer text-white mt-4 px-4 py-2 rounded-lg"
+                                className="bg-blue-400 hover:cursor-pointer text-white px-4 py-2 rounded-lg"
                                 onClick={() => check_answer(selected)}
                             >
                                 Check
                             </button>
 
                             <button
-                                className={`bg-gray-400 text-white hover:cursor-pointer px-4 py-2 rounded-lg mt-5 ml-3 ${next ? "opacity-100" : "opacity-0"
-                                    }`}
+                                className={`bg-gray-400 text-white hover:cursor-pointer px-4 py-2 rounded-lg ${next ? "opacity-100" : "opacity-0"}`}
                                 onClick={() => renderGame()}
                             >
                                 {next}
