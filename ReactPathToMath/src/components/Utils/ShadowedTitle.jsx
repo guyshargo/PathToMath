@@ -23,7 +23,7 @@ const ShadowedTitle = ({ text, shadowColor = "#000000" }) => {
             >
                 {text}
             </h1>
-            <h1 className="text-3xl md:text-5xl font-bold text-purple-600 whitespace-nowrap relative">
+            <h1 className="text-3xl md:text-5xl font-bold text-white whitespace-nowrap relative">
                 {text}
             </h1>
         </div>

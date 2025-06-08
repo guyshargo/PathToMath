@@ -2,6 +2,7 @@ import React from 'react';
 import { useUser } from '../../Utils/UserContext';
 import { useNavigate } from "react-router-dom";
 import ShadowedTitle from '../../Utils/ShadowedTitle';
+import BadgesBg from '../../../assets/Images/Background/badgesBg.jpg'
 
 
 const rewardsList = [
@@ -18,8 +19,8 @@ const Badge = ({ reward, index, isEarned }) => {
   return (
     <div
       className={`relative transform transition-all duration-500 hover:rotate-2 ${
-        isEarned ? 'scale-100 opacity-100 animate-pulse' : 'scale-75 opacity-40'
-      }`}
+        isEarned ? 'scale-100 opacity-100' : 'scale-75'
+      }`}         
     >
       <div
         className={`relative flex flex-col items-center p-6 rounded-3xl shadow-2xl border-4 transition-all duration-300 cursor-pointer overflow-hidden
@@ -32,9 +33,10 @@ const Badge = ({ reward, index, isEarned }) => {
         {/* Sparkle effects for earned badges */}
         {isEarned && (
           <>
-            <div className="absolute top-2 right-2 text-yellow-300 text-xl animate-ping">✨</div>
-            <div className="absolute top-4 left-2 text-yellow-200 text-sm animate-bounce delay-100">⭐</div>
-            <div className="absolute bottom-2 right-4 text-yellow-300 text-lg animate-pulse delay-200">💫</div>
+            <div className="absolute top-2 right-2 text-yellow-300 text-xl animate-bounce">✨</div>
+            <div className="absolute bottom-2 left-2 text-yellow-300 text-xl animate-bounce">✨</div>
+            <div className="absolute top-4 left-2 text-yellow-200 text-sm animate-bounce delay-200">💫</div>
+            <div className="absolute bottom-2 right-4 text-yellow-300 text-lg animate-bounce delay-200">💫</div>
           </>
         )}
 
@@ -79,17 +81,23 @@ const Badge = ({ reward, index, isEarned }) => {
 };
 
 const SignUpPrompt = () => {
-  const navigate = useNavigate(); // ✅ useNavigate must be used inside the component
+  const navigate = useNavigate(); //  useNavigate must be used inside the component
 
   const signUpBtn = () => {
     navigate("/Signup"); // ✅ now works correctly
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-200 via-gray-200 to-sky-300 relative overflow-hidden">
+    <div className="min-h-screen relative overflow-hidden"             
+    style={{
+                backgroundImage: `url(${BadgesBg})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+            }}>
       <div className="relative z-10 mt-10 mb-10 flex flex-col items-center justify-center min-h-screen px-4">
         {/* Header */}
-        <div className="flex items-center mb-8 text-4xl">
+        <div className="flex items-center mb-8 ">
           <ShadowedTitle text={"Discover Your Badges Here!"} shadowColor={'text-blue-400'} ></ShadowedTitle>
         </div>
 
@@ -213,15 +221,18 @@ const RewardsPage = () => {
   const subjectBreakdown = getSubjectBreakdown();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 relative overflow-hidden">
+    <div className="min-h-screen relative overflow-hidden"
+        style={{
+                backgroundImage: `url(${BadgesBg})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+            }}>
+
       <div className="relative z-10 flex flex-col items-center justify-start pt-8 pb-16 px-4">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
-          <div className="text-5xl animate-spin">🌟</div>
-          <h1 className="text-4xl md:text-6xl font-bold text-center text-white drop-shadow-lg">
-            Your Amazing Badges!
-          </h1>
-          <div className="text-5xl animate-spin">🌟</div>
+          <ShadowedTitle text={"Your Badges!"} />
         </div>
 
         {/* Welcome message with user name */}
@@ -231,17 +242,15 @@ const RewardsPage = () => {
           </p>
         </div>
 
-        {/* Fun subtitle */}
-        <div className="mb-8 text-center">
-          <p className="text-xl text-gray-600 font-semibold">
-            🎉 Collect them all by mastering math! 🎉
-          </p>
-        </div>
-
         {/* Progress indicator */}
         <div className="mb-8 w-full max-w-2xl">
           <div className="bg-white rounded-2xl p-6 shadow-xl border-4 border-blue-200 relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-purple-50 opacity-50" />
+            <div className="mb-8 text-center">
+              <p className="text-xl text-black font-semibold">
+                🎉 Collect them all by mastering math! 🎉
+              </p>
+            </div>
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-purple-50 opacity-0" />
             <div className="relative flex flex-col items-center gap-4">
               <div className="flex items-center gap-2">
                 <span className="text-3xl">🚀</span>
@@ -313,51 +322,23 @@ const RewardsPage = () => {
             <>
               <div className="mb-12">
                 <div className="text-center mb-8">
-                  <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
+                  <h2 className="text-3xl font-bold mb-2 text-white">
                     🎉 Badges You've Earned! 🎉
                   </h2>
-                  <p className="text-lg text-gray-600 font-medium">You're doing amazing!</p>
+                  <p className="text-lg text-white font-medium">You're doing amazing!</p>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                  {earnedRewards.map((reward, index) => (
+                  {rewardsWithProgress.map((reward, index) => (
                     <Badge
                       key={index}
                       reward={reward}
                       index={index}
-                      isEarned={true}
+                      isEarned={totalLevelsCompleted < reward.level?false:true}
                     />
                   ))}
+                  
                 </div>
               </div>
-
-              {/* Upcoming badges */}
-              {earnedRewards.length < rewardsList.length && (
-                <div>
-                  <div className="text-center mb-8">
-                    <h2 className="text-3xl font-bold mb-2 text-gray-800">
-                      🎯 Next Challenge Awaits! 🎯
-                    </h2>
-                    <p className="text-lg text-gray-600 font-medium">Keep going to unlock these badges!</p>
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    {rewardsWithProgress
-                      .filter(reward => totalLevelsCompleted < reward.level)
-                      .map((reward, index) => (
-                        <div key={index} className="relative">
-                          <Badge
-                            reward={reward}
-                            index={index}
-                            isEarned={false}
-                          />
-                          {/* Show how many more levels needed */}
-                          <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-purple-500 text-white px-3 py-1 rounded-full text-xs font-bold">
-                            {reward.level - totalLevelsCompleted} more to go!
-                          </div>
-                        </div>
-                      ))}
-                  </div>
-                </div>
-              )}
             </>
           )}
         </div>
