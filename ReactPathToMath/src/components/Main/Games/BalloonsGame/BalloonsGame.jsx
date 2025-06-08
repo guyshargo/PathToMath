@@ -7,9 +7,11 @@ import QuestionBox from './QuestionBox';
 import EndGameScreen from './EndGameScreen';
 import { useUser } from '../../../Utils/UserContext';
 import { updateUser } from '../../../../services/UserService';
-import { useLocation } from 'react-router-dom';
-import { useUpdateQuiz } from '../../PopQuizPage/UpdateQuiz.jsx';
 import TitleIcon from '../../../../assets/Images/BalloonGame/balloon_icon.png';
+import TitleIcon2 from '../../../../assets/Images/BalloonGame/balloon_icon2.png';
+import TitleIcon3 from '../../../../assets/Images/BalloonGame/balloon_icon3.png';
+import BalloonsBg from '../../../../assets/Images/BalloonGame/BalloonsBg.jpg';
+
 // Constants
 const NUM_QUESTIONS = 5;
 
@@ -85,62 +87,62 @@ function BalloonsGame() {
             navigate(`/subjects/${subjectName}`, { state: { fromGame: true } });
     };
 
+
     return (
-        <div className="relative">
-            {/* Game Container */}
             <GameContainer
-                gameName="Balloons Game"
+                gameName="Poppin' Problems"
                 gameSubject={subjectName}
                 gameLevel={gameLevel}
-                icon={TitleIcon}
+                icon={TitleIcon3}
+                backgroundImage={BalloonsBg}
             >
-                
-                {!gameOver ? (
-                    <div className="relative">
-                        {/* Progress Bar */}
-                        <div className="mb-8 w-full max-w-md mx-auto">
-                            <div className="flex justify-between items-center mb-2">
-                                <span className="text-sm font-semibold text-gray-600">Progress</span>
-                                <span className="text-sm font-semibold text-gray-600">
-                                    {currentQuestionIndex + 1}/{NUM_QUESTIONS}
-                                </span>
-                            </div>
-                            <div className="w-full bg-gray-200 rounded-full h-3 shadow-inner">
-                                <div
-                                    className="bg-gradient-to-r from-green-400 to-blue-500 h-3 rounded-full transition-all duration-500 ease-out"
-                                    style={{ width: `${((currentQuestionIndex + 1) / NUM_QUESTIONS) * 100}%` }}
-                                />
-                            </div>
-                        </div>
-
-                        {/* Game Field */}
-                        <div className="flex flex-col items-center">
-                            <QuestionBox question={currentQuestion?.question} />
-                            <BalloonField options={currentQuestion?.options} onBalloonClick={handleBalloonClick} />
-                        </div>
-
-                        {/* Feedback Overlays */}
-                        {showCorrectFeedback && (
-                            <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
-                                <div className="bg-green-500 text-white text-4xl font-black px-12 py-8 rounded-3xl shadow-2xl animate-bounce">
-                                    🎉 Correct! 🎉
+                <div className="bg-pink-100 rounded-3xl p-4 shadow-lg mb-5 max-w-3xl mx-auto">
+                    {!gameOver ? (
+                        <div className="relative mb-10">
+                            {/* Progress Bar */}
+                            <div className="mb-8 mt-5 w-full max-w-md mx-auto">
+                                <div className="flex justify-between items-center mb-2">
+                                    <span className="text-sm font-semibold text-gray-600">Progress</span>
+                                    <span className="text-sm font-semibold text-gray-600">
+                                        {currentQuestionIndex + 1}/{NUM_QUESTIONS}
+                                    </span>
+                                </div>
+                                <div className="w-full bg-gray-200 rounded-full h-3 shadow-inner">
+                                    <div
+                                        className="bg-gradient-to-r from-yellow-200 to-pink-500 h-3 rounded-full transition-all duration-500 ease-out"
+                                        style={{ width: `${((currentQuestionIndex + 1) / NUM_QUESTIONS) * 100}%` }}
+                                    />
                                 </div>
                             </div>
-                        )}
 
-                        {showIncorrectFeedback && (
-                            <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
-                                <div className="bg-orange-500 text-white text-4xl font-black px-12 py-8 rounded-3xl shadow-2xl animate-bounce">
-                                    💪 Try Again! 💪
-                                </div>
+                            {/* Game Field */}
+                            <div className="flex flex-col items-center">
+                                <QuestionBox question={currentQuestion?.question} />
+                                <BalloonField options={currentQuestion?.options} onBalloonClick={handleBalloonClick} />
                             </div>
-                        )}
-                    </div>
-                ) : (
-                    <EndGameScreen score={score} total={NUM_QUESTIONS} onFinish={handleFinish} />
-                )}
+
+                            {/* Feedback Overlays */}
+                            {showCorrectFeedback && (
+                                <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
+                                    <div className="bg-green-500 text-white text-4xl font-black px-12 py-8 rounded-3xl shadow-2xl animate-bounce">
+                                        🎉 Correct! 🎉
+                                    </div>
+                                </div>
+                            )}
+
+                            {showIncorrectFeedback && (
+                                <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
+                                    <div className="bg-orange-500 text-white text-4xl font-black px-12 py-8 rounded-3xl shadow-2xl animate-bounce">
+                                        💪 Try Again! 💪
+                                    </div>
+                                </div>
+                            )}
+                            </div>
+                    ) : (
+                        <EndGameScreen score={score} total={NUM_QUESTIONS} onFinish={handleFinish} />
+                    )}
+                </div>
             </GameContainer>
-        </div>
     );
 }
 

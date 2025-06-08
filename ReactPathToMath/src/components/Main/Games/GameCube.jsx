@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../Utils/UserContext';
 import { updateUser } from '../../../services/UserService';
 import GameContainer from './GameContainer.jsx';
+import CubesBg from '../../../assets/Images/cube_game/cubesBg.jpg';
+import TitleIcon from '../../../assets/Images/cube_game/CubesIcon.png';
 import { useLocation } from 'react-router-dom';
 import { useUpdateQuiz } from '../PopQuizPage/UpdateQuiz.jsx';
 
@@ -200,11 +202,10 @@ const GameCube = () => {
         else
             navigate(`/subjects/${gameSubject}`, { state: { fromGame: true } });
     }
-    
-    return (        
-        <GameContainer gameName="Cubes Game" gameSubject={gameSubject} gameLevel={level} icon ={gameIcon}  >
-            <div className="mt-5 border-8 border-white bg-gradient-to-br from-blue-100 via-white to-blue-200
-            rounded-3xl p-6 shadow-2xl relative transition-all duration-300 w-full max-w-xl mx-auto">
+    return (
+        <GameContainer gameName="Roll & Solve" gameSubject={gameSubject} gameLevel={{grade}} icon={TitleIcon} backgroundImage={CubesBg}>
+            <div className="border-8 border-white bg-yellow-100 rounded-lg p-4 shadow-lg relative max-w-2xl mx-auto mb-5">
+
                 <div className='text-sm group inline-block absolute top-4 left-4'>
                     {/* How to play button */}
                     <button className="group items-center flex gap-2 bg-purple-200 shadow-2xl px-4 py-2 rounded-lg hover:bg-purple-300 transition-colors cursor-pointer">
@@ -217,14 +218,15 @@ const GameCube = () => {
                     </div>
                 </div>
                 {gameFinished ? (
-                    <div className="text-2xl flex flex-col items-center justify-center h-80 text-center ">
-                        <h2 className="text-3xl font-semibold text-green-600 mb-4 mt-10">
+                    <div className="text-2xl flex flex-col items-center justify-center min-h-screen text-center">
+                        <h2 className="text-3xl font-semibold text-green-600 mb-4">
                             {feedbackMessage}
                         </h2>
                         {success ? "Level up!":" Try again next time!"}
                         <button className="bg-yellow-400 text-white mt-6 px-6 py-3 rounded-lg text-xl hover:cursor-pointer mb-4"
                           onClick={() => {
                              if (success) {
+
                                     handleFinishedGame();         // navigates to next level
                                 } else {
                                     restartGame();         // replay same level
@@ -233,6 +235,13 @@ const GameCube = () => {
                         >  
                             {success ? "Next level": "Try again"}
                         </button>
+                        <button
+                            className="bg-blue-500 text-white mt-4 px-6 py-3 rounded-lg text-xl hover:cursor-pointer mb-4"
+                            onClick={handleFinishedGame}
+                        >
+                            back to {gameSubject} levels
+                        </button>
+
 
                     </div>
                 ) : (
@@ -274,7 +283,8 @@ const GameCube = () => {
 
                         <div className="flex justify-center gap-4 mt-6">
                             <button
-                                className="bg-blue-400 hover:cursor-pointer text-white px-4 py-2 rounded-lg"
+                                className="bg-blue-600 hover:cursor-pointer text-white mt-4 px-4 py-2 rounded-lg"
+
                                 onClick={() => check_answer(selected)}
                             >
                                 Check

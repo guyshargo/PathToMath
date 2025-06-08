@@ -2,7 +2,6 @@ import React from 'react';
 import ButtonComponent from '../../Utils/Button';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import BackgroundImg from '../../../assets/Images/nature2.png'
 import ShadowedTitle from '../../Utils/ShadowedTitle';
 import { useLocation } from 'react-router-dom';
 /**
@@ -14,7 +13,7 @@ import { useLocation } from 'react-router-dom';
  * @param {React.ReactNode} props.children - The children of the component
  * @returns {React.ReactNode} The rendered component
  */
-function GameContainer({ gameName, gameSubject, children, icon }) {
+function GameContainer({ gameName, gameSubject, children, icon, backgroundImage }) {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -38,7 +37,7 @@ function GameContainer({ gameName, gameSubject, children, icon }) {
     return (
         <div className="flex flex-col h-full font-sans playful-font antialiased flex-grow"
             style={{
-                backgroundImage: `url(${BackgroundImg})`,
+                backgroundImage: `url(${backgroundImage})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
@@ -53,7 +52,8 @@ function GameContainer({ gameName, gameSubject, children, icon }) {
                 </div>
             )}
             {/* Game Header */}
-            <div className="text-center p-2">
+            <div className="text-center mt-5">
+
                 {/* Main game name with race flag */}
                 <h1 className="text-6xl font-bold text-black flex justify-center items-center space-x-3 select-none">
                     <ShadowedTitle text={gameName}/>
@@ -66,14 +66,15 @@ function GameContainer({ gameName, gameSubject, children, icon }) {
                         {gameSubject}
                     </span>
                     <span className="bg-green-300 text-green-900 font-semibold px-4 py-1 rounded-full shadow-md select-none">
-                        {`Level ${gameLevel}`}
+                        {`Grade ${gameLevel}`}
                     </span>
                 </div>
             </div>
 
             {/* Game Container */}
-            <div className="text-center scale-110 mb-20">
-                <div className="flex-grow text-center text-black space-y-6 scale-110 p-6 mx-auto max-w-6xl w-full bg-transparent mt-8">
+            <div className="text-center">
+                <div className="flex-grow text-center text-black mt-6 mx-auto max-w-6xl w-full bg-transparent">
+
                     {children}
                 </div>
             </div>

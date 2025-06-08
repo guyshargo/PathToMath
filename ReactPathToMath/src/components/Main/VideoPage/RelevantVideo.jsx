@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
-import background from '../../../assets/Images/Background/white_background.png';
+import background from '../../../assets/Images/nature2.png'
 import snail_icon from '../../../assets/Images/Loaders/snail_icon.png';
 import VideoGallery from './Gallery.jsx'; // make sure the path is correct
 import { Volume2, VolumeX, Maximize2, Minimize2, X, Star, BookOpen, ThumbsUp } from "lucide-react";
 import { useNavigate } from 'react-router-dom';
 import { useGrade } from '../../Utils/GradeComponent.jsx';
 import { useParams } from 'react-router-dom';
-
+import ShadowedTitle from "../../Utils/ShadowedTitle.jsx";
+import SubjectCircle from "../../Main/HomePage/SubjectCircle.jsx";
+import { subjectsData } from "../../Utils/SubjectData.jsx";
 const API_KEY = "AIzaSyABk2py4r0NYy5x63rfJ3bxoY3gMJKtMy8";
 
 const RelevantVideo = () => {
@@ -24,6 +26,7 @@ const RelevantVideo = () => {
 
   // Colors for the fun math theme
   const colors = ["bg-pink-500", "bg-purple-500", "bg-indigo-500", "bg-blue-500", "bg-green-500"];
+  
 
   useEffect(() => {
     const fetchVideos = async () => {
@@ -105,9 +108,23 @@ const RelevantVideo = () => {
         backgroundPosition: 'center',
       }}
     >
-      <h2 className="text-4xl font-bold mb-6 text-center text-gray-600">
-        Hello Grade {grade}! Let's Learn {subject}
-      </h2>
+            <div className="flex items-center gap-4 mb-8 justify-center">
+                <div className="flex items-center gap-6">
+                    <SubjectCircle
+                        imageSrc={subjectsData[subject]?.icon}
+                        title={subject}
+                        variant="circle"
+                        circleColor={subjectsData[subject]?.color || "#D3D3D3"}
+                        size={150}
+                        clickable={false}
+                    />
+                    <ShadowedTitle
+                        text={`Lets Learn ${subject}`}
+                        shadowColor={subjectsData[subject]?.color}
+                    />
+                </div>
+            </div>
+
 
       {loading && (
         <div className="flex flex-col items-center justify-center h-[300px]">

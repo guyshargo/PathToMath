@@ -18,12 +18,12 @@ const ShadowedTitle = ({ text, shadowColor = "#000000" }) => {
     return (
         <div className="relative w-fit leading-none z-0">
             <h1
-                className="text-3xl md:text-4xl font-bold absolute top-[3px] left-[4px] whitespace-nowrap"
+                className="text-3xl md:text-5xl font-bold absolute top-[3px] left-[4px] whitespace-nowrap"
                 style={{ color: darkerColor}}
             >
                 {text}
             </h1>
-            <h1 className="text-3xl md:text-4xl font-bold text-white whitespace-nowrap relative">
+            <h1 className="text-3xl md:text-5xl font-bold text-white whitespace-nowrap relative">
                 {text}
             </h1>
         </div>

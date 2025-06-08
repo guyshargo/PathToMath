@@ -16,6 +16,24 @@ const LevelCircle = ({ currentLevel, numOfLevels, grade }) => {
             levels.push({ levelNum: i, color: "bg-red-300", canPlay: false });
         }
     }
+    const randomGame = (level) => {
+        const gameArray = [
+            { 'name': 'OptionsGame' },
+            { 'name': 'RaceGame' },
+            { 'name': 'RocketGame'},
+            { 'name': 'WordGame' },
+            { 'name': 'BalloonsGame' }
+        ]
+
+        // Add GameCube only in Addition
+       if (subjectGame == "Addition") gameArray.push({ name: "GameCube" });
+
+        const randomIndex = Math.floor(Math.random() * gameArray.length);
+        const randomGame = gameArray[randomIndex];
+
+        navigate(`/${randomGame.name}/${subjectGame}/${grade}/${level}`);
+    }
+
     return (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5 w-full max-w-screen-lg p-1">
             {levels.map(({ levelNum, color, canPlay }, index) => (

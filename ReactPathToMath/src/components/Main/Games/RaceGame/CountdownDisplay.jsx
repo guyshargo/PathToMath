@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
  * @param {number|string|null} props.countdown - Current countdown number or "Race!", null if inactive
  * @returns {React.ReactNode|null} The countdown display or null if countdown is null
  */
-function CountdownDisplay({ countdown }) {
+function CountdownDisplay({ countdown, colorMap, startWord }) {
   
   // State to control the visibility and animation of the countdown display
   const [visible, setVisible] = useState(false);
@@ -27,11 +27,11 @@ function CountdownDisplay({ countdown }) {
 
   // Map countdown values to color classes for styling
   const colorClass = {
-    3: 'text-red-700',
-    2: 'text-yellow-500',
-    1: 'text-green-700',
-    'Race!': 'text-black',
-  }[countdown] || 'text-black';
+    3: colorMap[0],
+    2: colorMap[1],
+    1: colorMap[2],
+    [startWord]: colorMap[3],
+  }[countdown];
 
   return (
     <div
@@ -41,7 +41,7 @@ function CountdownDisplay({ countdown }) {
       }`}
     >
       <div className={`text-6xl font-extrabold text-center my-6 ${colorClass}`}>
-        {countdown === 'Race!' ? '🏁 Race!' : countdown}
+        {countdown === startWord ? startWord : countdown}
       </div>
     </div>
   );
