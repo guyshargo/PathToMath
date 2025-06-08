@@ -78,8 +78,6 @@ function BalloonsGame() {
     };
 
     return (
-        <div className="relative">
-            {/* Game Container */}
             <GameContainer
                 gameName="Poppin' Problems"
                 gameSubject={subjectName}
@@ -134,7 +132,6 @@ function BalloonsGame() {
                     )}
                 </div>
             </GameContainer>
-        </div>
     );
 }
 

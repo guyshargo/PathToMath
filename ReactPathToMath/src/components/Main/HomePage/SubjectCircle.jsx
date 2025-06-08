@@ -31,9 +31,6 @@ function SubjectCircle({
             className="w-[80%] h-[80%] object-contain"
           />
         </div>
-        <span className="text-center text-base font-semibold text-gray-800">
-          {title}
-        </span>
       </div>
     );
   }

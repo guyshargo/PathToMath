@@ -1,6 +1,7 @@
 import React from 'react';
 import { useUser } from '../../Utils/UserContext';
 import { useNavigate } from "react-router-dom";
+import ShadowedTitle from '../../Utils/ShadowedTitle';
 
 
 const rewardsList = [
@@ -88,12 +89,8 @@ const SignUpPrompt = () => {
     <div className="min-h-screen bg-gradient-to-br from-sky-200 via-gray-200 to-sky-300 relative overflow-hidden">
       <div className="relative z-10 mt-10 mb-10 flex flex-col items-center justify-center min-h-screen px-4">
         {/* Header */}
-        <div className="flex items-center gap-4 mb-8">
-          <div className="text-5xl animate-spin">🌟</div>
-          <h1 className="text-4xl md:text-6xl font-bold text-center text-white drop-shadow-lg">
-            Amazing Badges Await!
-          </h1>
-          <div className="text-5xl animate-spin">🌟</div>
+        <div className="flex items-center mb-8 text-4xl">
+          <ShadowedTitle text={"Discover Your Badges Here!"} shadowColor={'text-blue-400'} ></ShadowedTitle>
         </div>
 
         {/* Sign up prompt */}
