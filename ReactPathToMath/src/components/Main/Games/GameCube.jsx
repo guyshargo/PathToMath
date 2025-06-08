@@ -281,22 +281,22 @@ const GameCube = () => {
                             {feedbackMessage}
                         </div>
 
-                        <div className="flex justify-center gap-4 mt-6">
+                        <div className="flex justify-center items-center gap-4 mt-6">
                             <button
-                                className="bg-blue-600 hover:cursor-pointer text-white mt-4 px-4 py-2 rounded-lg"
-
+                                className="bg-blue-600 hover:cursor-pointer text-white px-4 py-2 rounded-lg"
                                 onClick={() => check_answer(selected)}
                             >
                                 Check
                             </button>
 
                             <button
-                                className={`bg-gray-400 text-white hover:cursor-pointer px-4 py-2 rounded-lg ${next ? "opacity-100" : "opacity-0"}`}
+                                className={`bg-orange-400 text-white hover:cursor-pointer px-4 py-2 rounded-lg transition-opacity duration-300 ${next ? "opacity-100" : "opacity-0"}`}
                                 onClick={() => renderGame()}
                             >
                                 {next}
                             </button>
                         </div>
+
                     </div>
                 )}
             </div>

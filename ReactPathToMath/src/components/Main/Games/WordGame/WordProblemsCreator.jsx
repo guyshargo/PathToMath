@@ -20,10 +20,9 @@ const WordProblemsCreator = ({ subject, var1, var2, answer }) => {
       setWordProblem("");
       //prompt for gemini
       const prompt = `Here are two example word problems:
-        Positive answer example: "${questions[subject.toLowerCase()]?.positive}"
-        Negative answer example: "${questions[subject.toLowerCase()]?.negative}"
-        
+        Positive answer example: "${questions[subject.toLowerCase()]?.positive}"        
         Now, write a new short, fun, and clear math word problem for a child in grade ${grade}.
+        the equestion needs to be ${var1} ${subject} ${var2} = ${answer} so make the story fit to the equestion.
         The problem should feel like it takes place in a magical fairy tale world — include things like enchanted forests, potions, dragons, elves, castles, witches, or magical creatures.
         Keep the fairy tale terms simple and easy to understand.
         Make different and original names for the characters in the story for the math problem.

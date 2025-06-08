@@ -10,7 +10,7 @@ import TitleIcon from "../../../../assets/Images/wordGame/StoriesIcon.png";
 import successImage from "../../../../assets/Images/success.png";
 import failureImage from "../../../../assets/Images/failure.png";
 import ButtonComponent from "../../../Utils/Button";
-import StoriesBg from '../../../../assets/Images/wordGame/StoriesBg.jpg'
+import StoriesBg from '../../../../assets/Images/wordGame/StoriesBg.png'
 import { useLocation } from 'react-router-dom';
 import { useUpdateQuiz } from '../../PopQuizPage/UpdateQuiz.jsx';
 

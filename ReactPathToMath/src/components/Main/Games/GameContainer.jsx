@@ -44,11 +44,12 @@ function GameContainer({ gameName, gameSubject, children, icon, backgroundImage 
             }}
         >
             {popQuiz && (
-                <div className="text-center text-6xl font-bold text-white drop-shadow-lg ">
-                    <span className="inline-block bg-gradient-to-l from-yellow-300 via-pink-300 to-orange-300 bg-clip-text text-transparent px-6 py-2 rounded-lg  animate-pulse"
-                    style={{ animationDuration: '5s' }}>
-                        Random Pop Quiz!
-                    </span>
+                <div className='flex justify-center'>
+                    <div className="mt-5 text-center text-3xl w-120 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-4 rounded-full shadow-lg hover:from-purple-600 hover:to-pink-600 transition-all duration-300 transform hover:scale-105">
+                        <span className="inline-block px-6 py-2 rounded-lg ">
+                            Random Pop Quiz! 🥇
+                        </span>
+                    </div>
                 </div>
             )}
             {/* Game Header */}
@@ -66,7 +67,7 @@ function GameContainer({ gameName, gameSubject, children, icon, backgroundImage 
                         {gameSubject}
                     </span>
                     <span className="bg-green-300 text-green-900 font-semibold px-4 py-1 rounded-full shadow-md select-none">
-                        {`Grade ${gameLevel}`}
+                        {`level ${gameLevel}`}
                     </span>
                 </div>
             </div>
