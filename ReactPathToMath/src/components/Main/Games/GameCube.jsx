@@ -17,7 +17,7 @@ import { useUpdateQuiz } from '../PopQuizPage/UpdateQuiz.jsx';
 const GameCube = () => {
     const MAX_TRIES = 2;
     const MAX_QUESTIONS = 5;
-
+    
     const { subjectGame, grade, level } = useParams();
     const gameSubject = subjectGame;
     const gameLevel = parseInt(level);
