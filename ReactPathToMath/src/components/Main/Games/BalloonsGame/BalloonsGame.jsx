@@ -11,6 +11,7 @@ import TitleIcon from '../../../../assets/Images/BalloonGame/balloon_icon.png';
 import TitleIcon2 from '../../../../assets/Images/BalloonGame/balloon_icon2.png';
 import TitleIcon3 from '../../../../assets/Images/BalloonGame/balloon_icon3.png';
 import BalloonsBg from '../../../../assets/Images/BalloonGame/BalloonsBg.jpg';
+
 // Constants
 const NUM_QUESTIONS = 5;
 
@@ -20,6 +21,9 @@ function BalloonsGame() {
     const subjectName = subjectGame;
     const gameLevel = parseInt(level);
     const navigate = useNavigate();
+    const location = useLocation();
+    const updateQuiz = useUpdateQuiz();
+
     const { user } = useUser();
     // State variables
     const [questions, setQuestions] = useState([]);
@@ -74,8 +78,15 @@ function BalloonsGame() {
             newUser.gradeLevel[user.grade - 1][subjectName] = gameLevel;
             updateUser(user.email, newUser);
         }
-        navigate(`/subjects/${subjectName}`);
+        if (location.state?.fromQuiz && score >= 4){
+            updateQuiz();
+        }
+        if (location.state?.fromQuiz)
+            navigate("/");
+        else
+            navigate(`/subjects/${subjectName}`, { state: { fromGame: true } });
     };
+
 
     return (
             <GameContainer

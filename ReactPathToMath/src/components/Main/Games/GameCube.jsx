@@ -1,14 +1,18 @@
 import { React } from 'react';
 import help_icon from '../../../assets/Images/cube_game/how_to_play.png';
+import gameIcon from '../../../assets/Images/cube_game/diceIcon.png'
+import Cubes from './Cubes.jsx';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Cubes from './Cubes.jsx';
 import { useUser } from '../../Utils/UserContext';
 import { updateUser } from '../../../services/UserService';
 import GameContainer from './GameContainer.jsx';
 import CubesBg from '../../../assets/Images/cube_game/cubesBg.jpg';
 import TitleIcon from '../../../assets/Images/cube_game/CubesIcon.png';
+import { useLocation } from 'react-router-dom';
+import { useUpdateQuiz } from '../PopQuizPage/UpdateQuiz.jsx';
+
 
 const GameCube = () => {
     const MAX_TRIES = 2;
@@ -17,22 +21,30 @@ const GameCube = () => {
     const { subjectGame, grade, level } = useParams();
     const gameSubject = subjectGame;
     const gameLevel = parseInt(level);
-
+    const location = useLocation();
     const navigate = useNavigate();
+    const updateQuiz = useUpdateQuiz();
+
     const generate_question = () => {
-        let sum = Math.floor(Math.random() * ((grade) * 2 + gameLevel + 5)) + 6;
-        let cubes = [];
-        cubes = generate_cubes(sum);
+        const numericGrade = parseInt(grade); // ensure number
+        const baseSum = 6 + gameLevel + numericGrade * 2; // scale with grade and level
+        const sum = Math.floor(Math.random() * baseSum) + 6;
+
+        const cubes = generate_cubes(sum, numericGrade, gameLevel);
         return { cubes, sum };
-    }
+    };
 
     // Generate randome cubes values
     const generate_cubes = (sum) => {
+        const minCubes = 4;
+        const maxCubes = 6 + Math.floor(level / 3) + Math.floor(grade / 2); // scale cubes count
+        const cubeCount = Math.min(maxCubes, 12); // limit to 12 max
+
         let validCubes = false;
         let cubes = [];
         while (!validCubes) {
             cubes = []
-            for (let i = 0; i <3+ grade * 2; i++) {
+            for (let i = 0; i < cubeCount ; i++) {
                 // Generate a random cube value between 1 and 6
                 cubes.push(Math.floor(Math.random() * 6) + 1);
                 validCubes = isValidCubes(cubes, sum);
@@ -173,27 +185,30 @@ const GameCube = () => {
     const success = correct >= 3;
     // Handle finished game
     const { user } = useUser();
-    
-    const updateLevel = () => {
 
-    }
     const handleFinishedGame = () => {
         const currentFinished = user?.gradeLevel[user.grade - 1]?.[gameSubject];
-        if (currentFinished && gameLevel > currentFinished && success) {
+        if (gameLevel > currentFinished) {
             // Update user's grade level for the subject if they passed the game
             let newUser = user;
             newUser.gradeLevel[user.grade - 1][gameSubject] = gameLevel;
             updateUser(user.email, newUser);
         }
-        navigate(`/subjects/${gameSubject}`);
+        if (location.state?.fromQuiz && success){
+            updateQuiz();
+        }
+        if (location.state?.fromQuiz)
+            navigate("/");
+        else
+            navigate(`/subjects/${gameSubject}`, { state: { fromGame: true } });
     }
-
     return (
         <GameContainer gameName="Roll & Solve" gameSubject={gameSubject} gameLevel={{grade}} icon={TitleIcon} backgroundImage={CubesBg}>
             <div className="border-8 border-white bg-yellow-100 rounded-lg p-4 shadow-lg relative max-w-2xl mx-auto mb-5">
+
                 <div className='text-sm group inline-block absolute top-4 left-4'>
                     {/* How to play button */}
-                    <button className="group items-center flex gap-2 bg-purple-200 px-4 py-2 rounded-lg hover:bg-purple-300 transition-colors cursor-pointer">
+                    <button className="group items-center flex gap-2 bg-purple-200 shadow-2xl px-4 py-2 rounded-lg hover:bg-purple-300 transition-colors cursor-pointer">
                         <img src={help_icon} alt="How to play" className="h-5 w-5"/>
                         How to play
                     </button>
@@ -211,10 +226,10 @@ const GameCube = () => {
                         <button className="bg-yellow-400 text-white mt-6 px-6 py-3 rounded-lg text-xl hover:cursor-pointer mb-4"
                           onClick={() => {
                              if (success) {
-                                updateLevel();// updates user level
-                                restartGame();         // navigates to next level
+
+                                    handleFinishedGame();         // navigates to next level
                                 } else {
-                                restartGame();         // replay same level
+                                    restartGame();         // replay same level
                                 }
                             }}
                         >  
@@ -250,9 +265,9 @@ const GameCube = () => {
                                     onClick={() => toggleCube(index)}
                                     className={
                                         selected.includes(index)
-                                            ? "outline-3 outline-green-400"
+                                            ? "outline-4 outline-green-400"
                                             : solution.includes(index)
-                                                ? "outline-3 outline-red-400"
+                                                ? "outline-4 outline-red-400"
                                                 : "bg-gray-100"
                                     }
                                 />
@@ -266,17 +281,17 @@ const GameCube = () => {
                             {feedbackMessage}
                         </div>
 
-                        <div>
+                        <div className="flex justify-center gap-4 mt-6">
                             <button
                                 className="bg-blue-600 hover:cursor-pointer text-white mt-4 px-4 py-2 rounded-lg"
+
                                 onClick={() => check_answer(selected)}
                             >
                                 Check
                             </button>
 
                             <button
-                                className={`bg-gray-400 text-white hover:cursor-pointer px-4 py-2 rounded-lg mt-5 ml-3 ${next ? "opacity-100" : "opacity-0"
-                                    }`}
+                                className={`bg-gray-400 text-white hover:cursor-pointer px-4 py-2 rounded-lg ${next ? "opacity-100" : "opacity-0"}`}
                                 onClick={() => renderGame()}
                             >
                                 {next}

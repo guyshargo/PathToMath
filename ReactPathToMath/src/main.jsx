@@ -21,6 +21,7 @@ import ParentPage from './components/Main/ParentPage/ParentPage.jsx';
 import LogoutPage from './components/Main/LoginSignupPage/Logout.jsx';
 import WordGame from './components/Main/Games/WordGame/WordProblem.jsx';
 import RocketGame from './components/Main/Games/RocketGame/RocketGame.jsx';
+import PopQuiz from './components/Main/PopQuizPage/PopQuiz.jsx';
 import BalloonsGame  from './components/Main/Games/BalloonsGame/BalloonsGame.jsx'
 import RewardsPage from './components/Main/BadgesPage/RewardsPage';
 /**
@@ -46,8 +47,9 @@ const router = createBrowserRouter([
       { path: '/videos/:subject', element: <RelevantVideo />, },
       { path: '/profile', element: <Profile />, },
       { path: '/ParentPage', element: <ParentPage />, },
-      { path: '/logout', element: <LogoutPage /> } ,
-      { path: '/badges', element: <RewardsPage />} 
+      { path: '/badges', element: <RewardsPage />} ,
+      { path: '/pop-quiz', element: <PopQuiz />, },
+      { path: '/logout', element: <LogoutPage /> }
     ],
   },
 ])

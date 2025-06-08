@@ -11,6 +11,8 @@ import successImage from "../../../../assets/Images/success.png";
 import failureImage from "../../../../assets/Images/failure.png";
 import ButtonComponent from "../../../Utils/Button";
 import StoriesBg from '../../../../assets/Images/wordGame/StoriesBg.jpg'
+import { useLocation } from 'react-router-dom';
+import { useUpdateQuiz } from '../../PopQuizPage/UpdateQuiz.jsx';
 
 const WordProblem = () => {
   // Get the subject and level from the URL parameters
@@ -19,6 +21,10 @@ const WordProblem = () => {
   const gameSubject = subjectGame;
   const gameLevel = parseInt(level);
   const navigate = useNavigate();
+  const updateQuiz = useUpdateQuiz();
+  
+  // State to handle return from pop quiz
+  const location = useLocation();
   // Get the user from the UserContext
   const { user ,update} = useUser();
   // Get the current grade from the GradeContext
@@ -131,7 +137,13 @@ const WordProblem = () => {
             newUser.gradeLevel[user.grade - 1][gameSubject] = gameLevel;
             update(user.email, newUser);
           }
-          navigate(`/subjects/${gameSubject}`);
+          if (location.state?.fromQuiz){
+            updateQuiz();
+            navigate("/");
+          }
+          else {
+            navigate(`/subjects/${gameSubject}`, { state: { fromGame: true } });
+          }
         } else {
           resetGame();
           loadGameLevel();

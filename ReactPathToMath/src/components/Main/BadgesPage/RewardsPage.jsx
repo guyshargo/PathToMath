@@ -21,6 +21,7 @@ const Badge = ({ reward, index, isEarned }) => {
       className={`relative transform transition-all duration-500 hover:rotate-2 ${
         isEarned ? 'scale-100 opacity-100' : 'scale-75'
       }`}         
+
     >
       <div
         className={`relative flex flex-col items-center p-6 rounded-3xl shadow-2xl border-4 transition-all duration-300 cursor-pointer overflow-hidden
@@ -81,7 +82,8 @@ const Badge = ({ reward, index, isEarned }) => {
 };
 
 const SignUpPrompt = () => {
-  const navigate = useNavigate(); //  useNavigate must be used inside the component
+const navigate = useNavigate(); //  useNavigate must be used inside the component
+
 
   const signUpBtn = () => {
     navigate("/Signup"); // ✅ now works correctly
@@ -329,6 +331,7 @@ const RewardsPage = () => {
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                   {rewardsWithProgress.map((reward, index) => (
+
                     <Badge
                       key={index}
                       reward={reward}
@@ -339,6 +342,7 @@ const RewardsPage = () => {
                   
                 </div>
               </div>
+
             </>
           )}
         </div>

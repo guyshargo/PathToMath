@@ -3,7 +3,7 @@ import ButtonComponent from '../../Utils/Button';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import ShadowedTitle from '../../Utils/ShadowedTitle';
-
+import { useLocation } from 'react-router-dom';
 /**
  * Game Container Component
  * @param {Object} props - The component props
@@ -15,14 +15,23 @@ import ShadowedTitle from '../../Utils/ShadowedTitle';
  */
 function GameContainer({ gameName, gameSubject, children, icon, backgroundImage }) {
     const navigate = useNavigate();
+    const location = useLocation();
+
     const { level } = useParams();
     const gameLevel = Number(level);
-
+    let popQuiz = false;
+    if (location.state?.fromQuiz) {
+        popQuiz = true;
+    }
     /**
      * Handles the return button click event
      */
     const handleReturn = () => {
-        navigate(-1);
+    if (location.state?.fromQuiz) {
+        navigate("/"); // go to homepage
+    } else {
+        navigate(-1); // go back to previous page
+    }
     };
 
     return (
@@ -34,12 +43,21 @@ function GameContainer({ gameName, gameSubject, children, icon, backgroundImage 
                 backgroundRepeat: 'no-repeat',
             }}
         >
+            {popQuiz && (
+                <div className="text-center text-6xl font-bold text-white drop-shadow-lg ">
+                    <span className="inline-block bg-gradient-to-l from-yellow-300 via-pink-300 to-orange-300 bg-clip-text text-transparent px-6 py-2 rounded-lg  animate-pulse"
+                    style={{ animationDuration: '5s' }}>
+                        Random Pop Quiz!
+                    </span>
+                </div>
+            )}
             {/* Game Header */}
             <div className="text-center mt-5">
+
                 {/* Main game name with race flag */}
                 <h1 className="text-6xl font-bold text-black flex justify-center items-center space-x-3 select-none">
                     <ShadowedTitle text={gameName}/>
-                    {icon && <img src={icon} alt="Game Icon" className="w-30 h-auto" />}
+                    {icon && <img src={icon} alt="Game Icon" className="w-25 h-auto" />}
                 </h1>
 
                 {/* Subject and Level badges */}
@@ -56,10 +74,13 @@ function GameContainer({ gameName, gameSubject, children, icon, backgroundImage 
             {/* Game Container */}
             <div className="text-center">
                 <div className="flex-grow text-center text-black mt-6 mx-auto max-w-6xl w-full bg-transparent">
+
                     {children}
                 </div>
             </div>
+
             <div className=" flex justify-center mb-10">
+
                 <ButtonComponent
                     label="Return"
                     onClick={handleReturn}

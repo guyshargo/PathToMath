@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-
+import { generateRandomGame } from '../Games/generateRandomGame';
 const LevelCircle = ({ currentLevel, numOfLevels, grade }) => {
     const navigate = useNavigate();
     const { subjectGame } = useParams();
@@ -16,7 +16,6 @@ const LevelCircle = ({ currentLevel, numOfLevels, grade }) => {
             levels.push({ levelNum: i, color: "bg-red-300", canPlay: false });
         }
     }
-
     const randomGame = (level) => {
         const gameArray = [
             { 'name': 'OptionsGame' },
@@ -51,7 +50,9 @@ const LevelCircle = ({ currentLevel, numOfLevels, grade }) => {
                     title={!canPlay ? "Level Locked" : ""}
                     disabled={!canPlay}
                     onClick={() => {
-                        randomGame(levelNum);
+                        const random = generateRandomGame(subjectGame);
+                        navigate(`/${random}/${subjectGame}/${grade}/${levelNum}`);
+
                     }}
                 >
                     {levelNum}
