@@ -82,7 +82,7 @@ function BalloonsGame() {
         if (location.state?.fromQuiz)
             navigate("/");
         else
-            navigate(`/subjects/${gameSubject}`);
+            navigate(`/subjects/${subjectName}`, { state: { fromGame: true } });
     };
 
     return (

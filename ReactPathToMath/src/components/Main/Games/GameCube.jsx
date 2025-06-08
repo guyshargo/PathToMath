@@ -198,7 +198,7 @@ const GameCube = () => {
         if (location.state?.fromQuiz)
             navigate("/");
         else
-            navigate(`/subjects/${gameSubject}`);
+            navigate(`/subjects/${gameSubject}`, { state: { fromGame: true } });
     }
     
     return (        

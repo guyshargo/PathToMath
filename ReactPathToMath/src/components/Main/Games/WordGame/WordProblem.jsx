@@ -140,7 +140,7 @@ const WordProblem = () => {
             navigate("/");
           }
           else {
-            navigate(`/subjects/${gameSubject}`);
+            navigate(`/subjects/${gameSubject}`, { state: { fromGame: true } });
           }
         } else {
           resetGame();

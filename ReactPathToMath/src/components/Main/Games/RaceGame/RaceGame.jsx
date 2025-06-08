@@ -82,7 +82,7 @@ function RaceGame() {
     if (location.state?.fromQuiz)
       navigate("/");
     else
-      navigate(`/subjects/${gameSubject}`);
+      navigate(`/subjects/${subjectName}`, { state: { fromGame: true } });
   }
 
   // Starts the countdown before the game and resets positions and states

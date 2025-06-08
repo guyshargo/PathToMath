@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import background from '../../../assets/Images/nature2.png'
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import LevelCircle from "./LevelCircle.jsx";
 import addition from '../../../assets/Images/Math_icon/addition_purple.png';
 import subtraction from '../../../assets/Images/Math_icon/minus.png';
@@ -42,10 +42,12 @@ const LevelsPage = () => {
     const { user } = useUser();
     const [popup, setPopup] = useState(false);
     const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
-        setPopup(!user);
-    }, [user]);
+        // Only show popup if user is not logged in and didn't come from a game
+        setPopup(!user && location.state?.fromGame);
+    }, [user, location.state]);
 
     if (!subjectGame) {
         return (

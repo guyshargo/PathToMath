@@ -158,7 +158,7 @@ export default function OptionsGame() {
                         navigate("/");
                     }
                     else {
-                        navigate(`/subjects/${gameSubject}`);
+                        navigate(`/subjects/${gameSubject}`, { state: { fromGame: true } });
                     }
                 }
                 else {
