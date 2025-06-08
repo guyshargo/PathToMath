@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import GameContainer from '../GameContainer';
 import generateQuestions from '../GameLogic';
 import BalloonField from './BalloonField';
 import QuestionBox from './QuestionBox';
+import { useUpdateQuiz } from '../../PopQuizPage/UpdateQuiz.jsx';
 import EndGameScreen from './EndGameScreen';
 import { useUser } from '../../../Utils/UserContext';
 import { updateUser } from '../../../../services/UserService';
