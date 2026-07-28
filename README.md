@@ -1,6 +1,6 @@
-# 📚 Path to Math 🎲
+# 📚 Path2Math 🎲
 
-**Path to Math** is a fun and interactive educational web app designed to help elementary school students (grades 1–6) improve their math skills through gamified learning, video tutorials, and personalized feedback.
+**Path2Math** is a fun and interactive educational web app designed to help elementary school students (grades 1–6) improve their math skills through gamified learning, video tutorials, and personalized feedback.
 
 ---
 
